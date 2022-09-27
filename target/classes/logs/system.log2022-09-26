@@ -1,0 +1,19 @@
+[23:52:34][INFO ][ContextLoader.java:271] - Root WebApplicationContext: initialization started
+[23:52:35][INFO ][ContextLoader.java:307] - Root WebApplicationContext initialized in 530 ms
+[23:52:35][INFO ][FrameworkServlet.java:525] - Initializing Servlet 'appServlet'
+[23:52:36][INFO ][FrameworkServlet.java:547] - Completed initialization in 644 ms
+[23:52:43][WARN ][DispatcherServlet.java:1278] - No mapping for GET /dab/main.do
+[23:53:10][INFO ][ContextLoader.java:271] - Root WebApplicationContext: initialization started
+[23:53:10][INFO ][ContextLoader.java:307] - Root WebApplicationContext initialized in 538 ms
+[23:53:10][INFO ][FrameworkServlet.java:525] - Initializing Servlet 'appServlet'
+[23:53:11][INFO ][FrameworkServlet.java:547] - Completed initialization in 711 ms
+[23:53:15][WARN ][DispatcherServlet.java:1278] - No mapping for GET /dab/main.do
+[23:57:22][INFO ][ContextLoader.java:271] - Root WebApplicationContext: initialization started
+[23:57:22][INFO ][ContextLoader.java:307] - Root WebApplicationContext initialized in 477 ms
+[23:57:22][INFO ][FrameworkServlet.java:525] - Initializing Servlet 'appServlet'
+[23:57:23][INFO ][FrameworkServlet.java:547] - Completed initialization in 647 ms
+[23:57:29][WARN ][DispatcherServlet.java:1278] - No mapping for GET /dab/main.do
+[23:59:52][INFO ][ContextLoader.java:271] - Root WebApplicationContext: initialization started
+[23:59:53][INFO ][ContextLoader.java:307] - Root WebApplicationContext initialized in 471 ms
+[23:59:53][INFO ][FrameworkServlet.java:525] - Initializing Servlet 'appServlet'
+[23:59:53][INFO ][FrameworkServlet.java:547] - Completed initialization in 725 ms
