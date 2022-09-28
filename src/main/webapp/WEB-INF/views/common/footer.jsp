@@ -3,20 +3,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title></title>
-<style type="text/css">
-footer{
-	text-align: center;
-	background-color: navy;
-	color: white;
+<style>
+.ft {
+	margin-top : -50px;
+	font-size : 20px;
+	text-align : center;
 }
 </style>
 </head>
 <body>
-<footer>
+<div class="ft">
 copyright@deepaccountbook 2차 프로젝트<br>
-2022-09-27 개발, developer : deep blue<br>
-</footer>
+2022-09-28 개발, developer : deep blue<br>
+</div>
 </body>
 </html>
