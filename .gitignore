@@ -13,7 +13,10 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-/target/
+
+# spring
+*.properties
+target/
 # External tool builders
 .externalToolBuilders/
 
