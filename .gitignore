@@ -16,7 +16,10 @@ local.properties
 
 # spring
 *.properties
+*/target/*
 target/
+
+
 # External tool builders
 .externalToolBuilders/
 
