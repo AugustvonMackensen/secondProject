@@ -7,7 +7,7 @@
 lecture
 target
 pom.properties
-#.classpath
+.classpath
 MANIFEST.MF
 
 ### Eclipse ###
@@ -19,7 +19,7 @@ tmp/
 *.swp
 *~.nib
 local.properties
-#.settings/
+.settings/
 .loadpath
 .recommenders
 
@@ -77,7 +77,7 @@ local.properties
 .sts4-cache/
 
 # Eclipse Core
-#.project
+.project
 
 # IDT-specific (Eclipse Java Development Tools)
 #.classpath
