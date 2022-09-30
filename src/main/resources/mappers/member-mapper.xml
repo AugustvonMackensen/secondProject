@@ -4,5 +4,80 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 
+	<resultMap type="Member" id="resultList">
+		<result property="userid" column="userid" />
+		<result property="userpwd" column="userpwd" />
+		<result property="username" column="username" />
+		<result property="email" column="email" />
+		<result property="loginok" column="loginok" />
+		<result property="admin" column="admin" />
+		<result property="enroll_date" column="enroll_date" />
+	</resultMap>
+
+	<select id="selectLogin" parameterType="Member" resultType="Member">
+		select * from member
+		where userid = #{ userid } and userpwd = #{ userpwd }
+		and loginok = 'Y'
+	</select>
+	
+	<!-- 회원 아이디(userid)로 회원정보 조회 -->
+	<select id="selectMember" parameterType="string" resultType="Member">
+		select * from member
+		where userid = #{ uid } 
+	</select>
+	
+	<!-- 회원가입시  아이디 중복 체크 처리용 -->
+	<select id="selectCheckId" parameterType="string" resultType="_int">
+		select count(userid) from member
+		where userid= #{ uid }
+	</select>
+	
+	<!-- 이메일로 회원조회 -->
+	<select id="selectByMail" parameterType="string" resultType="Member">
+		select * from member
+		where email = #{ umail }
+	</select>
+	
+	<!-- 아이디로 회원조회 -->
+	<select id="selectByid" parameterType="string" resultType="Member">
+		select * from member
+		where userid = #{ uid }
+	</select>
+	
+	<!-- 비밀번호 분실 : 임시비밀번호 발급 -->
+	<update id="findPwd" parameterType="Member">
+		update member
+		set userpwd = ${ userpwd }
+		where userid = #{ userid } and email = #{ email }
+	</update>
+	
+	<!-- 회원 전체 조회용 -->
+	<select id="selectList" resultMap="resultList">
+		select * from member
+	</select>
+	
+	<!-- loginok 값 변경용 -->
+	<update id="updateLoginOK" parameterType="Member">
+		update member
+		set loginok = #{ loginok }
+		where userid = #{ userid }
+	</update>
+	
+	<insert id="insertMember" parameterType="Member">
+		insert into member (userid, userpwd, username, email, loginok, admin, enroll_date)
+		values (#{ userid }, #{ userpwd }, #{ username }, #{ email }, default, default, default)
+	</insert>
+	
+	<update id="updateMember" parameterType="Member">
+		update member
+		set userpwd = #{ userpwd },
+			email = #{ email }
+		where userid = #{ userid } 
+	</update>
+	
+	<delete id="deleteMember" parameterType="string">
+		delete from member
+		where userid = #{ uid }
+	</delete>
 
 </mapper>

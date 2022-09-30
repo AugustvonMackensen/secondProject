@@ -12,5 +12,32 @@ import com.deepblue.dab.member.model.vo.Member;
 
 @Repository("memberDao")	// xml 자동 등록됨 (id 지정함)
 public class MemberDao {
+	@Autowired
+	private SqlSessionTemplate session;
 	
+	public Member selectMember(String userid) {
+		return session.selectOne("memberMapper.selectMember", userid);
+		
+	}
+	public int selectDupCheckId(String userid) {
+		return session.selectOne("memberMapper.selectCheckId", userid);
+	}
+	public int insertMember(Member member) {
+		return session.insert("memberMapper.insertMember", member);
+	}
+	public Member selectByMail(String email) {
+		return session.selectOne("memberMapper.selectByMail", email);
+	}
+	public Member selectByid(String userid) {
+		return session.selectOne("memberMapper.selectByid", userid);
+	}
+	public int findPwd(Member member) {
+		return session.update("memberMapper.findPwd", member);
+	}
+	public int updateMember(Member member) {
+		return session.update("memberMapper.updateMember", member);
+	}
+	public int deleteMember(String userid) {
+		return session.delete("memberMapper.deleteMember", userid);
+	}
 }

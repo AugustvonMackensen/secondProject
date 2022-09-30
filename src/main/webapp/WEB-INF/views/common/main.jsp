@@ -68,9 +68,22 @@ https://templatemo.com/tm-570-chain-app-dev
               <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="#services">Q&A게시판</a></li>
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/calendarListView.do">가계부</a></li>
-              <li><div class="gradient-button" ><a href="#"> 회원가입</a></div></li> 
-              <li><div class="gradient-button" ><a href="#"> 로그인</a></div></li> 
-            </ul>        
+              <c:if test="${ empty sessionScope.loginMember }">
+	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/enrollPage.do"> 회원가입</a></div></li> 
+	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/loginPage.do"> 로그인</a></div></li>
+              </c:if>
+              <c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
+	              <li>
+	              <div class="gradient-button" >
+	              	<c:url var="callMyinfo" value="/myinfo.do">
+						<c:param name="userid" value="${ loginMember.userid }" />
+					</c:url>
+					<a href="${ callMyinfo }">My Page</a>
+	              </div>
+	              </li> 
+	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/logout.do"> 로그아웃</a></div></li>
+              </c:if>
+            </ul>                 
           </nav>
         </div>
       </div>
