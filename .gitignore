@@ -1,5 +1,14 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,java,eclipse
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,java,eclipse
+# Created by https://www.toptal.com/developers/gitignore/api/eclipse,java
+# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java
+
+#mybatis-config.xml
+#log4j.xml
+
+lecture
+target
+pom.properties
+.classpath
+MANIFEST.MF
 
 ### Eclipse ###
 .metadata
@@ -13,24 +22,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-./settings/
-# spring
-/.metadata/
-.classpath
-.project
-.settings/
-
-*.properties
-./target/
-*/target/*
-target/
-/target/
-
-# Eclipse Core
-.project
-
-# JDT-specific (Eclipse Java Development Tools)
-.classpath
 
 # External tool builders
 .externalToolBuilders/
@@ -85,6 +76,12 @@ target/
 # Spring Boot Tooling
 .sts4-cache/
 
+# Eclipse Core
+.project
+
+# IDT-specific (Eclipse Java Development Tools)
+.classpath
+
 ### Java ###
 # Compiled class file
 *.class
@@ -109,32 +106,5 @@ target/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-replay_pid*
 
-### Windows ###
-# Windows thumbnail cache files
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-
-# Dump file
-*.stackdump
-
-# Folder config file
-[Dd]esktop.ini
-
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-# Windows Installer files
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
-
-# Windows shortcuts
-*.lnk
-
-# End of https://www.toptal.com/developers/gitignore/api/windows,java,eclipse
+# End of https://www.toptal.com/developers/gitignore/api/eclipse,java
