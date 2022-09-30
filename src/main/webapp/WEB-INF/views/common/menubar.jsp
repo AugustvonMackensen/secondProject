@@ -6,13 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    <title>DeepAccountBook</title>
+    <title></title>
     <!-- Bootstrap core CSS -->
     <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Additional CSS Files -->
@@ -23,17 +21,7 @@
   </head>
 <meta charset="UTF-8">
 <title>deep account book</title>
-  <!-- ***** Preloader Start ***** -->
-  <div id="js-preloader" class="js-preloader">
-    <div class="preloader-inner">
-      <span class="dot"></span>
-      <div class="dots">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </div>
+
   <!-- ***** Preloader End ***** -->
 
   <!-- ***** Header Area Start ***** -->
@@ -43,15 +31,15 @@
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
+            <a href="${ pageContext.servletContext.contextPath }/main.do" class="logo">
               <span style="font-size :30px">DeepAccountBook</span>
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
-              <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="#services">Q&A게시판</a></li>
-              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="#about">가계부</a></li>
+              <li class="scroll-to-section"><a href="${ pageContext.servletContext.contextPath }/main.do" class="active">Home</a></li>
+              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="${ pageContext.servletContext.contextPath }/qnaListView.do">Q&A게시판</a></li>
+              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/calendarListView.do">가계부</a></li>
               <li><div class="gradient-button" ><a href="#"> 회원가입</a></div></li> 
               <li><div class="gradient-button" ><a href="#"> 로그인</a></div></li> 
             </ul>        
@@ -63,5 +51,13 @@
 </head>
 <body>
 
+  <!-- Scripts -->
+  <script src="resources/vendor/jquery/jquery.min.js"></script>
+  <script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="resources/assets/js/owl-carousel.js"></script>
+  <script src="resources/assets/js/animation.js"></script>
+  <script src="resources/assets/js/imagesloaded.js"></script>
+  <script src="resources/assets/js/popup.js"></script>
+  <script src="resources/assets/js/custom.js"></script>
 </body>
 </html>

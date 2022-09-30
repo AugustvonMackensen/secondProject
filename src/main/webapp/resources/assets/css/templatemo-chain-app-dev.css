@@ -108,6 +108,7 @@ html, body {
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden
 }
 
 a {
@@ -332,7 +333,7 @@ header
 .header-area {
   background-color: transparent;
   border-bottom: 1px solid rgba(42,42,42,0.2);
-  position: absolute;
+  position: static;
   left: 0px;
   right: 0px;
   z-index: 100;
@@ -1572,13 +1573,11 @@ Footer Style
 */
 
 footer {
-  background-image: url(../images/footer-bg.png);
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin-top: 130px;
-  padding-top: 300px;
-  padding-bottom: 60px;
+  position: absolute;
+  left: 0; 
+  bottom: 0;
+  width: 100%;
+  text-align : center;
 }
 
 footer .section-heading {

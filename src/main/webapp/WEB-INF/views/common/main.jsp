@@ -1,43 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" errorPage="error.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+<html lang="ko">
 
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-
-    <title>DeepAccountBook</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-<!--
-
-TemplateMo 570 Chain App Dev
-
-https://templatemo.com/tm-570-chain-app-dev
-
--->
-
-    <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" href="resources/assets/css/templatemo-chain-app-dev.css">
-    <link rel="stylesheet" href="resources/assets/css/animated.css">
-    <link rel="stylesheet" href="resources/assets/css/owl.css">
-
-</head>
 <body>
-<body>
+<!-- 헤더부분 로그, 로그인 부분 -->
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
 
   <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader">
@@ -110,7 +80,7 @@ https://templatemo.com/tm-570-chain-app-dev
                   </div>
                   <div class="col-lg-12">
                     <div class="white-button first-button scroll-to-section">
-                      <a href="${ pageContext.servletContext.contextPath }/calendarListView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
+                      <a href="#contact" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
                     </div>
                   </div>
                 </div>
@@ -127,18 +97,8 @@ https://templatemo.com/tm-570-chain-app-dev
     </div>
   </div>
 
-  
-  
 
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 
-  <!-- Scripts -->
-  <script src="resources/vendor/jquery/jquery.min.js"></script>
-  <script src="resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="resources/assets/js/owl-carousel.js"></script>
-  <script src="resources/assets/js/animation.js"></script>
-  <script src="resources/assets/js/imagesloaded.js"></script>
-  <script src="resources/assets/js/popup.js"></script>
-  <script src="resources/assets/js/custom.js"></script>
-</body>
 </body>
 </html>

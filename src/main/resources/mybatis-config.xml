@@ -11,6 +11,8 @@
 	<typeAliases>
 		<typeAlias type="com.deepblue.dab.bill.model.vo.Bill" alias="Bill" />
 		<typeAlias type="com.deepblue.dab.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.deepblue.dab.qna.model.vo.QNA" alias="QNA" />
+		<typeAlias type="com.deepblue.dab.common.Paging" alias="Paging" />
 	</typeAliases>
 
 	<mappers>
@@ -18,5 +20,6 @@
 		<mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/bill-mapper.xml" />
+		<mapper resource="mappers/qna-mapper.xml" />
 	</mappers>
 </configuration>
