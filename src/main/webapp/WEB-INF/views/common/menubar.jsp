@@ -45,6 +45,7 @@
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/loginPage.do"> 로그인</a></div></li>
               </c:if>
               <c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
+	              <li><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록Test</a></li>
 	              <li>
 	              <div class="gradient-button" >
 	              	<c:url var="callMyinfo" value="/myinfo.do">
@@ -53,6 +54,21 @@
 					<a href="${ callMyinfo }">My Page</a>
 	              </div>
 	              </li> 
+	              
+	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/logout.do"> 로그아웃</a></div></li>
+              </c:if>
+              <!-- 관리자 -->
+              <c:if test="${ !empty sessionScope.loginMember and loginMember.admin eq 'Y' }">
+	              <li><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록Test</a></li>
+	              <li>
+	              <div class="gradient-button" >
+	              	<c:url var="callMyinfo" value="/myinfo.do">
+						<c:param name="userid" value="${ loginMember.userid }" />
+					</c:url>
+					<a href="${ callMyinfo }">My Page</a>
+	              </div>
+	              </li> 
+	              
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/logout.do"> 로그아웃</a></div></li>
               </c:if>
             </ul>                 

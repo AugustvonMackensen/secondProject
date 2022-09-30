@@ -105,8 +105,7 @@ table#outer {
 				var fmtTime = fTime.hour + ":" + fTime.minute + ":"
 						+ fTime.second;
 
-				$("input[name=bill_timestamp]").attr('value',
-						fmtDate + " " + fmtTime);
+				$("input[name=bill_timestamp2]").attr('value',fmtDate + "T" + fmtTime);
 
 				console.log(fTime.hour + "시" + fTime.minute + "분"
 						+ fTime.second + "초");
@@ -183,7 +182,7 @@ table#outer {
 			<tr>
 				<th width="120">* 결제 시간</th>
 				<td><input type="datetime-local" name="bill_timestamp2"
-					id="bill_timestamp" value="2022-02-15 15:30:12" required> &nbsp; &nbsp; <input
+					id="bill_timestamp" required> &nbsp; &nbsp; <input
 					type="button" value="중복체크" onclick="return dupCheckId();"></td>
 			</tr>
 			<tr>
