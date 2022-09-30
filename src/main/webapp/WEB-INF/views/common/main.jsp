@@ -22,43 +22,7 @@
   </div>
   <!-- ***** Preloader End ***** -->
 
-  <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="main-nav">
-            <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
-              <span style="font-size :30px">DeepAccountBook</span>
-            </a>
-            <!-- ***** Logo End ***** -->
-            <!-- ***** Menu Start ***** -->
-            <ul class="nav">
-              <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="#services">Q&A게시판</a></li>
-              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/calendarListView.do">가계부</a></li>
-              <c:if test="${ empty sessionScope.loginMember }">
-	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/enrollPage.do"> 회원가입</a></div></li> 
-	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/loginPage.do"> 로그인</a></div></li>
-              </c:if>
-              <c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
-	              <li>
-	              <div class="gradient-button" >
-	              	<c:url var="callMyinfo" value="/myinfo.do">
-						<c:param name="userid" value="${ loginMember.userid }" />
-					</c:url>
-					<a href="${ callMyinfo }">My Page</a>
-	              </div>
-	              </li> 
-	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/logout.do"> 로그아웃</a></div></li>
-              </c:if>
-            </ul>                 
-          </nav>
-        </div>
-      </div>
-    </div>
-  </header>
+ 
 
 </div>
   <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
