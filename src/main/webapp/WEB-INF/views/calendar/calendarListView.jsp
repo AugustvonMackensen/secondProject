@@ -182,6 +182,7 @@
 	</style>
 </head>
 <body>
+
 <form name="calendarFrm" id="calendarFrm" action="" method="GET">
 
 <div class="calendar" >
@@ -309,5 +310,7 @@
 </table>
 </div>
 </form>
+
+	<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

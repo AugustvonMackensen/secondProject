@@ -3,21 +3,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <title>DeepAccountBook</title>
 <meta charset="UTF-8">
 <title></title>
 <style>
-.ft {
-	margin-top : -50px;
-	font-size : 20px;
-	text-align : center;
+footer{
+  position: absolute;
+  left: 0; 
+  bottom: 0;
+  width: 100%;
+  text-align : center;
+  
 }
 </style>
 </head>
 <body>
-<div class="ft">
+<footer>
 copyright@deepaccountbook 2차 프로젝트<br>
 2022-09-28 개발, developer : deep blue<br>
-</div>
+</footer>
+
 </body>
 </html>
