@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="calendarMapper">
+
+	<resultMap type="Bill" id="resultBill">
+		<id column="id" property="id" />
+		<result column="userid" property="userid" />
+		<result column="bill_timestamp" property="bill_timestamp" />
+		<result column="bill_price" property="bill_price" />
+		<result column="bill_content" property="bill_content" />
+		<result column="bill_category" property="bill_category" />
+	</resultMap>
+	
+	<select id="selectBillTime" parameterType="Bill" resultMap="resultBill">
+		select * from bill
+		where bill_timestamp = #{ bill_timestamp }
+	</select>
+	
+	<select id="selectBillPrice" parameterType="_int" resultMap="resultBill">
+		select * from bill
+		where bill_price = #{ bill_price }
+	</select>
+	
+	<select id="selectBillContent" parameterType="Bill" resultMap="resultBill">
+		select * from bill
+		where bill_content = #{ bill_content }
+	</select>
+	
+	<select id="selectBillCategory" parameterType="Bill" resultMap="resultBill">
+		select * from bill
+		where bill_category = #{ bill_category }
+	</select>
+
+</mapper>
