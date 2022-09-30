@@ -3,9 +3,19 @@
 "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
- 	<settings>
+	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 		<setting name="cacheEnabled" value="false"/>
 	</settings>
 
+	<typeAliases>
+		<typeAlias type="com.deepblue.dab.bill.model.vo.Bill" alias="Bill" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mappers/member-mapper.xml" />
+		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/bill-mapper.xml" />
+	</mappers>
 </configuration>

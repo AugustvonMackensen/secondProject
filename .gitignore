@@ -15,10 +15,21 @@ local.properties
 .recommenders
 
 # spring
+/.metadata/
+.classpath
+.project
+.settings/
+
 *.properties
 */target/*
 target/
 /target/
+
+# Eclipse Core
+.project
+
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
 
 # External tool builders
 .externalToolBuilders/
