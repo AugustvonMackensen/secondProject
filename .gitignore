@@ -7,7 +7,7 @@
 lecture
 target
 pom.properties
-.classpath
+#.classpath
 MANIFEST.MF
 
 ### Eclipse ###
@@ -77,10 +77,10 @@ local.properties
 .sts4-cache/
 
 # Eclipse Core
-.project
+#.project
 
 # IDT-specific (Eclipse Java Development Tools)
-.classpath
+#.classpath
 
 ### Java ###
 # Compiled class file
