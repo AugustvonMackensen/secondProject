@@ -13,7 +13,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-
+./settings/
 # spring
 /.metadata/
 .classpath
@@ -21,6 +21,7 @@ local.properties
 .settings/
 
 *.properties
+./target/
 */target/*
 target/
 /target/
