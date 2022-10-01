@@ -25,13 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.deepblue.dab.member.model.service.MemberService;
 import com.deepblue.dab.member.model.vo.Member;
 
-
-@Controller // xml에 자동 등록됨 ... import 해서 annotation 써야 됨
+@Controller //컨트롤러 등록
 public class MemberController {
-	// 이 컨트롤러 안의 메소드들에 구동 상태에 대한 로그 출력용 객체 생성
-	// classpath 에 log4j.xml 에 설정된 내용으로 출력 적용됨
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-
+	
 	@Autowired //자동 의존성 주입
 	private MemberService memberService;
 	
@@ -129,9 +126,16 @@ public class MemberController {
 	@ResponseBody
 	@GetMapping("mailCheck.do")
 	public String mailCheck(String email) {
-		System.out.println("이메일 인증 요청이 들어옴!");
-		System.out.println("이메일 인증 이메일 : " + email);
-		return mailService.mailMessage(email);
+		int mailCount = memberService.selectMailCheck(email);
+		
+		if(mailCount == 0 ) {
+			System.out.println("이메일 인증 요청이 들어옴!");
+			System.out.println("이메일 인증 이메일 : " + email);
+			return mailService.mailMessage(email);
+		} else {
+			String failureMessage = "failure";
+			return failureMessage;
+		}
 	}
 	
 	//아이디 중복확인
@@ -193,8 +197,23 @@ public class MemberController {
 	
 	//비밀번호 찾기 : 임시비밀번호 발급
 	@PostMapping("findPwd.do")
-	public String passRecovery(Member member, Model model) {
-		return "";
+	public void passRecovery(@RequestParam("userid") String userid, @RequestParam("email") String email, 
+			HttpServletResponse response) throws IOException {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		//아이디 조회에 실패하면, 오류메세지 출력
+		if(memberService.selectByid(userid) == null) {
+			out.print("등록된 아이디가 아닙니다.");
+			out.close();
+		}else if(memberService.selectByMail(email) == null) { //이메일 조회 실패시 오류메세지 출력
+			out.print("등록된 이메일이 아닙니다.");
+			out.close();
+		}else {
+			String memberKey = "";
+					
+			
+		}
+		
 	}
 	
 	//회원 정보 보기

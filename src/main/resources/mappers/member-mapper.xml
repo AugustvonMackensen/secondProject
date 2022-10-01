@@ -3,7 +3,10 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
-
+	<!-- select 한 결과집합 ResultSet 에서 한 행씩 꺼내서
+	각 컬럼값들을 vo 객체의 각 필드에 저장 처리하는 작업
+	: 결과 매핑
+	리스트나 맵에 여러 객체를 저장 처리도 포함됨 -->
 	<resultMap type="Member" id="resultList">
 		<result property="userid" column="userid" />
 		<result property="userpwd" column="userpwd" />
@@ -30,6 +33,12 @@
 	<select id="selectCheckId" parameterType="string" resultType="_int">
 		select count(userid) from member
 		where userid= #{ uid }
+	</select>
+	
+	<!-- 회원가입시 이메일 중복 체크 처리 -->
+	<select id = "selectMailCheck" parameterType="String" resultType="_int">
+		select count(email) from member
+		where email = #{ email }
 	</select>
 	
 	<!-- 이메일로 회원조회 -->
@@ -79,5 +88,17 @@
 		delete from member
 		where userid = #{ uid }
 	</delete>
-
+	
+	<!-- 회원 검색 처리용 쿼리문 -->
+	<select id="selectSearchUserid" parameterType="string" resultMap="resultList">
+		select * from member
+		where userid like '%' || #{ keyword } || '%'
+	</select>
+		
+	<select id="selectSearchLoginOK" parameterType="string" resultMap="resultList">
+		select * from member
+		where loginok = #{ keyword }
+	</select>
+	
+	
 </mapper>
