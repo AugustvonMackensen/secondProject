@@ -13,7 +13,6 @@ public class MemberDao {
 	
 	public Member selectMember(String userid) {
 		return session.selectOne("memberMapper.selectMember", userid);
-		
 	}
 	public int selectDupCheckId(String userid) {
 		return session.selectOne("memberMapper.selectCheckId", userid);
