@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.deepblue.dab.member.model.dao.MemberDao;
 import com.deepblue.dab.member.model.vo.Member;
+import com.deepblue.dab.member.model.service.MemberService;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService{
@@ -56,5 +57,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int selectMailCheck(String email) {
 		return memberDao.selectMailCheck(email);
+	}
+
+	@Override
+	public int chkSelectForPwd(Member loginMember) {
+		return memberDao.chkSelectForPwd(loginMember);
 	}
 }
