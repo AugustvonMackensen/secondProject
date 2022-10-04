@@ -73,6 +73,16 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping("namecardPage.do")
+	public String moveNameCardPage() {
+		return "member/nameCardPage";
+	}
+	
+	@RequestMapping("pickEnroll.do")
+	public String movePickEnroll() {
+		return "member/chooseSignUp";
+	}
+	
 	// -----------------------------------------------------------
 	
 	//로그인

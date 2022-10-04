@@ -41,7 +41,7 @@
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="#services">Q&A게시판</a></li>
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/calendarListView.do">가계부</a></li>
               <c:if test="${ empty sessionScope.loginMember }">
-	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/enrollPage.do"> 회원가입</a></div></li> 
+	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/pickEnroll.do"> 회원가입</a></div></li> 
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/loginPage.do"> 로그인</a></div></li>
               </c:if>
               <c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
