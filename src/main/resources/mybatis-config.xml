@@ -12,6 +12,7 @@
 		<typeAlias type="com.deepblue.dab.bill.model.vo.Bill" alias="Bill" />
 		<typeAlias type="com.deepblue.dab.qna.model.vo.QNA" alias="QNA" />
 		<typeAlias type="com.deepblue.dab.common.Paging" alias="Paging" />
+		<typeAlias type="com.deepblue.dab.common.SearchDate" alias="SearchDate" />
 	</typeAliases>
 
 	<mappers>

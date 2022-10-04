@@ -6,11 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.deepblue.dab.common.Paging;
+import com.deepblue.dab.common.SearchDate;
 import com.deepblue.dab.qna.model.service.QNAService;
 import com.deepblue.dab.qna.model.vo.QNA;
 
@@ -98,6 +101,55 @@ public class QNAController {
 		}
 		return mv;
 	}
+	
+	//공지글 제목 검색용	
+	@RequestMapping(value="qnasearchTitle.do", method=RequestMethod.POST)
+	public String noticeSearchTitleMethod(
+			@RequestParam("keyword") String keyword, Model model) {
+		ArrayList<QNA> list = qnaService.selectSearchTitle(keyword);
+		
+		if(list.size() > 0) {
+			model.addAttribute("list", list);
+			return "qna/qnaListView";
+		}else {
+			model.addAttribute("message", 
+					keyword + "로 검색된 공지글 정보가 없습니다.");
+			return "common/error";
+		}
+	}
+	
+	//공지글 작성자 검색용
+		@RequestMapping(value="qnasearchWriter.do", method=RequestMethod.POST)
+		public String noticeSearchWriterMethod(
+				@RequestParam("keyword") String keyword, Model model) {
+			ArrayList<QNA> list = qnaService.selectSearchWriter(keyword);
+			
+			if(list.size() > 0) {
+				model.addAttribute("list", list);
+				return "qna/qnaListView";
+			}else {
+				model.addAttribute("message", 
+						keyword + "로 검색된 공지글 정보가 없습니다.");
+				return "common/error";
+			}
+		}
+	
+		//공지글 등록날짜 검색용 
+		@RequestMapping(value="qnasearchDate.do", method=RequestMethod.POST)
+		public String noticeSearchDateMethod(SearchDate date, Model model) {
+			ArrayList<QNA> list = qnaService.selectSearchDate(date);
+			
+			if(list.size() > 0) {
+				model.addAttribute("list", list);
+				return "qna/qnaListView";
+			}else {
+				model.addAttribute("message", "해당 날짜에 등록된 공지사항 정보가 없습니다.");
+				return "common/error";
+			}
+		}
+		
+		
+	
 	
 	
 }

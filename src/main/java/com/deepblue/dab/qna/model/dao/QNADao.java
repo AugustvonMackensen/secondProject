@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.deepblue.dab.common.Paging;
+import com.deepblue.dab.common.SearchDate;
 import com.deepblue.dab.qna.model.vo.QNA;
 
 @Repository("QNADao")
@@ -37,6 +38,21 @@ public class QNADao {
 
 	public ArrayList<QNA> selectList(Paging page) {
 		List<QNA> list = session.selectList("qnaMapper.selectList", page);
+		return (ArrayList<QNA>)list;
+	}
+
+	public ArrayList<QNA> selectSearchTitle(String keyword) {
+		List<QNA> list = session.selectList("qnaMapper.searchTitle", keyword);
+		return (ArrayList<QNA>)list;
+	}
+
+	public ArrayList<QNA> selectSearchWriter(String keyword) {
+		List<QNA> list = session.selectList("qnaMapper.searchWriter", keyword);
+		return (ArrayList<QNA>)list;
+	}
+
+	public ArrayList<QNA> selectSearchDate(SearchDate date) {
+		List<QNA> list = session.selectList("qnaMapper.searchDate", date);
 		return (ArrayList<QNA>)list;
 	}
 

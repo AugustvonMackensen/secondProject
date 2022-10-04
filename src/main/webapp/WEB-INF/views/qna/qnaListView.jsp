@@ -11,43 +11,67 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
-table th { background-color: #99ffff; }
-table#outer { border: 2px solid navy; }
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: blue; text-decoration: underline;}
+table.qa-table{
+	width: 1300px;
+	text-align:center;
+	border : 1px solid #ccc;
+	margin-left: auto; 
+	margin-right: auto;
+	border-collapse: collapse;
+	line-height: 1.5;
+}
+table.qa-table thead{
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	background: #4886FA;
+}
+table.qa-table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+}
+table.qa-table tbody tr{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #F0F8FF;
+	height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+	text-align : center;
+}
+
+
+
 </style>
-<script type="text/javascript" 
-src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	showDiv();
-	
-	$('input[name=item]').on("change", function(){
-		showDiv();
-	});
-});
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 
-function showDiv(){
-	if($('input[name=item]').eq(0).is(":checked")){
-		$("#titleDiv").css("display", "block");
-		$("#writerDiv").css("display", "none");
-		$("#dateDiv").css("display", "none");
-	}
-	if($('input[name=item]').eq(1).is(":checked")){
-		$("#titleDiv").css("display", "none");
-		$("#writerDiv").css("display", "block");
-		$("#dateDiv").css("display", "none");
-	}
-	if($('input[name=item]').eq(2).is(":checked")){
-		$("#titleDiv").css("display", "none");
-		$("#writerDiv").css("display", "none");
-		$("#dateDiv").css("display", "block");
-	}
+<script language="JavaScript" type="text/javascript">
+<!--
+function Change(){
+ var key = test.value;
+ if(key==1){
+ document.all["d1"].style.display="block";
+ document.all["d2"].style.display="none";
+ document.all["d3"].style.display="none"; 
+ }
+ if(key==2){
+ document.all["d1"].style.display="none";
+ document.all["d2"].style.display="block";
+ document.all["d3"].style.display="none";
+ }
+ if(key==3){
+ document.all["d1"].style.display="none";
+ document.all["d2"].style.display="none";
+ document.all["d3"].style.display="block";
+ }
 }
-//글쓰기 버튼 클릭시 실행되는 함수
-function showWriteForm(){
-	// 게시 원글 쓰기 페이지로 이동 처리
-	location.href = "${pageContext.servletContext.contextPath}/bwform.do";
-}
-
 
 </script>
 </head>
@@ -55,66 +79,60 @@ function showWriteForm(){
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 <br>
 <!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
-<h1 align="center">게시글 목록</h1>
-<h3 align="center">총 목록 수 : ${ listCount } 개</h3>
+<h1 align="center">Q&A게시판</h1>
 <br>
 <!-- 
 	=> 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
-<center>
+
 <!-- <c:if test="${ !empty sessionScope.loginMember }">
 	
 </c:if>-->
+<div style="d5">
 <button onclick="showWriteForm;">글쓰기</button>
-</center>
-<!-- 검색 항목 영역 -->
-<center>
+</div>
 <div>
-	<h2>검색할 항목을 선택하세요.</h2>
-	<input type="radio" name="item" value="title" checked> 제목 &nbsp; &nbsp;
-	<input type="radio" name="item" value="writer"> 작성자 &nbsp; &nbsp;
-	<input type="radio" name="item" value="date"> 날짜 
+		<select id="test" onchange="Change()">
+		<option value="1">제목</option>
+		<option value="2">작성자</option>
+		<option value="3">날짜</option>
+		</select>
+	<div id="d1" style="display:block">
+		<form action="qnasearchTitle.do" method="post">
+				<input type="search" name="keyword">
+			<input type="submit" value="검색">
+		</form>
+	</div>
+	<div id="d2" style="display:none" >
+		<form action="qnasearchWriter.do" method="post">
+				<input type="search" name="keyword">
+			<input type="submit" value="검색">
+		</form>
+	</div>
+	<div id="d3" style="display:none">
+		<form action="qnasearchDate.do" method="post">
+				<input type="date" name="begin"> ~ 
+				<input type="date" name="end">
+			<input type="submit" value="검색">
+		</form>
+	</div>
 </div>
-<div id="titleDiv">
-	<form action="nsearchTitle.do" method="post">
-		<label>검색할 제목 키워드를 입력하세요 : 
-			<input type="search" name="keyword">
-		</label>
-		<input type="submit" value="검색">
-	</form>
-</div>
-<div id="writerDiv">
-	<form action="nsearchWriter.do" method="post">
-		<label>검색할 작성자 아이디를 입력하세요 : 
-			<input type="search" name="keyword">
-		</label>
-		<input type="submit" value="검색">
-	</form>
-</div>
-<div id="dateDiv">
-	<form action="nsearchDate.do" method="post">
-		<label>검색할 등록날짜를 입력하세요 : 
-			<input type="date" name="begin"> ~ 
-			<input type="date" name="end">
-		</label>
-		<input type="submit" value="검색">
-	</form>
-</div>
-</center>
-
 <!-- 목록 출력 영역 -->
 <br>
-<table align="center" width="700" border="1" cellspacing="0" cellpadding="1">
+<table class="qa-table" >
+	<thead>
 	<tr>
-		<th>번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-		<th>날짜</th>
-		<th>조회수</th>
-		<th>첨부파일</th>
+		<th scope="cols">번호</th>
+		<th scope="cols">제목</th>
+		<th scope="cols">작성자</th>
+		<th scope="cols">날짜</th>
+		<th scope="cols">조회수</th>
+		<th scope="cols">첨부파일</th>
 	</tr>
-	<br>
+	</thead>
+	<br>	
+	<tbody>
 	<c:forEach items="${ requestScope.list }" var="b">
-		<tr align="center">
+		<tr>
 			<td>${ b.q_no }</td>
 			<!-- 공지제목 클릭시 해당 글의 상세보기로 넘어가게 처리 -->
 			<c:url var="bdt" value="/qnadetail.do">
@@ -136,19 +154,20 @@ function showWriteForm(){
 			</td>
 			<td>${ b.q_writer }</td>
 			<td><fmt:formatDate value="${ b.q_date }" pattern="yyyy-MM-dd" /></td>
-			<td>${b.readcount }</td>
+			<td>${b.q_readcount }</td>
 			<td>
-				<c:if test="${ !empty b.q_upfile }">◎</c:if>
-				<c:if test="${ empty b.q_upfile }">&nbsp;</c:if>
+				<c:if test="${ !empty b.q_original_filename }">◎</c:if>
+				<c:if test="${ empty b.q_original_filename }">&nbsp;</c:if>
 			</td>
 			
 		</tr>
 	</c:forEach>
+	</tbody>
 </table>
 <br>
 <br>
 <!-- 페이징 처리 -->
-<div style="text-align:center;"> <!-- 페이지 표시 영역 -->
+<div class="paging"> <!-- 페이지 표시 영역 -->
 	<!-- 1페이지로 이동 처리 -->
 	<c:if test="${ currentPage eq 1 }">
 		[맨처음] &nbsp;
@@ -202,10 +221,6 @@ function showWriteForm(){
 		<a href="${ bl5 }">[맨끝]</a> &nbsp;
 	</c:if>
 </div>
-<hr>
-
-
-
 
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>

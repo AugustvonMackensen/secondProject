@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.deepblue.dab.common.Paging;
+import com.deepblue.dab.common.SearchDate;
 import com.deepblue.dab.qna.model.dao.QNADao;
 import com.deepblue.dab.qna.model.vo.QNA;
 
@@ -28,9 +29,6 @@ public class QNAServiceImpl implements QNAService {
 	public int selectListCount() {
 		return qnaDao.selectListCount();
 	}
-
-
-
 	@Override
 	public ArrayList<QNA> selectAll() {
 		return qnaDao.selectList();
@@ -40,5 +38,22 @@ public class QNAServiceImpl implements QNAService {
 	public ArrayList<QNA> selectList(Paging page) {
 		return qnaDao.selectList(page);
 	}
+
+	@Override
+	public ArrayList<QNA> selectSearchTitle(String keyword) {
+		return qnaDao.selectSearchTitle(keyword);
+	}
+
+	@Override
+	public ArrayList<QNA> selectSearchWriter(String keyword) {
+		return qnaDao.selectSearchWriter(keyword);
+	}
+
+	@Override
+	public ArrayList<QNA> selectSearchDate(SearchDate date) {
+		return qnaDao.selectSearchDate(date);
+	}
+
+
 
 }

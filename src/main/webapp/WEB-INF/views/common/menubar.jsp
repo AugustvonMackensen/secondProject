@@ -32,7 +32,7 @@
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="${ pageContext.servletContext.contextPath }/main.do" class="logo">
-              <span style="font-size :30px">DeepAccountBook</span>
+              <span style="font-size :30px; color: #0d6efd;">DeepAccountBook</span>
             </a>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->

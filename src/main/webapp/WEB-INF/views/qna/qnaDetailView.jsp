@@ -36,14 +36,11 @@
 			<th>첨부파일</th>
 			<td>
 				<!-- 첨부파일이 있다면, 파일명 클릭시 다운로드 실행되게 함 --> <c:if
-					test="${ !empty question.q_upfile }">
-					<c:url var="bfd" value="/bfdown.do">
-						<c:param name="ofile" value="${ question.q_upfile }" />
-						<c:param name="rfile" value="${ question.q_upfile }" />
-					</c:url>
-					<a href="${ bfd }">${ question.q_upfile }</a>
+					test="${ !empty question.q_original_filename }">
+
+					<a href="${ bfd }">${ question.q_original_filename }</a>
 				</c:if> <!-- 첨부파일이 없다면 공백으로 처리함 --> <c:if
-					test="${ empty question.q_upfile }">
+					test="${ empty question.q_original_filename }">
 				&nbsp;
 			</c:if>
 			</td>
@@ -55,8 +52,13 @@
 		<tr>
 			<th colspan="2">
 				<button
-					onclick="history.back(-1);">목록</button>
-				&nbsp;
+			onclick="history.back(-1);">목록</button>&nbsp;
+			<a href="${ bdl }">[글삭제]</a>
+			<c:url var="bup" value="/qnaview.do">
+				<c:param name="q_no" value="${ q.q_no }" />
+				<c:param name="page" value="${ currentPage }" />
+			</c:url>
+			<a href="${ bup }">[수정페이지로 이동]</a> &nbsp;
 			</th>
 		</tr>
 	</table>

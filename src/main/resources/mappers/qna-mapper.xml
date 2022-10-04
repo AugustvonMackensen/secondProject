@@ -10,8 +10,9 @@
 		<result column="q_title" property="q_title" />
 		<result column="q_date" property="q_date" />
 		<result column="q_content" property="q_content" />
-		<result column="q_upfile" property="q_upfile" />
-		<result column="readcount" property="readcount" />
+		<result column="q_original_filename" property="q_original_filename" />
+		<result column="q_rename_filename" property="q_rename_filename" />
+		<result column="readcount" property="q_readcount" />
 	</resultMap>
 
 	<!--  리스트 전체 목록 보기  -->
@@ -23,7 +24,7 @@
 	<!-- 조회수 1증가 -->
 	<update id="addReadCount" parameterType="_int" >
 		update question
-		set readcount = readcount + 1
+		set q_readcount = q_readcount + 1
 		where q_no = #{ q_no }
 	</update>
 	
@@ -39,17 +40,41 @@
 	<select id="getListCount" resultType="_int">
 		select count(*) from question
 	</select>
-	
+	<!-- 페이징 처리 -->
 		<select id="selectList" parameterType="Paging" resultMap="resultQNA">
 		<![CDATA[
 			SELECT *  
 			FROM (SELECT ROWNUM RNUM, q_no, q_writer, 
-						  q_title, q_date, q_content, q_upfile, readcount
+						  q_title, q_date, q_content, q_original_filename, q_readcount
 			       FROM (SELECT * FROM QUESTION 
 			              ORDER BY q_no DESC))  
 			where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>
 	</select>
 	
+	<!-- 검색제목 -->
+		<select id="searchTitle" resultMap="resultQNA" parameterType="string">
+		select * from question
+		where q_title like '%' || #{ keyword } || '%'
+		order by q_no desc
+	</select>
+	
+	<!-- 검색작성자 -->
+	<select id="searchWriter" resultMap="resultQNA" parameterType="string">
+		select * from question
+		where q_writer like '%' || #{ keyword } || '%'
+		order by q_no desc
+	</select>
+	
+	<!-- 검색 날짜 -->
+	<select id="searchDate" resultMap="resultQNA" parameterType="SearchDate">
+		select * from question
+		where q_date between #{ begin } and #{ end }
+		order by q_no desc
+	</select>
+	
+	 
+
+
 </mapper>
 

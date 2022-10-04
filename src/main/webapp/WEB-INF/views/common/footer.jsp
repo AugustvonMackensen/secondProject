@@ -22,8 +22,7 @@ footer{
 </head>
 <body>
 <footer>
-copyright@deepaccountbook 2차 프로젝트<br>
-2022-09-28 개발, developer : deep blue<br>
+Copyright 2022.DeepBlue all rights reserved<br> DeepAccountBook 2차 프로젝트
 </footer>
 
 </body>
