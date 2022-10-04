@@ -83,6 +83,11 @@ public class MemberController {
 		return "member/chooseSignUp";
 	}
 	
+	@RequestMapping("uploadImage.do")
+	public String moveUploadImg() {
+		return "member/uploadCardImg";
+	}
+	
 	// -----------------------------------------------------------
 	
 	//로그인
