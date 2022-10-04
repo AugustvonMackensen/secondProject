@@ -38,7 +38,7 @@
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
               <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="#services">Q&A게시판</a></li>
+              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="${ pageContext.servletContext.contextPath }/qnaListView.do">Q&A게시판</a></li>
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/calendarListView.do">가계부</a></li>
               <c:if test="${ empty sessionScope.loginMember }">
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/enrollPage.do"> 회원가입</a></div></li> 

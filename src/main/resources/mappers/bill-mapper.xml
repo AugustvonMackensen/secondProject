@@ -3,26 +3,75 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="billMapper">
+
+	<resultMap type="Bill" id="resultBill">
+		<id column="id" property="id" />
+		<result column="userid" property="userid" />
+		<result column="bill_timestamp" property="bill_timestamp" />
+		<result column="bill_price" property="bill_price" />
+		<result column="bill_content" property="bill_content" />
+
+		<result column="bill_category" property="bill_category" />
+		<result column="bill_cardinfo" property="bill_cardinfo" />
+		<result column="bill_storeinfo_name"
+			property="bill_storeinfo_name" />
+		<result column="bill_storeinfo_biznum"
+			property="bill_storeinfo_biznum" />
+		<result column="bill_storeinfo_tel"
+			property="bill_storeinfo_tel" />
+	</resultMap>
+
+
+
 	<insert id="insertBill" parameterType="Bill">
 		insert into bill(
-						id,
-						userid,
-						bill_timestamp,
-						bill_price,
-						bill_content,
-						bill_category,
-						bill_cardinfo,
-						bill_storeinfo_name,
-						bill_storeinfo_biznum)
+		id,
+		userid,
+		bill_timestamp,
+		bill_price,
+		bill_content,
+		bill_category,
+		bill_cardinfo,
+		bill_storeinfo_name,
+		bill_storeinfo_biznum,
+		bill_storeinfo_tel)
 		values(
-				default,
-				#{userid},
-				#{bill_timestamp},
-				#{bill_price},
-				#{bill_content},
-				#{bill_category},
-				#{bill_cardinfo},
-				#{bill_storeinfo_name},
-				#{bill_storeinfo_biznum})
+		default,
+		#{userid},
+		#{bill_timestamp},
+		#{bill_price},
+		#{bill_content},
+		#{bill_category},
+		#{bill_cardinfo},
+		#{bill_storeinfo_name},
+		#{bill_storeinfo_biznum},
+		#{bill_storeinfo_tel})
 	</insert>
+
+	<select id="getListCountDay" parameterType="Map" resultType="_int">
+		select count(*)
+		from bill
+		where to_char(bill_timestamp, 'yyyy mm dd') = #{ date } and	userid = #{userid}
+	</select>
+
+	<select id="selectList" parameterType="PagingBill" 
+		resultMap="resultBill">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, b.*
+			       FROM (SELECT * FROM bill ]]>
+					<if test="date!= null and date.length() == 10 ">
+						where to_char(bill_timestamp, 'yyyy mm dd') = #{ date } and userid = #{userid}
+					</if>
+					<if test="date!= null and date.length() == 7 ">
+						where to_char(bill_timestamp, 'yyyy mm') = #{ date } and userid = #{userid}
+					</if>
+					<if test="date == null">
+						where userid = #{userid}
+					</if>
+		<![CDATA[	       ORDER BY BILL_TIMESTAMP ASC) b )  
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+
+	</select>
 </mapper>

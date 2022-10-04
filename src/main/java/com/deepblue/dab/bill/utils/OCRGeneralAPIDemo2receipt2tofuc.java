@@ -1,4 +1,4 @@
-package com.deepblue.dab.common;
+package com.deepblue.dab.bill.utils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

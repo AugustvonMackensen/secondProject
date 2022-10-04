@@ -41,7 +41,8 @@ CREATE TABLE BILL (
    BILL_CATEGORY   VARCHAR2(20)     NOT NULL,
    BILL_CARDINFO  VARCHAR2(30)      NULL,
    BILL_STOREINFO_NAME VARCHAR2(30) NULL,
-   BILL_STOREINFO_BIZNUM VARCHAR2(30) NULL
+   BILL_STOREINFO_BIZNUM VARCHAR2(30) NULL,
+   BILL_STOREINFO_TEL VARCHAR2(20) NULL
 );
 
 COMMENT ON COLUMN BILL.ID IS 'PK 생성 용도';
@@ -58,9 +59,11 @@ COMMENT ON COLUMN BILL.BILL_CATEGORY IS '영수증 지출 내역 분류';
 
 COMMENT ON COLUMN BILL.BILL_CARDINFO IS '카드정보';
 
-COMMENT ON COLUMN BILL.BILL_STOREINFO_NAME IS '가게이름';
+COMMENT ON COLUMN BILL.BILL_STOREINFO_NAME IS '상호명';
 
 COMMENT ON COLUMN BILL.BILL_STOREINFO_BIZNUM IS '사업자번호';
+
+COMMENT ON COLUMN BILL.BILL_STOREINFO_TEL IS '매장 전화번호';
 
 CREATE TABLE QUESTION (
    Q_NO   NUMBER  generated always as identity,
@@ -68,8 +71,9 @@ CREATE TABLE QUESTION (
    Q_TITLE   VARCHAR2(200)      NOT NULL,
    Q_DATE   DATE      NOT NULL,
    Q_CONTENT   VARCHAR2(1000)      NOT NULL,
-   Q_UPFILE   VARCHAR2(100)      NULL,
-   READCOUNT   NUMBER      NOT NULL
+   Q_ORIGINAL_FILENAME	VARCHAR2(100),
+   Q_RENAME_FILENAME   VARCHAR2(100),
+   Q_READCOUNT   NUMBER DEFAULT 0
 );
 
 COMMENT ON COLUMN QUESTION.Q_NO IS '질문번호(시퀀스)';
@@ -78,7 +82,11 @@ COMMENT ON COLUMN QUESTION.Q_WRITER IS '사용자(User) 아이디';
 
 COMMENT ON COLUMN QUESTION.Q_CONTENT IS '질문내용';
 
-COMMENT ON COLUMN QUESTION.Q_UPFILE IS '첨부파일';
+COMMENT ON COLUMN QUESTION.Q_ORIGINAL_FILENAME IS '원본파일';
+
+COMMENT ON COLUMN QUESTION.Q_RENAME_FILENAME IS '수정파일';
+
+COMMENT ON COLUMN QUESTION.Q_READCOUNT IS '조회수';
 
 
 CREATE TABLE ANSWER (
@@ -88,7 +96,8 @@ CREATE TABLE ANSWER (
    A_TITLE   VARCHAR2(200)      NOT NULL,
    A_DATE   DATE      NOT NULL,
    A_CONTENT   VARCHAR2(1000)      NOT NULL,
-   A_UPFILE   VARCHAR2(100)      NULL
+   A_ORIGINAL_FILENAME	VARCHAR2(100),
+   A_RENAME_FILENAME   VARCHAR2(100)
 );
 
 COMMENT ON COLUMN ANSWER.A_NO IS '원글 질문에 대한 답변 번호(시퀀스)';
@@ -97,7 +106,9 @@ COMMENT ON COLUMN ANSWER.A_WRITER IS '관리자(Manager) 아이디';
 
 COMMENT ON COLUMN ANSWER.A_CONTENT IS '답변내용';
 
-COMMENT ON COLUMN ANSWER.A_UPFILE IS '첨부파일';
+COMMENT ON COLUMN QUESTION.A_ORIGINAL_FILENAME IS '원본파일';
+
+COMMENT ON COLUMN QUESTION.A__RENAME_FILENAME IS '수정파일';
 
 ALTER TABLE BILL ADD CONSTRAINT PK_BILL PRIMARY KEY (
    ID
@@ -146,25 +157,25 @@ INSERT INTO MEMBER VALUES('user02', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1m
 INSERT INTO MEMBER VALUES('user03', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자3', 'user03@deepaccount.com', 'Y', 'N', sysdate);
 INSERT INTO MEMBER VALUES('user04', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자4', 'user04@deepaccount.com', 'Y', 'N', sysdate);
 
-INSERT INTO QUESTION VALUES(default, 'user02', '2질문 사항이 있습니다.', sysdate, '이 사이트는 어떻게 사용하나요?', '첨부파일', 3);
-INSERT INTO QUESTION VALUES(default, 'user03', '3질문 사항이 있습니다.', sysdate, '이 사이트는 어떻게 탈퇴하나요?', '첨부파일', 5);
-INSERT INTO QUESTION VALUES(default, 'user04', '4질문 사항이 있습니다.', sysdate, '이 사이트는 요청사항이 언제 개선되나요?', '첨부파일', 7);
-INSERT INTO QUESTION VALUES(default, 'user04', '5질문 사항이 있습니다.', sysdate, '기한내에 마감이 가능한가요?', '첨부파일', 7);
-INSERT INTO QUESTION VALUES(default, 'user04', '6질문 사항이 있습니다.', sysdate, '무사히 끝날 수 있을까요?', '첨부파일', 7);
-INSERT INTO QUESTION VALUES(default, 'user04', '7질문 사항이 있습니다.', sysdate, '어디로 가야할까요?', '첨부파일', 7);
-INSERT INTO QUESTION VALUES(default, 'user04', '8질문 사항이 있습니다.', sysdate, '어디를 수정해야할까요?', '첨부파일', 7);
-INSERT INTO QUESTION VALUES(default, 'user04', '9질문 사항이 있습니다.', sysdate, '오늘 점심은 무엇을 먹을까요?', '첨부파일', 7);
-INSERT INTO QUESTION VALUES(default, 'user04', '10질문 사항이 있습니다.', sysdate, '무엇을 눌러야 하는 지 모르겠네요', '첨부파일', 7);
-INSERT INTO QUESTION VALUES(default, 'user04', '11질문 사항이 있습니다.', sysdate, '회원가입을 어떻게 하나요?', '첨부파일', 7);
-INSERT INTO QUESTION VALUES(default, 'user04', '12질문 사항이 있습니다.', sysdate, '테스트가 무사히 끝났으면 하네요?', '첨부파일', 7);
+INSERT INTO QUESTION VALUES(default, 'user02', '2질문 사항이 있습니다.', sysdate, '이 사이트는 어떻게 사용하나요?', null, null, default);
+INSERT INTO QUESTION VALUES(default, 'user03', '3질문 사항이 있습니다.', sysdate, '이 사이트는 어떻게 탈퇴하나요?', null, null,  default);
+INSERT INTO QUESTION VALUES(default, 'user04', '4질문 사항이 있습니다.', sysdate, '이 사이트는 요청사항이 언제 개선되나요?', null, null,  default);
+INSERT INTO QUESTION VALUES(default, 'user04', '5질문 사항이 있습니다.', sysdate, '기한내에 마감이 가능한가요?', null, null,  default);
+INSERT INTO QUESTION VALUES(default, 'user04', '6질문 사항이 있습니다.', sysdate, '무사히 끝날 수 있을까요?', null, null,  default);
+INSERT INTO QUESTION VALUES(default, 'user04', '7질문 사항이 있습니다.', sysdate, '어디로 가야할까요?', null, null,  default);
+INSERT INTO QUESTION VALUES(default, 'user04', '8질문 사항이 있습니다.', sysdate, '어디를 수정해야할까요?', null, null,  default);
+INSERT INTO QUESTION VALUES(default, 'user04', '9질문 사항이 있습니다.', sysdate, '오늘 점심은 무엇을 먹을까요?', null, null,  default);
+INSERT INTO QUESTION VALUES(default, 'user04', '10질문 사항이 있습니다.', sysdate, '무엇을 눌러야 하는 지 모르겠네요', null, null,  default);
+INSERT INTO QUESTION VALUES(default, 'user04', '11질문 사항이 있습니다.', sysdate, '회원가입을 어떻게 하나요?', null, null,  default);
+INSERT INTO QUESTION VALUES(default, 'user04', '12질문 사항이 있습니다.', sysdate, '테스트가 무사히 끝났으면 하네요?', null, null,  default);
 
-INSERT INTO ANSWER VALUES(default, 1, 'admin', '사이트 사용법', sysdate, '이 사이트는 이렇게 사용합니다. 참고하세요.', '첨부파일');
-INSERT INTO ANSWER VALUES(default, 2, 'admin', '사이트 사용법', sysdate, '이 사이트 탈퇴 메뉴얼을 참고하세요.', '첨부파일');
-INSERT INTO ANSWER VALUES(default, 3, 'admin', '사이트 사용법', sysdate, '곧 개선됩니다. 조금만 기다려주세요.', '첨부파일');
+INSERT INTO ANSWER VALUES(default, 1, 'admin', '사이트 사용법', sysdate, '이 사이트는 이렇게 사용합니다. 참고하세요.', null, null);
+INSERT INTO ANSWER VALUES(default, 2, 'admin', '사이트 사용법', sysdate, '이 사이트 탈퇴 메뉴얼을 참고하세요.',  null, null);
+INSERT INTO ANSWER VALUES(default, 3, 'admin', '사이트 사용법', sysdate, '곧 개선됩니다. 조금만 기다려주세요.', null, null);
 
-INSERT INTO BILL VALUES(default, 'user02', sysdate, 10000, '즉석떡볶이', '음식',null,null,null);
-INSERT INTO BILL VALUES(default, 'user03', sysdate, 30800, '피아노 학원 등록', '취미',null,null,null);
-INSERT INTO BILL VALUES(default, 'user04', sysdate, 42000, '택시비 및 버스비', '교통비',null,null,null);
+INSERT INTO BILL VALUES(default, 'user02', sysdate, 10000, '즉석떡볶이', '음식',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user03', sysdate, 30800, '피아노 학원 등록', '취미',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', sysdate, 42000, '택시비 및 버스비', '교통비',null,null,null,null);
 COMMIT;
 
 -- 관리자인 'admin' 인 아이디의 컬럼값 변경
