@@ -57,20 +57,6 @@ table#outer {
 
 		return true;
 	}
-	//비어있는지 확인하는 함수
-	isEmpty = (value) => {
-
-		if (value == ""
-				|| value == null
-				|| value == undefined
-				|| (value != null && typeof value == "object" && !Object
-						.keys(value).length)) {
-			return true
-		} else {
-			return false
-		}
-	};
-
 	function upload() {
 		const imageInput = $("#imageInput")[0];
 		// 파일을 여러개 선택할 수 있으므로 files 라는 객체에 담긴다.
@@ -98,46 +84,32 @@ table#outer {
 				var message = data.tTotalPrice;
 				console.log("message: ", message);
 				console.log("fcardnum: ", data.fCardnum);
-				
-				var fcardnum = !isEmpty(data.fCardnum) ? JSON.parse(data.fCardnum) : "null";
+				var fcardnum = JSON.parse(data.fCardnum)
 				console.log("fcardnum.value: ", fcardnum.value);
 
-				var fCom = !isEmpty(data.fCom) ? JSON.parse(data.fCom) : "null";
+				var fCom = JSON.parse(data.fCom);
 				console.log("카드사 : " + fCom.value);
-				
-				var fmtDate = ""; //날짜구하기
-				if( !isEmpty(data.fDate) ){
-					var fDate = JSON.parse(data.fDate);
-					console.log(fDate.year + "년" + fDate.month + "월" + fDate.day
-							+ "일")
-					var year = fDate.year
-	
-					if (year == "" || year.length == 0){
-						//year = 2022 //년도가 비어있다면 현재 년도를 넣어줌
-						var now = new Date();
-						var year = now.getFullYear();
-						console.log(year);
-					}
-					fmtDate = year + "-" + fDate.month + "-" + fDate.day;
-				}
-				
-				var fmtTime = ""; // 시간구하기
-				if ( !isEmpty(data.fTime)) {
-					var fTime = JSON.parse(data.fTime);
-					fmtTime = fTime.hour + ":" + fTime.minute + ":"
-							+ fTime.second;
-				}
-				$("input[name=bill_timestamp2]").attr('value',
-						fmtDate + "T" + fmtTime);
+
+				var fDate = JSON.parse(data.fDate);
+				console.log(fDate.year + "년" + fDate.month + "월" + fDate.day
+						+ "일")
+				var year = fDate.year
+
+				$("input[name=bill_price]").attr('value', data.fTotalPrice)
+
+				if (year == "" || year.length == 0)
+					year = 2022
+				var fmtDate = year + "-" + fDate.month + "-" + fDate.day;
+
+				var fTime = JSON.parse(data.fTime);
+				var fmtTime = fTime.hour + ":" + fTime.minute + ":"
+						+ fTime.second;
+
+				$("input[name=bill_timestamp2]").attr('value',fmtDate + "T" + fmtTime);
 
 				console.log(fTime.hour + "시" + fTime.minute + "분"
 						+ fTime.second + "초");
-				
-				//총가격
-				if ( !isEmpty(data.fTotalPrice) ){
-					$("input[name=bill_price]").attr('value', data.fTotalPrice)
-				}
-				//내용에 상품명 수량 가격 넣기
+
 				$("#resultUploadPath").text(message);
 				if (data.subResults_size > 0) {
 					console.log("sub개수 : " + data.subResults_size);
@@ -154,47 +126,22 @@ table#outer {
 					}
 
 					$("textarea[name=bill_content]").text(content);
-				} //
-
-/* 				// 내용 마지막줄에 전화번호 넣기 존재하면 ====컬럼으로추가함
-				if (!isEmpty(data.storeInfo_tel)) {
-					$("textarea[name=bill_content]").text(
-							$("textarea[name=bill_content]").text()
-									+ "\n가게 전화번호 : " + data.storeInfo_tel
-									+ "\n");
-				} */
-				
-				//영수증 ocr 입력시 존재하면 보임
-				if (!isEmpty(data.storeInfo_name.length)) {
-					$("input[name=bill_storeinfo_name]").attr('value',
-							data.storeInfo_name);
+				}
+				if(data.storeInfo_name.length > 0) {
+					$("input[name=bill_storeinfo_name]").attr('value', data.storeInfo_name);
 					$('#store_name').show();
 				}
-				if (!isEmpty(data.storeInfo_bizNum.length)) {
-					$("input[name=bill_storeinfo_biznum]").attr('value',
-							data.storeInfo_bizNum);
+				if(data.storeInfo_bizNum.length > 0) {
+					$("input[name=bill_storeinfo_biznum]").attr('value', data.storeInfo_bizNum);
 					$('#store_bizNum').show();
 				}
 				console.log(fcardnum.value.length);
 				console.log(fCom.value.length);
-				if (!isEmpty(fcardnum.value.length) && !isEmpty(fCom.value.length) ) {
-					$("input[name=bill_cardinfo]").attr('value',
-							fCom.value + " " + fcardnum.value);
+				if(fcardnum.value.length > 0 && fCom.value.length > 0) {
+					$("input[name=bill_cardinfo]").attr('value', fCom.value +" "+fcardnum.value);
 					$('#cardinfo').show();
 				}
-				
-				if (!isEmpty(data.storeInfo_tel)) {
-					// 매장 전화번호 전달 받았을 경우
-					$("input[name=bill_storeinfo_tel]").attr('value',
-							data.storeInfo_tel);
-					$('#store_tel').show();
-					
-				}
-				
-				
-				//식비 체크 
-				$("input:radio[name=bill_category]:radio[value='식비']").prop(
-						'checked', true);
+				$("input:radio[name=bill_category]:radio[value='식비']").prop('checked', true);
 			},
 			err : function(err) {
 				console.log("err:", err)
@@ -218,7 +165,7 @@ table#outer {
 
 	<h1 align="center">지출 등록 페이지</h1>
 	<br>
-	<form action="insertBill.do" method="post">
+	<form action="insertBill.do" method="post" >
 		<table id="outer" align="center" width="500" cellspacing="5"
 			cellpadding="0">
 			<tr>
@@ -226,8 +173,7 @@ table#outer {
 			</tr>
 			<tr>
 				<th width="120">아이디</th>
-				<td><input type="text" name="userid"
-					value="${ loginMember.userid }" readonly></td>
+				<td><input type="text" name="userid" value="${ loginMember.userid }" readonly></td>
 			</tr>
 			<tr>
 				<th width="120">* 지출 금액</th>
@@ -241,34 +187,30 @@ table#outer {
 			</tr>
 			<tr>
 				<th width="120">내용</th>
-				<td><textarea rows="5" cols="50" name="bill_content"
-						id="bill_content"></textarea></td>
+				<td><textarea rows="5" cols="50" name="bill_content" id="bill_content"></textarea></td>
 			</tr>
 			<tr>
 				<th width="120">카테고리</th>
-				<td><input type="radio" name="bill_category" value="식비">식비
-					&nbsp; <input type="radio" name="bill_category" value="문화/여가">문화/여가
-					&nbsp; <input type="radio" name="bill_category" value="교통비">교통비
-					&nbsp; <input type="radio" name="bill_category" value="기타" checked>기타
+				<td><input type="radio" name="bill_category" value="식비">식비 &nbsp; 
+					<input type="radio" name="bill_category" value="문화/여가">문화/여가 &nbsp; 
+					<input type="radio" name="bill_category" value="교통비">교통비 &nbsp; 
+					<input type="radio" name="bill_category" value="기타" checked>기타 
 				</td>
 			</tr>
-
+			
 			<tr style="display: none" id="cardinfo">
 				<th width="120">카드 정보</th>
 				<td><input type="text" name="bill_cardinfo"></td>
 			</tr>
 			<tr style="display: none" id="store_name">
-				<th width="120">상호명</th>
+				<th width="120">지점명</th>
 				<td><input type="text" name="bill_storeinfo_name"></td>
 			</tr>
 			<tr style="display: none" id="store_bizNum">
 				<th width="120">사업자 번호</th>
 				<td><input type="text" name="bill_storeinfo_biznum"></td>
 			</tr>
-			<tr style="display: none" id="store_tel">
-				<th width="120">매장 전화번호</th>
-				<td><input type="text" name="bill_storeinfo_tel"></td>
-			</tr>
+			
 			<tr>
 				<th colspan="2"><input type="submit" value="등록하기">
 					&nbsp; <input type="reset" value="작성취소"> &nbsp; <a

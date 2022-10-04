@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,11 +27,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.deepblue.dab.bill.model.service.BillService;
 import com.deepblue.dab.bill.model.vo.Bill;
-import com.deepblue.dab.common.FileReaderTest;
-import com.deepblue.dab.common.OCRGeneralAPIDemo2receipt2tofuc;
+import com.deepblue.dab.bill.utils.FileReaderTest;
+import com.deepblue.dab.bill.utils.PagingBill;
+import com.deepblue.dab.common.Paging;
 
 
 @Controller
@@ -149,7 +153,7 @@ public class BillController {
 					// -------
 
 					try (BufferedReader reader = new BufferedReader(
-							new FileReader("C:\\python_workspace\\testcv\\namecard\\rec\\receiptOCR.txt"));) {
+							new FileReader("C:\\python_workspace\\testcv\\namecard\\rec\\receiptOCR_ajaxText.txt"));) {
 						String bs = "";
 						String str;
 						ArrayList<String> keys = new
@@ -198,5 +202,80 @@ public class BillController {
 			
 
 		return "common/main";
+	}
+	
+	// 해당하는 일의 지출목록 뷰
+	@RequestMapping("billListView.do")
+	public ModelAndView qnaListMethod(
+			@RequestParam(name="page", required=false) String page,
+			@RequestParam("date") String date,
+			@RequestParam(name="userid",required=false) String userid,
+			ModelAndView mv) {
+		Map<String,Object>map = new HashMap<String,Object>();
+		mv.addObject("date",date); //페이징 으로인해 다시 date값 전달
+		
+		String[] tokken = date.split(" ");
+		String[] origin = tokken.clone();
+//		logger.info("년 + " +tokken[0]);
+//		logger.info("월 + " +tokken[1]);
+//		logger.info("일 + " +tokken[2]);
+		if(tokken[1].length() == 1)
+			tokken[1] = "0" + tokken[1];
+		if(tokken[2].length() == 1)
+			tokken[2] = "0" + tokken[2];
+		
+		
+		date = tokken[0] +" "+ tokken[1] + " " + tokken[2];
+//		logger.info(date);
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = Integer.parseInt(page);
+		}
+		map.put("userid", userid);
+		map.put("date", date);
+		int limit = 10;  
+		int listCount = billService.selectListCountDay(map); //해당 날짜 를 매개변수로 줘서 몇개인지 계산
+		logger.info("받음 + listCount : " + listCount);
+		int maxPage = (int)((double)listCount / limit + 0.9);
+
+		int startPage = (currentPage / 10) * 10 + 1;
+		int endPage = startPage + 10 - 1;
+		
+		if(maxPage < endPage) {
+			endPage = maxPage;
+		}
+		
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		PagingBill paging = new PagingBill(startRow, endRow,userid, date);
+		
+		//페이징 계산 처리 끝 ---------------------------------------
+		
+		ArrayList<Bill> list = billService.selectList(paging); //
+		
+		if(list != null && list.size() > 0) {
+			mv.addObject("list", list);
+			mv.addObject("listCount", listCount);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startPage", startPage);
+			mv.addObject("endPage", endPage);
+			mv.addObject("limit", limit);
+			
+			if(origin.length == 3)
+				mv.addObject("currentDate", origin[0] + "년 "+ origin[1] +"월 " + origin[2] + "일");
+			else if(origin.length == 2)
+				mv.addObject("currentDate", origin[0] + "년 "+ origin[1] +"월");
+			else if(origin.length == 1)
+				mv.addObject("currentDate", origin[0] + "년");
+			
+			mv.setViewName("bill/billListView");
+		}else {
+			mv.addObject("message", 
+					currentPage + " 페이지 목록 조회 실패.");
+			mv.setViewName("common/error");
+		}
+		
+		return mv;
 	}
 }

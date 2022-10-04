@@ -1,4 +1,4 @@
-package com.deepblue.dab.common;
+package com.deepblue.dab.bill.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -134,7 +134,7 @@ public class FileReaderTest {
 		// 전송용 json 객체 준비
 		JSONObject sendJson = new JSONObject();
 		// list 를 옮길 json 배열 객체 준비
-		//JSONArray sjarr = new JSONArray();  // 필요없는듯
+		// JSONArray sjarr = new JSONArray(); // 필요없는듯
 
 		JSONObject o = jobj;
 		// System.out.println(o);
@@ -156,20 +156,20 @@ public class FileReaderTest {
 		// rjs.containsKey(keys) 키값이 있는지 확인 가능
 		// totalPrice 에서 가격추출하기
 		if (rjs.containsKey("totalPrice")) { // totalPrice 키가 있다면
-			Set<Map.Entry<String, Object>> element = ((JSONObject) ((JSONObject) rjs.get("totalPrice")).get("price")).entrySet();
-			// totalPrice 
-			
-			
+			Set<Map.Entry<String, Object>> element = ((JSONObject) ((JSONObject) rjs.get("totalPrice")).get("price"))
+					.entrySet();
+			// totalPrice
+
 			// System.out.println(element);
 			System.out.println(element.size()); // 키값개수
 			for (Map.Entry<String, Object> entry : element) {
 				if (entry.getValue() instanceof String) {
 					// text(총가격) 인경우
 					// if (entry.getKey().equals("text"))
-					//System.out.println(entry.getValue().getClass().getName());
+					// System.out.println(entry.getValue().getClass().getName());
 					String tTotalPrice = (String) entry.getValue();
 					sendJson.put("tTotalPrice", tTotalPrice);
-					
+
 					System.out.println("가격 : " + tTotalPrice);
 				} else if (entry.getValue() instanceof JSONObject) {
 					// formatted 포맷된 총가격 인경우
@@ -190,17 +190,24 @@ public class FileReaderTest {
 					if (entry.getKey().equals("name")) {
 						String name = ((JSONObject) entry.getValue()).get("text").toString();
 						sendJson.put("storeInfo_name", name);
-						System.out.println("지점명 : " + name);
+						System.out.println("상호명 : " + name);
 					} else if (entry.getKey().equals("bizNum")) {
 						String bizNum = ((JSONObject) entry.getValue()).get("text").toString();
 						sendJson.put("storeInfo_bizNum", bizNum);
 						System.out.println("사업자번호 : " + bizNum);
 					}
+					//전화번호 벨류는 JSONArray임
+				} else if (entry.getValue() instanceof JSONArray) {
+					if (entry.getKey().equals("tel")) {
+						String tel = ((JSONObject) ((JSONArray) entry.getValue()).get(0)).get("text").toString();
+						sendJson.put("storeInfo_tel", tel);
+						System.out.println("매장 전화번호 : " + tel);
+					}
 				}
 
 			}
 		}
-		JSONArray sAr = new JSONArray(); //subResults항목 전송용 json배열
+		JSONArray sAr = new JSONArray(); // subResults항목 전송용 json배열
 		if (rjs.containsKey("subResults")) { // subResults 키가 있다면
 			JSONArray jarr = (JSONArray) rjs.get("subResults"); // 애만 JSONArray임
 			System.out.println("상품목록 갯수 : " + jarr.size());
@@ -214,21 +221,22 @@ public class FileReaderTest {
 				// 한개당가격 없을수도 있음 삭제해야할듯
 				// String onePrice=
 				// ((JSONObject)((JSONObject)jo3.get("unitPrice")).get("formatted")).get("value").toString();
-				
-				//각 subReuslt 저장할객체 생성
+
+				// 각 subReuslt 저장할객체 생성
 				JSONObject subjobj = new JSONObject();
-				
+
 				// 합계가격
-				String subPrice = ((JSONObject) ((JSONObject) jo3.get("price")).get("formatted")).get("value").toString();
-				//sendJson.put("subResults_subPrice", subPrice);
+				String subPrice = ((JSONObject) ((JSONObject) jo3.get("price")).get("formatted")).get("value")
+						.toString();
+				// sendJson.put("subResults_subPrice", subPrice);
 				subjobj.put("subResults_subPrice", subPrice);
 				// 상품이름
 				String name = ((JSONObject) ((JSONObject) jo2.get("name")).get("formatted")).get("value").toString();
-				//sendJson.put("subResults_name", name);
+				// sendJson.put("subResults_name", name);
 				subjobj.put("subResults_name", name);
 				// 개수
 				String count = ((JSONObject) ((JSONObject) jo2.get("count")).get("formatted")).get("value").toString();
-				//sendJson.put("subResults_count", count);
+				// sendJson.put("subResults_count", count);
 				subjobj.put("subResults_count", count);
 				// System.out.println(name+" 은 한개당 " + onePrice + "원 입니다.");
 				System.out.println("상품명 : " + name);
@@ -274,7 +282,7 @@ public class FileReaderTest {
 					System.out.println("text : " + tCard);
 					sendJson.put("fCardnum", fCard);
 					sendJson.put("tCardnum", tCard);
-					
+
 					String fCom = ((JSONObject) ((JSONObject) entry.getValue()).get("company")).get("formatted")
 							.toString();
 					String tCom = ((JSONObject) ((JSONObject) entry.getValue()).get("company")).get("text").toString();
@@ -291,12 +299,12 @@ public class FileReaderTest {
 					System.out.println("카드 승인 번호");
 					System.out.println(tCnum);
 					sendJson.put("confirmNum", tCnum);
-					
+
 					break;
 
 				default:
 					System.out.println(entry.getKey() + "새로운 키값 발견");
-					
+
 				}
 
 			}

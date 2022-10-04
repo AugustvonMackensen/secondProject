@@ -14,11 +14,14 @@ public class Bill implements Serializable {
     private String bill_cardinfo;
     private String bill_storeinfo_name;
     private String bill_storeinfo_biznum;
+    private String bill_storeinfo_tel;
+    
 	public Bill() {
 		super();
 	}
 	public Bill(int id, String userid, Timestamp bill_timestamp, int bill_price, String bill_content,
-			String bill_category, String bill_cardinfo, String bill_storeinfo_name, String bill_storeinfo_biznum) {
+			String bill_category, String bill_cardinfo, String bill_storeinfo_name, String bill_storeinfo_biznum,
+			String bill_storeinfo_tel) {
 		super();
 		this.id = id;
 		this.userid = userid;
@@ -29,6 +32,14 @@ public class Bill implements Serializable {
 		this.bill_cardinfo = bill_cardinfo;
 		this.bill_storeinfo_name = bill_storeinfo_name;
 		this.bill_storeinfo_biznum = bill_storeinfo_biznum;
+		this.bill_storeinfo_tel = bill_storeinfo_tel;
+	}
+
+	public String getBill_storeinfo_tel() {
+		return bill_storeinfo_tel;
+	}
+	public void setBill_storeinfo_tel(String bill_storeinfo_tel) {
+		this.bill_storeinfo_tel = bill_storeinfo_tel;
 	}
 	public int getId() {
 		return id;
@@ -92,7 +103,8 @@ public class Bill implements Serializable {
 		return "Bill [id=" + id + ", userid=" + userid + ", bill_timestamp=" + bill_timestamp + ", bill_price="
 				+ bill_price + ", bill_content=" + bill_content + ", bill_category=" + bill_category
 				+ ", bill_cardinfo=" + bill_cardinfo + ", bill_storeinfo_name=" + bill_storeinfo_name
-				+ ", bill_storeinfo_biznum=" + bill_storeinfo_biznum + "]";
+				+ ", bill_storeinfo_biznum=" + bill_storeinfo_biznum + ", bill_storeinfo_tel=" + bill_storeinfo_tel
+				+ "]";
 	}
     
     

@@ -9,11 +9,11 @@
 	<title>캘린더</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-	<script type="text/javaScript" src="./modal.js"></script>
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="./modal.css">
+
 
 	<style TYPE="text/css">
 		body {
@@ -182,6 +182,7 @@
 	</style>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 
 <form name="calendarFrm" id="calendarFrm" action="" method="GET">
 
@@ -251,10 +252,14 @@
 					<td class="today">
 						<div class="date">
 							${dateList.date}
-							<div class="modal-dialog">
-							<jsp:include page="./modal.jsp"></jsp:include>
-							<button id="createBtn" type="button" data-toggle="modal" data-target="#myModal">영수증 내역</button>
-							</div>
+							
+							<c:url var="dayRecipt" value="/billListView.do">
+								<c:param name="userid" value="${ loginMember.userid }"/>
+								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
+							</c:url>
+							<a href="${ dayRecipt }">영수증 내역</a>
+							<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							
 						</div>
 						<div>
 						</div>
@@ -264,10 +269,7 @@
 					<td class="sat_day">
 						<div class="sat">
 							${dateList.date}
-							<div class="modal-dialog">
-							<jsp:include page="./modal.jsp"></jsp:include>
-							<button id="createBtn" type="button" data-toggle="modal" data-target="#myModal">영수증 내역</button>
-							</div>
+							<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 						</div>
 						<div>
 						</div>
@@ -280,10 +282,7 @@
 			<a href></a>
 			<div class="sun">
 				${dateList.date}
-				<div class="modal-dialog">
-				<jsp:include page="./modal.jsp"></jsp:include>
-				<button id="createBtn" type="button" data-toggle="modal" data-target="#myModal">영수증 내역</button>
-				</div>
+				<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 			</div>
 			<div>
 			</div>
@@ -293,10 +292,7 @@
 		<td class="normal_day">
 			<div class="date">
 				${dateList.date}
-				<div class="modal-dialog">
-				<jsp:include page="./modal.jsp"></jsp:include>
-				<button id="createBtn" type="button" data-toggle="modal" data-target="#myModal">영수증 내역</button>
-				</div>
+				<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 			</div>
 			<div>
 			
