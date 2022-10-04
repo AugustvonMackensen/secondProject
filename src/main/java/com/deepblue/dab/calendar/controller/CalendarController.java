@@ -76,4 +76,5 @@ public class CalendarController {
 		model.addAttribute("today_info", today_info);
 		return "calendar/calendarListView";
 	}
+
 }

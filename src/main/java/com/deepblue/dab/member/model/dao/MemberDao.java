@@ -1,5 +1,8 @@
 package com.deepblue.dab.member.model.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,6 +44,12 @@ public class MemberDao {
 	public int chkSelectForPwd(Member loginMember) {
 		return session.selectOne("memberMapper.chkSelectForPwd", loginMember);
 	}
-	
+	public ArrayList<Member> selectList(){
+		List<Member> list = session.selectList("memberMapper.selectList");
+		return (ArrayList<Member>)list;
+	}
+	public int updateLoginok(Member member) {
+		return session.update("memberMapper.updateLoginOK", member);
+	}
 
 }

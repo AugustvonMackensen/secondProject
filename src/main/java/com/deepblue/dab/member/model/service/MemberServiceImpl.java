@@ -1,5 +1,7 @@
 package com.deepblue.dab.member.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +64,15 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int chkSelectForPwd(Member loginMember) {
 		return memberDao.chkSelectForPwd(loginMember);
+	}
+
+	@Override
+	public ArrayList<Member> selectList() {
+		return memberDao.selectList();
+	}
+
+	@Override
+	public int updateLoginok(Member member) {
+		return memberDao.updateLoginok(member);
 	}
 }
