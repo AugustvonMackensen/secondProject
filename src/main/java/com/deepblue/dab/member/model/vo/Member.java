@@ -59,12 +59,12 @@ public class Member implements java.io.Serializable{
 		this.email = email;
 	}
 
-	public String getLoginOK() {
+	public String getLoginok() {
 		return loginok;
 	}
 
-	public void setLoginOK(String loginOK) {
-		this.loginok = loginOK;
+	public void setLoginok(String loginok) {
+		this.loginok = loginok;
 	}
 
 	public String getAdmin() {

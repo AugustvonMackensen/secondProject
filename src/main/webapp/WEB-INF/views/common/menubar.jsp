@@ -30,7 +30,6 @@
             <a href="${ pageContext.servletContext.contextPath }/main.do" class="logo">
               <span style="font-size :30px; color: #0d6efd;">DeepAccountBook</span>
             <a href="index.html" class="logo">
-              <span style="font-size :30px">DeepAccountBook</span>
             </a>
             <ul class="nav">
               <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
@@ -40,6 +39,10 @@
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/pickEnroll.do"> 회원가입</a></div></li> 
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/loginPage.do"> 로그인</a></div></li>
               </c:if>
+              <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y' }">
+				<li><a href="${ pageContext.servletContext.contextPath }/mlist.do">회원관리</a></li>
+			 </c:if>
+			
               <c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
 	              <li><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록Test</a></li>
 	              <li>

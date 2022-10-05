@@ -2,6 +2,7 @@ package com.deepblue.dab.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.deepblue.dab.member.model.service.MemberService;
 import com.deepblue.dab.member.model.vo.Member;
-import com.deepblue.dab.member.controller.MemberController;
 
 @Controller //컨트롤러 등록
 public class MemberController {
@@ -101,7 +101,7 @@ public class MemberController {
 		
 		String viewName = null;
 		if(loginMember != null && this.bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd()) 
-				&& loginMember.getLoginOK().equals("Y")) {
+				&& loginMember.getLoginok().equals("Y")) {
 			//로그인 상태 관리 방법 : 기본 세션 사용
 			logger.info("sessionID : " + loginSession.getId());
 			
@@ -286,6 +286,33 @@ public class MemberController {
 			return "redirect:logout.do";
 		} else {
 			model.addAttribute("message", userid + " : 회원 삭제 요청 실패!");
+			return "common/error";
+		}
+	}
+	
+	// 회원관리용 회원전체목록 처리용
+	@RequestMapping("mlist.do")
+	public String memberListViewMethod(Model model) {
+		ArrayList<Member> list = memberService.selectList();
+		
+		if(list.size() > 0) {
+			model.addAttribute("list", list);
+			return "member/memberListView";
+		}else {
+			model.addAttribute("message", "회원 정보가 존재하지 않습니다.");
+			return "common/error";
+		}
+	}
+	
+	//로그인 제한/가능 변경 처리용
+	@RequestMapping("loginok.do")
+	public String changeLoginOKMethod(Member member, Model model) {
+		logger.info("loginok.do : " + member.getUserid() + ", " + member.getLoginok());
+			
+		if(memberService.updateLoginok(member) > 0) {
+			return "redirect:mlist.do";
+		} else {
+			model.addAttribute("message", "로그인 제한/허용 처리 오류");
 			return "common/error";
 		}
 	}

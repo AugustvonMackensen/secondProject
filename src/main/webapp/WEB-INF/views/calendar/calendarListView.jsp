@@ -217,6 +217,8 @@
 <button type="button" class="buttonstyle" onclick="location.href='calendarListView.do'" style="height: 30ps; width:80px;">Today</button>
 </div>
 
+<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+
 <table class="calendar_body">
 
 <thead>
