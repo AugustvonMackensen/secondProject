@@ -2,11 +2,11 @@ package com.deepblue.dab.qna.model.vo;
 
 import java.sql.Date;
 
-public class QNA implements java.io.Serializable{
+public class Question implements java.io.Serializable{
 
 	private static final long serialVersionUID = 1766193439657005461L;
 	
-	public QNA () {}
+	public Question () {}
 	
 	private int q_no;
 	private String q_writer;
@@ -17,7 +17,7 @@ public class QNA implements java.io.Serializable{
 	private String q_rename_filename;
 	private int q_readcount;
 
-	public QNA(int q_no, String q_writer, String q_title, Date q_date, String q_content, String q_original_filename,
+	public Question(int q_no, String q_writer, String q_title, Date q_date, String q_content, String q_original_filename,
 			String q_rename_filename, int q_readcount) {
 		super();
 		this.q_no = q_no;
