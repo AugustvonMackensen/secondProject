@@ -142,15 +142,10 @@ function Change(){
 			<!-- 게시글제목 클릭시 해당 글의 상세보기로 넘어가게 처리함 -->
 			<td>
 
-			<!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
-				들여쓰기 처리 : 원글과 구분지음
-			 -->
-
 			<!-- 로그인한 회원만 상세보기 할 수 있게 한다면 -->
-			<!--<c:if test="${ !empty sessionScope.loginMember }">
-				<a href="${ bdt }">${ b.board_title }</a>
-			</c:if>  -->
-			<a href="${ bdt }">${ b.q_title }</a>
+			<c:if test="${ !empty sessionScope.loginMember }">
+				<a href="${ bdt }">${ b.q_title }</a>
+			</c:if> 
 			</td>
 			<td>${ b.q_writer }</td>
 			<td><fmt:formatDate value="${ b.q_date }" pattern="yyyy-MM-dd" /></td>
