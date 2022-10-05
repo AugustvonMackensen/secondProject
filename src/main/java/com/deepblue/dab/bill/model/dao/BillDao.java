@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.deepblue.dab.bill.model.vo.Bill;
 import com.deepblue.dab.bill.utils.PagingBill;
 import com.deepblue.dab.common.Paging;
-import com.deepblue.dab.qna.model.vo.QNA;
+import com.deepblue.dab.qna.model.vo.Question;
 
 
 
