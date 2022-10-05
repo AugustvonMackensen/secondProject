@@ -179,11 +179,19 @@
 			border: 3px solid #c9c9c9;
 		}
 		
+	
 	</style>
+	
+	
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 
+<style type="text/css" >
+html, body {
+		overflow: scroll;
+	}	
+</style>
 <form name="calendarFrm" id="calendarFrm" action="" method="GET">
 
 <div class="calendar" >
@@ -260,7 +268,7 @@
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
 							<a href="${ dayRecipt }">영수증 내역</a>
-							<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<button type="button" class="buttonstyle" onclick="location.href='${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 							
 						</div>
 						<div>
@@ -271,7 +279,11 @@
 					<td class="sat_day">
 						<div class="sat">
 							${dateList.date}
-							<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<c:url var="dayRecipt" value="/billListView.do">
+								<c:param name="userid" value="${ loginMember.userid }"/>
+								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
+							</c:url>
+							<button type="button" class="buttonstyle" onclick="location.href='${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 						</div>
 						<div>
 						</div>
@@ -284,7 +296,11 @@
 			<a href></a>
 			<div class="sun">
 				${dateList.date}
-				<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+				<c:url var="dayRecipt" value="/billListView.do">
+								<c:param name="userid" value="${ loginMember.userid }"/>
+								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
+							</c:url>
+				<button type="button" class="buttonstyle" onclick="location.href='${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 			</div>
 			<div>
 			</div>
@@ -294,7 +310,11 @@
 		<td class="normal_day">
 			<div class="date">
 				${dateList.date}
-				<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+				<c:url var="dayRecipt" value="billListView.do">
+								<c:param name="userid" value="${ loginMember.userid }"/>
+								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
+							</c:url>
+				<button type="button" class="buttonstyle" onclick="location.href='${pageContext.servletContext.contextPath}/${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 			</div>
 			<div>
 			
@@ -309,6 +329,6 @@
 </div>
 </form>
 
-	<c:import url="/WEB-INF/views/common/footer.jsp" />
+<%-- 	<c:import url="/WEB-INF/views/common/footer.jsp" /> --%>
 </body>
 </html>

@@ -31,6 +31,22 @@ public class BillServiceImpl implements BillService{
 		// TODO Auto-generated method stub
 		return billDao.selectList(paging);
 	}
+
+	@Override
+	public Bill selectBill(int bill_id) {
+		return billDao.selectBill(bill_id);
+	}
+
+	@Override
+	public int updateBill(Bill bill) {
+		return billDao.updateBill(bill);
+	}
+
+	@Override
+	public int deleteBill(int id) {
+		// TODO Auto-generated method stub
+		return billDao.deleteBill(id);
+	}
 	
 	
 }

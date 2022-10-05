@@ -74,4 +74,29 @@
 		]]>
 
 	</select>
+	
+	
+	<select id="selectBill" parameterType="_int" resultType="Bill">
+		select * from bill where id = #{id}
+	</select>
+	
+	<update id="updateBill" parameterType="Bill">
+		update bill
+		set
+		bill_timestamp= #{bill_timestamp},
+		bill_price= #{bill_price},
+		bill_content= #{bill_content},
+		bill_category= #{bill_category},
+		bill_cardinfo= #{bill_cardinfo},
+		bill_storeinfo_name= #{bill_storeinfo_name},
+		bill_storeinfo_biznum= #{bill_storeinfo_biznum},
+		bill_storeinfo_tel= #{bill_storeinfo_tel}
+		where
+		id = #{id}
+	</update>
+	
+	<delete id="deleteBill" parameterType="_int">
+		delete from bill
+		where id = #{id}
+	</delete>
 </mapper>

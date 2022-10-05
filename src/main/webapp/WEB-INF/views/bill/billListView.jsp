@@ -85,10 +85,10 @@ function showWriteForm(){
 	<br>
 	<c:forEach items="${ requestScope.list }" var="b" varStatus="status">
 		<tr align="center">
-			<td>${ b.id }</td> 
+			<td>지출id:${ b.id },순서${ status.count+ (currentPage-1) * 10 }</td> 
 			<!-- 지출 금액 클릭시 해당 지출의 상세보기로 넘어가게 처리 -->
 			<c:url var="bdt" value="/billdetail.do">
-				<c:param name="b_id" value="${ b.id }" />
+				<c:param name="bill_id" value="${ b.id }" />
 				<c:param name="page" value="${ currentPage }" />
 			</c:url>
 			<!-- 지출 클릭시 해당 글의 상세보기로 넘어가게 처리함 -->
@@ -129,7 +129,7 @@ function showWriteForm(){
 		[이전그룹] &nbsp;
 	</c:if>
 	<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
-	<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+	<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1" >
 		<c:if test="${ p eq currentPage }">
 			<font size="4" color="red"><b>[${ p }]</b></font>
 		</c:if>
@@ -138,14 +138,14 @@ function showWriteForm(){
 				<c:param name="page" value="${ p }" />
 				<c:param name="date" value="${ date }"/>
 				<c:param name="userid" value="${ loginMember.userid }"/>
-		</c:url>
-		<a href="${ bl3 }">${ p }</a> 
+			</c:url>
+			<a href="${ bl3 }">${ p }</a> 
 		</c:if>
 	</c:forEach>
 	<!-- 다음 페이지그룹으로 이동 처리 -->
 	<c:if test="${ (currentPage + 10) > endPage and (currentPage + 10) < maxPage }">
 		<c:url var="bl4" value="/billListView.do">
-			<c:param name="page" value="${ endPage + 10 }" />
+			<c:param name="page" value="${ currentPage + 10 }" />
 			<c:param name="date" value="${ date }"/>
 			<c:param name="userid" value="${ loginMember.userid }"/>
 		</c:url>

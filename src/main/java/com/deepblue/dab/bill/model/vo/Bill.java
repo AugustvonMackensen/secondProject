@@ -3,6 +3,9 @@ package com.deepblue.dab.bill.model.vo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+
+
+
 public class Bill implements Serializable {
 	private static final long serialVersionUID = 874907408487708508L;
     private int id;

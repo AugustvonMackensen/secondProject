@@ -211,14 +211,15 @@ public class BillController {
 			@RequestParam("date") String date,
 			@RequestParam(name="userid",required=false) String userid,
 			ModelAndView mv) {
+		
 		Map<String,Object>map = new HashMap<String,Object>();
 		mv.addObject("date",date); //페이징 으로인해 다시 date값 전달
 		
 		String[] tokken = date.split(" ");
 		String[] origin = tokken.clone();
-//		logger.info("년 + " +tokken[0]);
-//		logger.info("월 + " +tokken[1]);
-//		logger.info("일 + " +tokken[2]);
+		logger.info("년 + " +tokken[0]);
+		logger.info("월 + " +tokken[1]);
+		logger.info("일 + " +tokken[2]);
 		if(tokken[1].length() == 1)
 			tokken[1] = "0" + tokken[1];
 		if(tokken[2].length() == 1)
@@ -238,7 +239,7 @@ public class BillController {
 		logger.info("받음 + listCount : " + listCount);
 		int maxPage = (int)((double)listCount / limit + 0.9);
 
-		int startPage = (currentPage / 10) * 10 + 1;
+		int startPage = currentPage / 10 * 10 + 1;
 		int endPage = startPage + 10 - 1;
 		
 		if(maxPage < endPage) {
@@ -277,5 +278,78 @@ public class BillController {
 		}
 		
 		return mv;
+	}
+	
+	
+	@RequestMapping(value = "billdetail.do")
+	public ModelAndView billDetailMethod(
+			ModelAndView mv, 
+			@RequestParam("bill_id") int bill_id,
+			@RequestParam(value = "page", required = false) String page) {
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = Integer.parseInt(page);
+		}
+		
+		Bill bill = billService.selectBill(bill_id);
+		
+		if(bill != null) {
+			mv.addObject("bill", bill);
+			mv.addObject("currentPage", currentPage);
+			mv.setViewName("bill/billDetailView");
+		} else {
+			mv.addObject("message", bill_id + "번 지출 조회 실패!");
+			mv.setViewName("common/error");
+		}
+		
+		
+		return mv;
+
+	}
+	
+	@RequestMapping(value="updateBill.do", method = RequestMethod.POST)
+	public String billUpdateMethod(
+			Bill bill,
+			@RequestParam("page") int page,
+			@RequestParam("bill_timestamp2") String ts,
+			@RequestParam("bill_id") int bill_id,
+			HttpServletRequest request, Model model) {
+		logger.info("지출 확인 : " + bill);
+		logger.info("bill_timestamp2 확인 : " + ts);
+		ts = ts.replace("T", " ");
+		Timestamp t = Timestamp.valueOf(ts);
+		logger.info(t.toString());
+		bill.setBill_timestamp(t);
+		
+		if(billService.updateBill(bill) > 0 ) {
+			//수정 성공시
+			model.addAttribute("page", page);
+			model.addAttribute("bill_id", bill_id);
+			return "redirect:billdetail.do";
+		} else {
+			model.addAttribute("message", bill_id+"번 글 수정 실패!");
+			return "common/error";
+		}
+	}
+	
+	@RequestMapping("deleteBill.do")
+	public String billDeleteMethod(
+			@RequestParam("bill_id") String bill_id,
+			Model model) {
+		int id = Integer.parseInt(bill_id);
+		
+		Bill bill = billService.selectBill(id);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");
+		logger.info("date : " + formatter.format(bill.getBill_timestamp()));
+		if(billService.deleteBill(bill.getId()) > 0) {
+			//삭제 성공
+			logger.info("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+			return "redirect:billListView.do?page=1&userid="+bill.getUserid()+"&date="+formatter.format(bill.getBill_timestamp());
+		} else {
+			model.addAttribute("message", "삭제실패ㅋ");
+			return "common/error";
+		}
+		
 	}
 }

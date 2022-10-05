@@ -13,4 +13,10 @@ public interface BillService {
 	int selectListCountDay(Map<String, Object> map);
 
 	ArrayList<Bill> selectList(PagingBill paging);
+
+	Bill selectBill(int bill_id);
+
+	int updateBill(Bill bill);
+
+	int deleteBill(int id);
 }

@@ -33,4 +33,17 @@ public class BillDao {
 		List<Bill> list = session.selectList("billMapper.selectList", paging);
 		return (ArrayList<Bill>)list;
 	}
+
+	public Bill selectBill(int bill_id) {
+		return session.selectOne("billMapper.selectBill", bill_id);
+	}
+
+	public int updateBill(Bill bill) {
+		return session.update("billMapper.updateBill", bill);
+	}
+
+	public int deleteBill(int id) {
+		// TODO Auto-generated method stub
+		return session.delete("billMapper.deleteBill",id);
+	}
 }
