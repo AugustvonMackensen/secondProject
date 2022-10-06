@@ -293,7 +293,7 @@ function showWriteForm(){
 			<c:param name="page" value="${ maxPage }" />
 			<c:param name="date" value="${ date }"/>
 			<c:param name="userid" value="${ loginMember.userid }"/>
-							<c:param name="p1" value="${ p1 }"/>
+			<c:param name="p1" value="${ p1 }"/>
 				<c:param name="p2" value="${ p2 }"/>
 				<c:param name="category" value="${ category }"/>
 				<c:param name="begin" value="${ begin }"/>
