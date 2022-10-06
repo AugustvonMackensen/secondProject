@@ -19,4 +19,22 @@ public interface BillService {
 	int updateBill(Bill bill);
 
 	int deleteBill(int id);
+
+	int totalPrice(Map<String, Object> map);
+
+	ArrayList<Bill> selectListSearchPrice(Map<String, Object> map);
+
+	ArrayList<Bill> selectListSearchCategory(Map<String, Object> map);
+
+	ArrayList<Bill> selectListSearchDate(Map<String, Object> map);
+
+	int selectListCountSearchPrice(Map<String, Object> map);
+
+	int selectListCountSearchCategory(Map<String, Object> map);
+
+	int selectListCountSearchDate(Map<String, Object> map);
+
+	int selectListCountSearch(Map<String, Object> map);
+
+	ArrayList<Bill> selectListSearch(Map<String, Object> map);
 }

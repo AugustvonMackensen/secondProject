@@ -3,6 +3,8 @@
 <%@page import="java.util.Calendar"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <html lang="ko">
 <head>
@@ -13,7 +15,12 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	<script type="text/javascript">
+	
+	
+	
+	
+	</script>
 
 	<style TYPE="text/css">
 		body {
@@ -261,32 +268,39 @@ html, body {
 				<c:when test="${dateList.value=='today'}">
 					<td class="today">
 						<div class="date">
+						<c:if test="${ dateList.date != '' }">
 							${dateList.date}
-							
 							<c:url var="dayRecipt" value="/billListView.do">
 								<c:param name="userid" value="${ loginMember.userid }"/>
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
-							<a href="${ dayRecipt }">영수증 내역</a>
-							<button type="button" class="buttonstyle" onclick="location.href='${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<br>
+							<c:if test="${ dateList.totalPrice != '0' }">
+							<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+							</c:if>
 							
+						</c:if>
 						</div>
-						<div>
-						</div>
+					
 					</td>
 				</c:when>
 				<c:when test="${date_status.index%7==6}">
 					<td class="sat_day">
 						<div class="sat">
+							<c:if test="${ dateList.date != '' }">
 							${dateList.date}
 							<c:url var="dayRecipt" value="/billListView.do">
 								<c:param name="userid" value="${ loginMember.userid }"/>
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
-							<button type="button" class="buttonstyle" onclick="location.href='${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<br>
+							<c:if test="${ dateList.totalPrice != '0' }">
+							<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+							</c:if>
+							
+							</c:if>
 						</div>
-						<div>
-						</div>
+						
 					</td>
 				</c:when>
 				<c:when test="${date_status.index%7==0}">
@@ -295,12 +309,18 @@ html, body {
 		<td class="sun_day">
 			<a href></a>
 			<div class="sun">
+			<c:if test="${ dateList.date != '' }">
 				${dateList.date}
 				<c:url var="dayRecipt" value="/billListView.do">
 								<c:param name="userid" value="${ loginMember.userid }"/>
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
-				<button type="button" class="buttonstyle" onclick="location.href='${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<br>
+				<c:if test="${ dateList.totalPrice != '0' }">
+				<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+				</c:if>
+				
+			</c:if>
 			</div>
 			<div>
 			</div>
@@ -309,12 +329,17 @@ html, body {
 				<c:otherwise>
 		<td class="normal_day">
 			<div class="date">
+			<c:if test="${ dateList.date != '' }">
 				${dateList.date}
 				<c:url var="dayRecipt" value="billListView.do">
 								<c:param name="userid" value="${ loginMember.userid }"/>
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
-				<button type="button" class="buttonstyle" onclick="location.href='${pageContext.servletContext.contextPath}/${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<br>
+				<c:if test="${ dateList.totalPrice != '0' }">
+				<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+				</c:if>	
+			</c:if>
 			</div>
 			<div>
 			
