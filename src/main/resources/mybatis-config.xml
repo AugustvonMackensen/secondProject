@@ -16,6 +16,8 @@
 		<typeAlias type="com.deepblue.dab.common.SearchDate" alias="SearchDate" />
 		<typeAlias type="com.deepblue.dab.bill.utils.PagingBill" alias="PagingBill" />
 		<typeAlias type="com.deepblue.dab.qna.model.vo.Answer" alias="Answer" />
+		<typeAlias type="com.deepblue.dab.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="com.deepblue.dab.common.SearchPaging" alias="SearchPaging" />
 	</typeAliases>
 
 	<mappers>
