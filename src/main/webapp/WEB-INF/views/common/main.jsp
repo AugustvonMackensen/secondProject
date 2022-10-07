@@ -5,9 +5,73 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script type="text/javascript">
+
+function getChart() {
+	let monthList = [];
+	let posList = [];
+	
+	$.ajax({
+		url:"currentYearCart.do",
+		type:"get",
+		data:{ userid: "${loginMember.userid}" },
+		dataType:"json",
+		success: (data) => {
+			
+			for (let i = 0; i<data.length;i++){    				  
+				monthList.push(data[i].label+"월");    				  
+				posList.push(data[i].sumPrice);    				  
+		 	 }
+		console.log(monthList);
+		console.log(posList);
+		
+		new Chart(document.getElementById("line-chart"), {
+	    	  type: 'bar',
+	    	  data: {
+	    	    labels: monthList, // X축 
+	    	    datasets: [{ 
+	    	        data: posList, // 값
+	    	        label: "지출(원)",
+	                backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+
+	    	        fill: false
+	    	      }
+	    	    ]
+	    	  },
+	    	  options: {
+	    	    title: {
+	    	      display: true,
+	    	      text: '2022년 월별 지출 차트'
+	    	    }
+	    	  }
+	    	}); //그래프
+	
+		},
+		error: (jqXHR , textStatus, errorThrown) => {
+			console.log("ntop3 error : "+ jqXHR+", " + textStatus +", " +errorThrown);
+			
+			}
+	})
+}
+
+$(() => {
+	getChart();
+});
+
+</script>
+</head>
+
+
 <body>
 <!-- 헤더부분 로그, 로그인 부분 -->
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
+
+
 
   <!-- ***** Preloader Start ***** -->
   <div id="js-preloader" class="js-preloader">
@@ -44,7 +108,7 @@
                   </div>
                   <div class="col-lg-12">
                     <div class="white-button first-button scroll-to-section">
-                      <a href="#contact" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
+                      <a href="${ pageContext.servletContext.contextPath }/calendarListView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
                     </div>
                   </div>
                 </div>
@@ -52,7 +116,13 @@
             </div>
             <div class="col-lg-6">
               <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                
+				<c:if test="${ loginMember != null }">
+				<canvas id="line-chart" width="300" height="250"></canvas>
+				</c:if>
+				<c:if test="${ loginMember == null }">
                 <img style="margin-left : 200px" src="resources/assets/images/slider-dec.png" alt="">
+              	</c:if>
               </div>
             </div>
           </div>

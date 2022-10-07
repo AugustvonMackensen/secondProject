@@ -19,6 +19,7 @@
 		color:#880000; 
 		background-color: #d3d3d3;
 	}
+	
 </style>
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
@@ -169,7 +170,7 @@ $(() => {
 			
 			<tr>
 				<th colspan="2">
-					<c:set var="date"><fmt:formatDate type="date" pattern="yyyy-MM-dd'T'HH:mm:ss.SSSX" value="${ bill.bill_timestamp }"/></c:set>
+					
 					<button class="btn btn-primary" type="button"
 						onclick="javascript:location.href='billListView.do?page=${ currentPage }&userid=${ loginMember.userid }&date=${date}'">목록</button>
 					&nbsp;

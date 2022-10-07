@@ -67,8 +67,15 @@
 	</update>
 	
 	<!-- 회원 전체 조회용 -->
-	<select id="selectList" resultMap="resultList">
-		select * from member
+	<!-- 페이징 처리 -->
+	<select id="selectList" parameterType="PagingMember" resultMap="resultList">
+	<![CDATA[
+		SELECT *  
+		FROM (SELECT ROWNUM RNUM, userid, userpwd, username, email, loginok, admin, enroll_date
+		       FROM (SELECT * FROM MEMBER 
+		              ORDER BY userid DESC))  
+		where rnum >= #{startRow} and rnum <= #{endRow}
+	]]>
 	</select>
 	
 	<!-- loginok 값 변경용 -->
@@ -90,27 +97,75 @@
 		where userid = #{ userid } 
 	</update>
 	
+	<update id="aupdateMember" parameterType="Member">
+		update member
+		set email = #{ email }
+		where userid = #{ userid } 
+	</update>
+
 	<delete id="deleteMember" parameterType="string">
 		delete from member
 		where userid = #{ uid }
 	</delete>
 	
-	<!-- 회원 검색 처리용 쿼리문 -->
-	<select id="selectSearchUserid" parameterType="string" resultMap="resultList">
-		select * from member
+	<select id="getListCount" resultType="_int">
+		select count(*) from member
+	</select>
+	
+		<select id="searchId" resultMap="resultList" parameterType="SearchPaging">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, USERID, USERPWD, 
+						  USERNAME, EMAIL, LOGINOK,  
+			               ADMIN, ENROLL_DATE
+			       FROM (SELECT * FROM MEMBER
+			       		   where userid like '%' || #{ keyword } || '%'
+			       		   order by userid desc
+			                  )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="searchLoginok" resultMap="resultList" parameterType="SearchPaging">
+		<![CDATA[
+		SELECT *  
+			FROM (SELECT ROWNUM RNUM, USERID, USERPWD, 
+						  USERNAME, EMAIL, LOGINOK,  
+			               ADMIN, ENROLL_DATE
+			       FROM (SELECT * FROM MEMBER
+			       		   where loginok like '%' || #{ keyword } || '%'
+			       		   order by userid desc
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="searchDate" resultMap="resultList" parameterType="SearchPaging">
+		<![CDATA[
+		SELECT *  
+			FROM (SELECT ROWNUM RNUM, USERID, USERPWD, 
+						  USERNAME, EMAIL, LOGINOK,  
+			               ADMIN, ENROLL_DATE
+			       FROM (SELECT * FROM MEMBER
+			       		   where enroll_date between #{ begin } and #{ end }
+			       		   order by userid desc
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="getSearchIdCount" resultType="_int" parameterType="string">
+		select count(*) from member
 		where userid like '%' || #{ keyword } || '%'
 	</select>
 	
-
-	<select id="selectSearchEnrollDate" parameterType="SearchDate" resultMap="resultList">
-		select * from member
+	<select id="getSearchLoginCount" resultType="_int" parameterType="string">
+		select count(*) from member
+		where loginok like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchEnrollCount" resultType="_int" parameterType="SearchDate">
+		select count(*) from member
 		where enroll_date between #{ begin } and #{ end }
 	</select>
-	
-	<select id="selectSearchLoginOK" parameterType="string" resultMap="resultList">
-		select * from member
-		where loginok = #{ keyword }
-	</select>
-	
-	
 </mapper>

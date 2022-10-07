@@ -3,6 +3,9 @@
 <%@page import="java.util.Calendar"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 
 <html lang="ko">
 <head>
@@ -13,7 +16,19 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	<script type="text/javascript">
+	
+	console.log("${dateList}")
+	//for(var i in "${dateList}") {
+	//	console.log(i);
+	//}
+	var dlist = JSON.stringify(${dateList})
+	console.log(dlist)
+	
+	for(var i in dlist) {
+		console.log(dlist[i]);
+	}
+	</script>
 
 	<style TYPE="text/css">
 		body {
@@ -220,12 +235,18 @@ html, body {
 		</a>
 	</div>
 
+<c:url var="monthRecipt" value="/billListView.do">
+	<c:param name="userid" value="${ loginMember.userid }"/>
+	<c:param name="date" value="${today_info.search_year} ${today_info.search_month}" />
+</c:url>
 <!-- 현재 날짜로 돌아가기 버튼 생성 완료 -->
+<p style="color: black;">${today_info.search_year}년 ${today_info.search_month}월 총 지출 : <a href="${monthRecipt}" style="color: red; font-weight: bold;">-<fmt:formatNumber type="number" maxFractionDigits="3" value="${monthTotalPrice}" /></a><br></p>
 <div class="today_button_div">
 <button type="button" class="buttonstyle" onclick="location.href='calendarListView.do'" style="height: 30ps; width:80px;">Today</button>
 </div>
 
-<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+
+<button type="button" class="buttonstyle" onclick="location.href='${monthRecipt}'" style="height: 30ps; width:220px;">${today_info.search_year}년 ${today_info.search_month}월 지출 내역 보기</button>
 
 <table class="calendar_body">
 
@@ -261,32 +282,40 @@ html, body {
 				<c:when test="${dateList.value=='today'}">
 					<td class="today">
 						<div class="date">
+						<c:if test="${ dateList.date != '' }">
 							${dateList.date}
-							
 							<c:url var="dayRecipt" value="/billListView.do">
 								<c:param name="userid" value="${ loginMember.userid }"/>
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
-							<a href="${ dayRecipt }">영수증 내역</a>
-							<button type="button" class="buttonstyle" onclick="location.href='${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<br>
+							<c:if test="${ dateList.totalPrice != '0' }">
+							<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+							</c:if>
 							
+						</c:if>
 						</div>
-						<div>
-						</div>
+					
 					</td>
 				</c:when>
 				<c:when test="${date_status.index%7==6}">
 					<td class="sat_day">
 						<div class="sat">
+							<c:if test="${ dateList.date != '' }">
 							${dateList.date}
+
 							<c:url var="dayRecipt" value="/billListView.do">
 								<c:param name="userid" value="${ loginMember.userid }"/>
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
-							<button type="button" class="buttonstyle" onclick="location.href='${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<br>
+							<c:if test="${ dateList.totalPrice != '0' }">
+							<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+							</c:if>
+							
+							</c:if>
 						</div>
-						<div>
-						</div>
+						
 					</td>
 				</c:when>
 				<c:when test="${date_status.index%7==0}">
@@ -295,12 +324,19 @@ html, body {
 		<td class="sun_day">
 			<a href></a>
 			<div class="sun">
+			<c:if test="${ dateList.date != '' }">
 				${dateList.date}
+
 				<c:url var="dayRecipt" value="/billListView.do">
 								<c:param name="userid" value="${ loginMember.userid }"/>
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
-				<button type="button" class="buttonstyle" onclick="location.href='${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<br>
+				<c:if test="${ dateList.totalPrice != '0' }">
+				<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+				</c:if>
+				
+			</c:if>
 			</div>
 			<div>
 			</div>
@@ -309,12 +345,20 @@ html, body {
 				<c:otherwise>
 		<td class="normal_day">
 			<div class="date">
+			<c:if test="${ dateList.date != '' }">
 				${dateList.date}
+
 				<c:url var="dayRecipt" value="billListView.do">
 								<c:param name="userid" value="${ loginMember.userid }"/>
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
-				<button type="button" class="buttonstyle" onclick="location.href='${pageContext.servletContext.contextPath}/${dayRecipt}'" style="height: 30ps; width:80px;">지출 내역 보기</button>
+							<br>
+				<c:if test="${ dateList.totalPrice != '0' }">
+				
+				<a  style="color: red; background-color: white; display: inline-block;" href="${ dayRecipt }">-<fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+				</c:if>
+					
+			</c:if>
 			</div>
 			<div>
 			

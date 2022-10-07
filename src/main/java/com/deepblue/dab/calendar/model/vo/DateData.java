@@ -7,12 +7,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DateData {
-	String year = "";
-	String month = "";
-	String date = "";
-	String value = "";
-	String schedule = "";
-	String schedule_detail = "";
+	private String year = "";
+	private String month = "";
+	private String date = "";
+	private String value = "";
+	private String schedule = "";
+	private String schedule_detail = "";
+	private int totalPrice = 0;
+	
+
+	public DateData(String year, String month, String date, String value, String schedule, String schedule_detail,
+			int totalPrice) {
+		super();
+		this.year = year;
+		this.month = month;
+		this.date = date;
+		this.value = value;
+		this.schedule = schedule;
+		this.schedule_detail = schedule_detail;
+		this.totalPrice = totalPrice;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 	public String getYear() {
 		return year;
@@ -161,7 +183,8 @@ public class DateData {
 
 		@Override
 		public String toString() {
-			return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + "]";
+			return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + ", schedule="
+					+ schedule + ", schedule_detail=" + schedule_detail + ", totalPrice=" + totalPrice + "]";
 		}
 		
 }
