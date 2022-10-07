@@ -260,8 +260,6 @@
 								<c:param name="date" value="${ dateList.year } ${ dateList.month+1 } ${ dateList.date }" />
 							</c:url>
 							<a href="${ dayRecipt }">영수증 내역</a>
-							<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
-							
 						</div>
 						<div>
 						</div>
@@ -271,7 +269,6 @@
 					<td class="sat_day">
 						<div class="sat">
 							${dateList.date}
-							<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 						</div>
 						<div>
 						</div>
@@ -284,7 +281,6 @@
 			<a href></a>
 			<div class="sun">
 				${dateList.date}
-				<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 			</div>
 			<div>
 			</div>
@@ -294,7 +290,6 @@
 		<td class="normal_day">
 			<div class="date">
 				${dateList.date}
-				<button type="button" class="buttonstyle" onclick="location.href='cdetail.do'" style="height: 30ps; width:80px;">지출 내역 보기</button>
 			</div>
 			<div>
 			

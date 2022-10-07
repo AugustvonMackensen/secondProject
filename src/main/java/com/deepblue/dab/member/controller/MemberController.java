@@ -2,6 +2,7 @@ package com.deepblue.dab.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.deepblue.dab.common.SearchDate;
+import com.deepblue.dab.common.SearchPaging;
 import com.deepblue.dab.member.model.service.MemberService;
 import com.deepblue.dab.member.model.vo.Member;
+import com.deepblue.dab.member.utils.PagingMember;
 
 @Controller //컨트롤러 등록
 public class MemberController {
@@ -70,7 +74,18 @@ public class MemberController {
 			model.addAttribute("message", userid + " : 회원 조회 실패!");
 			return "common/error";
 		}
-		
+	}
+	
+	@RequestMapping("amoveup.do")
+	public String moveAdminUpdatePage(@RequestParam String userid, Model model) {
+		Member member = memberService.selectMember(userid);
+		if(member != null) {
+			model.addAttribute("member", member);
+			return "member/adminupdatePage";
+		} else {
+			model.addAttribute("message", userid + " : 회원 조회 실패!");
+			return "common/error";
+		}
 	}
 	
 	@RequestMapping("namecardPage.do")
@@ -99,9 +114,8 @@ public class MemberController {
 		//전달온 회원 아이디로 먼저 회원정보 조회
 		Member loginMember = memberService.selectMember(member.getUserid());
 		
-		String viewName = null;
-		if(loginMember != null && this.bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd()) 
-				&& loginMember.getLoginok().equals("Y")) {
+		String viewName = null; 
+		if(loginMember != null && this.bcryptPasswordEncoder.matches(member.getUserpwd(), loginMember.getUserpwd()) && loginMember.getLoginok().equals("Y")) {
 			//로그인 상태 관리 방법 : 기본 세션 사용
 			logger.info("sessionID : " + loginSession.getId());
 			
@@ -292,16 +306,49 @@ public class MemberController {
 	
 	// 회원관리용 회원전체목록 처리용
 	@RequestMapping("mlist.do")
-	public String memberListViewMethod(Model model) {
-		ArrayList<Member> list = memberService.selectList();
+	public ModelAndView memberListViewMethod(@RequestParam(name="page", required=false) String page, ModelAndView mv) {
 		
-		if(list.size() > 0) {
-			model.addAttribute("list", list);
-			return "member/memberListView";
-		}else {
-			model.addAttribute("message", "회원 정보가 존재하지 않습니다.");
-			return "common/error";
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = Integer.parseInt(page);
 		}
+		
+		int limit = 10;  
+		int listCount = memberService.selectListCount();
+		
+		int maxPage = (int)((double)listCount / limit + 0.9);
+
+		int startPage = (currentPage / 10) * 10 + 1;
+		int endPage = startPage + 10 - 1;
+		
+		if(maxPage < endPage) {
+			endPage = maxPage;
+		}
+		
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		PagingMember paging = new PagingMember(startRow, endRow);
+		
+		//페이징 계산 처리 끝 ---------------------------------------
+		
+		ArrayList<Member> list = memberService.selectList(paging);
+		
+		if(list != null && list.size() > 0) {
+			mv.addObject("list", list);
+			mv.addObject("listCount", listCount);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startPage", startPage);
+			mv.addObject("endPage", endPage);
+			mv.addObject("limit", limit);
+			mv.setViewName("member/memberListView");
+		}else {
+			mv.addObject("message", 
+					currentPage + " 회원 목록 조회 실패.");
+			mv.setViewName("common/error");
+		}
+		
+		return mv;
 	}
 	
 	//로그인 제한/가능 변경 처리용
@@ -316,4 +363,179 @@ public class MemberController {
 			return "common/error";
 		}
 	}
+	   
+	 //관리자 회원 정보 수정
+		@RequestMapping(value="amupdate.do", method=RequestMethod.POST)
+		public String memberUpdate(Member member, Model model) {		
+			logger.info("amupdate.do : " + member);
+			
+			logger.info("after : " + member);
+			
+			if(memberService.aupdateMember(member) > 0) {
+				return "redirect:mlist.do";
+			}else {
+				model.addAttribute("message", member.getUserid() + " : 회원 정보 수정 실패!");
+				return "common/error";
+			}
+			
+		}
+		
+			
+		// 회원 아이디 검색용	
+		@RequestMapping(value="msearchId.do", method=RequestMethod.GET)
+		public String memberSearchIdMethod(
+				@RequestParam("keyword") String keyword, 
+				@RequestParam(name="page", required=false) String page,
+				Model model) {
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = Integer.parseInt(page);
+			}
+			
+			ArrayList<Member> list = null;
+			
+			int limit = 10;
+			
+			int listCount = memberService.getSearchIdCount(keyword);
+
+			int maxPage = (int)((double)listCount / limit + 0.9);
+
+			int startPage = (currentPage / 10) * 10 + 1;
+
+			int endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			
+			//페이징 계산 처리 끝 ---------------------------------------
+			SearchPaging searchpaging = new SearchPaging(keyword, startRow, endRow);
+			
+			list = memberService.searchId(searchpaging);
+			
+			if(list.size() > 0) {
+				model.addAttribute("list", list);
+				model.addAttribute("listCount", listCount);
+				model.addAttribute("maxPage", maxPage);
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("startPage", startPage);
+				model.addAttribute("endPage", endPage);
+				model.addAttribute("limit", limit);
+				model.addAttribute("action", "userid");
+				model.addAttribute("keyword", keyword);
+				return "member/memberListView";
+			}else {
+				model.addAttribute("message", 
+						keyword + "로 검색된 공지글 정보가 없습니다.");
+				return "common/error";
+			}
+		}
+		
+		// 회원 로그인 여부 (활성/비활성) 검색용
+		@RequestMapping(value="msearchLogin.do", method=RequestMethod.GET)
+		public String memberSearchWriterMethod(
+				@RequestParam("keyword") String keyword, 
+				@RequestParam(name="page", required=false) String page,
+				Model model) {
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = Integer.parseInt(page);
+			}
+			
+			ArrayList<Member> list = null;
+			
+			int limit = 10;
+			
+			int listCount = memberService.getSearchLoginCount(keyword);
+
+			int maxPage = (int)((double)listCount / limit + 0.9);
+
+			int startPage = (currentPage / 10) * 10 + 1;
+
+			int endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			//쿼리문에 전달할 현재 페이지에 적용할 목록의 시작행과 끝행 계산
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			
+			//페이징 계산 처리 끝 ---------------------------------------
+			SearchPaging searchpaging = new SearchPaging(keyword, startRow, endRow);
+			list = memberService.searchLoginok(searchpaging);
+			
+			if(list.size() > 0) {
+				model.addAttribute("list", list);
+				model.addAttribute("listCount", listCount);
+				model.addAttribute("maxPage", maxPage);
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("startPage", startPage);
+				model.addAttribute("endPage", endPage);
+				model.addAttribute("limit", limit);
+				model.addAttribute("action", "login");
+				model.addAttribute("keyword", keyword);
+				return "member/memberListView";
+			}else {
+				model.addAttribute("message", 
+						keyword + "로 검색된 공지글 정보가 없습니다.");
+				return "common/error";
+			}
+		}
+		
+		// 회원 등록날짜 검색용 
+		@RequestMapping(value="msearchDate.do", method=RequestMethod.GET)
+		public String memberSearchDateMethod(SearchDate date, 
+				@RequestParam(name="page", required=false) String page,
+				Model model) {
+			int currentPage = 1;
+			if(page != null) {
+				currentPage = Integer.parseInt(page);
+			}
+			
+			ArrayList<Member> list = null;
+
+			int limit = 10; 
+			
+			int listCount = memberService.getSearchEnrollCount(date);
+
+			int maxPage = (int)((double)listCount / limit + 0.9);
+
+			int startPage = (currentPage / 10) * 10 + 1;
+
+			int endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			int startRow = (currentPage - 1) * limit + 1;
+			int endRow = startRow + limit - 1;
+			
+			
+			//페이징 계산 처리 끝 ---------------------------------------
+			SearchPaging searchpaging = new SearchPaging(date.getBegin(), date.getEnd(), startRow, endRow);
+			list = memberService.searchDate(searchpaging);
+			
+			if(list.size() > 0) {
+				model.addAttribute("list", list);
+				model.addAttribute("listCount", listCount);
+				model.addAttribute("maxPage", maxPage);
+				model.addAttribute("currentPage", currentPage);
+				model.addAttribute("startPage", startPage);
+				model.addAttribute("endPage", endPage);
+				model.addAttribute("limit", limit);
+				model.addAttribute("action", "edate");
+				model.addAttribute("begin", date.getBegin());
+				model.addAttribute("end", date.getEnd());
+				return "member/memberListView";
+			}else {
+				model.addAttribute("message", "해당 날짜에 등록된 공지사항 정보가 없습니다.");
+				return "common/error";
+			}
+		}
 }

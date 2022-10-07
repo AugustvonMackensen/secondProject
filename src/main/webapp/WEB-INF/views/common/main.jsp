@@ -44,7 +44,7 @@
                   </div>
                   <div class="col-lg-12">
                     <div class="white-button first-button scroll-to-section">
-                      <a href="#contact" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
+                      <a href="${ pageContext.servletContext.contextPath }/calendarListView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
                     </div>
                   </div>
                 </div>
