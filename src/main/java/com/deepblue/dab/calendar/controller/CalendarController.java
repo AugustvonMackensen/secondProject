@@ -2,6 +2,7 @@ package com.deepblue.dab.calendar.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowire;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.deepblue.dab.bill.model.service.BillService;
 import com.deepblue.dab.calendar.model.vo.*;
+import com.deepblue.dab.member.model.vo.Member;
 
 @Controller
 public class CalendarController {
@@ -27,9 +31,18 @@ public class CalendarController {
 
 	//@Autowired // 자동 의존성주임(DI) (자동 객체 생성됨)
 	//private CalendarService calendarService;
+	@Autowired
+	private BillService billService;
 	
 	@RequestMapping(value="calendarListView.do", method = RequestMethod.GET)
 	public String calendar(Model model, HttpServletRequest request, DateData dateData){
+		
+		// 해당 날짜의 지출 총합을 구하기 위한 유저아이디 가져옴
+		String userid = ((Member)request.getSession().getAttribute("loginMember")).getUserid();
+		logger.info(userid);
+		
+		// 해당 월의 총가격합계를 위한 변수
+		int monthTotalPrice=0;
 		
 		Calendar cal = Calendar.getInstance();
 		DateData calendarData;
@@ -56,6 +69,22 @@ public class CalendarController {
 			}else{
 				calendarData= new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "normal_date");
 			}
+			if(calendarData.getYear() != null) { // 날짜데이터가 존재하면
+				logger.info(dateData.getYear() + dateData.getMonth() + i);
+				Map<String,Object>map = new HashMap<String,Object>();
+
+				map.put("userid", userid);
+				
+				String m = Integer.parseInt(dateData.getMonth()) < 9 ? "0"+String.valueOf(Integer.parseInt(dateData.getMonth())+1) : String.valueOf(Integer.parseInt(dateData.getMonth())+1);
+				String d = i < 10 ? "0"+String.valueOf(i) : String.valueOf(i);
+				String cdate = 	calendarData.getYear() + " " + m + " " + d; // yyyy MM dd 형식
+				logger.info(cdate);
+				map.put("date", cdate);
+				int stprice = billService.totalPrice(map);
+				monthTotalPrice += stprice;
+				calendarData.setTotalPrice(stprice); // 해당 날짜의 지출합계를 구함
+			}
+			
 			dateList.add(calendarData);
 		}
 
@@ -69,11 +98,13 @@ public class CalendarController {
 				dateList.add(calendarData);
 			}
 		}
+		
 		System.out.println(dateList);
 		
 		//배열에 담음
 		model.addAttribute("dateList", dateList);		//날짜 데이터 배열
 		model.addAttribute("today_info", today_info);
+		model.addAttribute("monthTotalPrice", monthTotalPrice);
 		return "calendar/calendarListView";
 	}
 

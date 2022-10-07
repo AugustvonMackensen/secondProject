@@ -53,7 +53,6 @@ table.qa-table tbody tr{;
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 
 <script language="JavaScript" type="text/javascript">
-<!--
 function Change(){
  var key = test.value;
  if(key==1){
@@ -73,6 +72,11 @@ function Change(){
  }
 }
 
+function showWriteForm(){
+	//게시원글 쓰기 페이지로 이동 처리
+	location.href = "${ pageContext.servletContext.contextPath }/qwform.do";
+}
+
 </script>
 </head>
 <body >
@@ -83,13 +87,9 @@ function Change(){
 <br>
 <!-- 
 	=> 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
-
-<!-- <c:if test="${ !empty sessionScope.loginMember }">
-	
-</c:if>-->
-<div style="d5">
-<button onclick="showWriteForm;">글쓰기</button>
-</div>
+ <c:if test="${ !empty sessionScope.loginMember }">
+	<button onclick="showWriteForm();">글쓰기</button>
+</c:if>
 <div>
 		<select id="test" onchange="Change()">
 		<option value="1">제목</option>
@@ -146,11 +146,11 @@ function Change(){
 				들여쓰기 처리 : 원글과 구분지음
 			 -->
 
-			<!-- 로그인한 회원만 상세보기 할 수 있게 한다면 -->
-			<!--<c:if test="${ !empty sessionScope.loginMember }">
-				<a href="${ bdt }">${ b.board_title }</a>
-			</c:if>  -->
-			<a href="${ bdt }">${ b.q_title }</a>
+		
+			<c:if test="${ !empty sessionScope.loginMember }">
+					<a href="${ bdt }">${ b.q_title }</a>
+			</c:if> 
+
 			</td>
 			<td>${ b.q_writer }</td>
 			<td><fmt:formatDate value="${ b.q_date }" pattern="yyyy-MM-dd" /></td>

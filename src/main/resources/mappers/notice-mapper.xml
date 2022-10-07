@@ -3,5 +3,183 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="noticeMapper">
+
+	<resultMap type="Notice" id="resultNotice">
+		<id column="noticeno" property="noticeno" />
+		<result column="noticetitle" property="noticetitle" />
+		<result column="noticedate" property="noticedate" />
+		<result column="noticewriter" property="noticewriter" />
+		<result column="noticecontent" property="noticecontent" />
+		<result column="original_filepath" property="original_filepath" />
+		<result column="rename_filepath" property="rename_filepath" />
+	</resultMap>
+	
+	<resultMap type="Notice" id="resultNoticeTop3">
+		<id column="noticeno" property="noticeno" />
+		<result column="noticetitle" property="noticetitle" />
+		<result column="noticedate" property="noticedate" />		
+	</resultMap>
+	
+	<select id="selectNewTop3" resultMap="resultNoticeTop3">
+		<![CDATA[
+		select *
+		from (select rownum rnum, noticeno, noticetitle, noticedate
+		      from (select * from notice
+		            order by noticedate desc, noticeno desc))
+		where rnum >= 1 and rnum <= 3
+		]]>
+	</select>
+	
+	<!--  리스트 전체 목록 보기  -->
+	<select id="selectAll" resultMap="resultNotice">
+		select * from notice
+		order by noticeno desc
+	</select>
+	
+	<select id="searchTitle" resultMap="resultNotice" parameterType="SearchPaging">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
+						  NOTICEDATE, NOTICEWRITER, 
+						  NOTICECONTENT,  
+			               ORIGINAL_FILEPATH, RENAME_FILEPATH, 
+			               READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE
+			       		   where noticetitle like '%' || #{ keyword } || '%'
+			               ORDER BY NOTICENO DESC, 
+			              			NOTICENO DESC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="searchWriter" resultMap="resultNotice" parameterType="SearchPaging">
+		<![CDATA[
+		SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
+						  NOTICEDATE, NOTICEWRITER, 
+						  NOTICECONTENT,  
+			               ORIGINAL_FILEPATH, RENAME_FILEPATH, 
+			               READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE
+			       		   where noticewriter like '%' || #{ keyword } || '%'
+			               ORDER BY NOTICENO DESC, 
+			              			NOTICENO DESC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="searchDate" resultMap="resultNotice" parameterType="SearchPaging">
+		<![CDATA[
+		SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
+						  NOTICEDATE, NOTICEWRITER, 
+						  NOTICECONTENT,  
+			               ORIGINAL_FILEPATH, RENAME_FILEPATH, 
+			               READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE
+			       		   where noticedate between #{ begin } and #{ end }
+			               ORDER BY NOTICENO DESC, 
+			              			NOTICENO DESC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="selectNotice" parameterType="_int" resultMap="resultNotice">
+		select * from notice
+		where noticeno = #{ noticeno }
+	</select>
+	
+	<delete id="deleteNotice" parameterType="_int">
+		delete from notice
+		where noticeno = #{ noticeno }
+	</delete>
+	
+	<insert id="insertNotice" parameterType="Notice">
+		insert into notice (noticeno, noticetitle, noticewriter, 
+		noticedate, original_filepath, rename_filepath, noticecontent, readcount, IMPORTANCE) 
+		values ((select max(noticeno) + 1 from notice), 
+				#{ noticetitle }, #{ noticewriter }, sysdate, 
+				#{ original_filepath, jdbcType=VARCHAR }, 
+				#{ rename_filepath, jdbcType=VARCHAR }, 
+				#{ noticecontent }, default, 
+				<if test="importance != 0">
+				#{ importance }
+				</if>
+				<if test="importance == 0">
+				default
+				</if>
+				)
+			
+	</insert>
+	
+	<update id="updateNotice" parameterType="Notice">
+		update notice
+		set noticetitle = #{ noticetitle },
+			noticecontent = #{ noticecontent}
+			<if test="original_filepath != null">
+			, original_filepath = #{ original_filepath }
+			, rename_filepath = #{ rename_filepath }
+			</if>
+			<if test="original_filepath == null">
+			, original_filepath = null
+			, rename_filepath = null
+			</if>
+			<if test="importance != 0">
+			, importance = #{ importance }
+			</if>
+			<if test="importance == 0">
+			, importance = default
+			</if>
+		where noticeno = #{ noticeno }
+	</update>
+	
+	<!-- 조회수 1증가 -->
+	<update id="addReadCount" parameterType="_int">
+		update notice
+		set readcount = readcount + 1
+		where noticeno = #{ noticeno }
+	</update>
+	
+	<select id="getListCount" resultType="_int">
+		select count(*) from notice
+	</select>
+	
+	<select id="getSearchTListCount" resultType="_int" parameterType="string">
+		select count(*) from notice
+		where noticetitle like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchWListCount" resultType="_int" parameterType="string">
+		select count(*) from notice
+		where noticewriter like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchDListCount" resultType="_int" parameterType="SearchDate">
+		select count(*) from notice
+		where noticedate between #{ begin } and #{ end }
+	</select>
+	
+	
+	<select id="selectList" parameterType="Paging" resultMap="resultNotice">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
+						  NOTICEDATE, NOTICEWRITER, 
+						  NOTICECONTENT,  
+			               ORIGINAL_FILEPATH, RENAME_FILEPATH, 
+			               READCOUNT, IMPORTANCE
+			       FROM (SELECT * FROM NOTICE 
+			              ORDER BY IMPORTANCE DESC, 
+			              			NOTICENO DESC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
 	
 </mapper>
+
+
+

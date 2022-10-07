@@ -11,43 +11,144 @@
 <c:set var="currentPage" value= "${currentPage}"></c:set>
 <c:set var="currentDate" value= "${currentDate}"></c:set>
 
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
-table th { background-color: #99ffff; }
+table th { background-color: #99ffff; border-bottom: 1px solid #444444;}
+table td {border-bottom: 1px solid #444444;}
 table#outer { border: 2px solid navy; }
+
+
+
 </style>
 <script type="text/javascript" 
 src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
+
+function removeChar(event) {
+
+    event = event || window.event;
+    var keyID = (event.which) ? event.which : event.keyCode;
+    
+    if ( keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) {
+    
+        return;
+        
+    } else {
+    
+        //숫자만 입력
+        event.target.value = event.target.value.replace(/[^0-9]/g, "");
+    
+    }
+    
+}
+
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+function inputNumberFormat(obj) {
+
+    obj.value = comma(uncomma(obj.value));
+    
+}
+
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+
+checkPrice = () => {
+	var m1 = parseInt(uncomma(searchPFrom.p1.value));
+	var m2 = parseInt(uncomma(searchPFrom.p2.value));
+	console.log(m1);
+	console.log(m2);
+	
+	
+	if( searchPFrom.p2.value == ""  ) {
+		alert("금액을 입력해주세요");
+		return false;
+	} else if( m1 > m2 ){
+		alert("가격을 확인해주십시오.\n시작가격은 마지막 가격보다 클 수 없습니다.");
+		return false;
+	} else if( searchPFrom.p1.value=="" && searchPFrom.p2.value != ""){
+		searchPFrom.p1.value=0;
+	}
+	searchPFrom.p1.value = m1;
+	searchPFrom.p2.value = m2;
+}
+checkCategory = () => {
+	
+}
+checkDate = () => {
+	
+	
+	
+	if( searchDFrom.end.value == "" || searchDFrom.begin.value == ""  ) {
+		alert("날짜를 입력해주세요")
+		return false;
+	} else if(!( searchDFrom.end.value == "" || searchDFrom.begin.value == ""  )){
+		var d1 = new Date(searchDFrom.begin.value);
+		var d2 = new Date(searchDFrom.end.value);
+		if( d1 >= d2 ){
+			alert("날짜를 확인해주십시오.\n시작날짜는 마지막 날짜보다 클 수 없습니다.")
+			return false;
+		} 
+	}
+
+}
+
+
+function showDiv(){
+	if($('input[name=item]').eq(0).is(":checked")){
+		$("#searchPriceDiv").css("display", "block");
+		$("#searchDateDiv").css("display", "none");
+		$("#searchCategoryDiv").css("display", "none");
+	}
+	if($('input[name=item]').eq(1).is(":checked")){
+		$("#searchPriceDiv").css("display", "none");
+		$("#searchDateDiv").css("display", "block");
+		$("#searchCategoryDiv").css("display", "none");
+	}
+	if($('input[name=item]').eq(2).is(":checked")){
+		$("#searchPriceDiv").css("display", "none");
+		$("#searchDateDiv").css("display", "none");
+		$("#searchCategoryDiv").css("display", "block");
+	}
+}
+
 $(function(){
+	
+	if(${type == "searchPrice"}) {
+		$("input[name=p1]").val(comma(${p1}))
+		$("input[name=p2]").val(comma(${p2}))
+	}else if(${type == "searchCategory" }) {
+		$("input:radio[name=category]:input[value=${category}]").attr("checked", true)
+		$("input:radio[name=item]:input[value=category]").attr("checked", true)
+	}else if(${type == "searchDate" } ) {
+		$("input[name=begin]").val("${begin}")
+		$("input[name=end]").val("${end}")
+		$("input:radio[name=item]:input[value=date]").attr("checked", true)
+	}
+	
 	showDiv();
+	
+	
 	
 	$('input[name=item]').on("change", function(){
 		showDiv();
 	});
+
+	
+	
 });
 
-function showDiv(){
-	if($('input[name=item]').eq(0).is(":checked")){
-		$("#titleDiv").css("display", "block");
-		$("#writerDiv").css("display", "none");
-		$("#dateDiv").css("display", "none");
-	}
-	if($('input[name=item]').eq(1).is(":checked")){
-		$("#titleDiv").css("display", "none");
-		$("#writerDiv").css("display", "block");
-		$("#dateDiv").css("display", "none");
-	}
-	if($('input[name=item]').eq(2).is(":checked")){
-		$("#titleDiv").css("display", "none");
-		$("#writerDiv").css("display", "none");
-		$("#dateDiv").css("display", "block");
-	}
-}
+
 //글쓰기 버튼 클릭시 실행되는 함수
 function showWriteForm(){
 	// 게시 원글 쓰기 페이지로 이동 처리
@@ -55,10 +156,15 @@ function showWriteForm(){
 }
 
 
+
+
 </script>
 </head>
 <body >
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
+
+
+
 <br>
 <!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
 <h1 align="center">${ currentDate } 지출 목록</h1>
@@ -66,11 +172,51 @@ function showWriteForm(){
 <br>
 <!-- 
 	=> 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
+<!-- 검색 항목 영역 -->
 <center>
-<!-- <c:if test="${ !empty sessionScope.loginMember }">
-	
-</c:if>-->
-<button onclick="showWriteForm;">지출등록(링크바꾸기)</button>
+<div>
+	<h2>검색할 항목을 선택하세요.</h2>
+	<input type="radio" name="item" value="title" checked> 금액 &nbsp; &nbsp;
+	<input type="radio" name="item" value="date"> 날짜 &nbsp; &nbsp;
+	<input type="radio" name="item" value="category"> 카테고리 &nbsp; &nbsp;
+</div>
+<div id="searchPriceDiv">
+	<form name="searchPFrom" action="billListView.do" method="post" onSubmit="return checkPrice()">
+		<input type="hidden" name="type" value="searchPrice">
+		<input type="hidden" name="date" value="${ date }">
+		<input type="hidden" name="userid" value="${ loginMember.userid }">
+		<input type="text" name="p1" class="input--text-item start_price" placeholder="0" onkeyup="removeChar(event);inputNumberFormat(this);">
+		 ~ 
+		<input type="text" name="p2" class="input--text-item end_price" placeholder="999,999,999" onkeyup="removeChar(event);inputNumberFormat(this);">
+		<input type="submit" value="검색">
+	</form>
+</div>
+<div id="searchCategoryDiv">
+	<form name="searchCFrom" action="billListView.do" method="post">
+	<input type="hidden" name="type" value="searchCategory" onSubmit="return checkCategory()">
+	<input type="hidden" name="date" value="${ date }">
+	<input type="hidden" name="userid" value="${ loginMember.userid }">
+		<label>검색할 카테고리를 입력하세요 :
+			<input type="radio" name="category" value="식비">식비
+	&nbsp; <input type="radio" name="category" value="문화/여가">문화/여가
+	&nbsp; <input type="radio" name="category" value="교통비">교통비
+	&nbsp; <input type="radio" name="category" value="기타">기타
+		</label>
+		<input type="submit" value="검색">
+	</form>
+</div>
+<div id="searchDateDiv">
+	<form name="searchDFrom" action="billListView.do" method="post" onSubmit="return checkDate()">
+	<input type="hidden" name="type" value="searchDate">
+	<input type="hidden" name="date" value="${ date }">
+	<input type="hidden" name="userid" value="${ loginMember.userid }">
+		<label>검색할 결제날짜를 입력하세요 :
+			<input type="date" name="begin"> ~
+			<input type="date" name="end">
+		</label>
+		<input type="submit" value="검색">
+	</form>
+</div>
 </center>
 
 <!-- 목록 출력 영역 -->
@@ -85,10 +231,10 @@ function showWriteForm(){
 	<br>
 	<c:forEach items="${ requestScope.list }" var="b" varStatus="status">
 		<tr align="center">
-			<td>${ b.id }</td> 
+			<td>${ status.count+ (currentPage-1) * 10 }</td> 
 			<!-- 지출 금액 클릭시 해당 지출의 상세보기로 넘어가게 처리 -->
 			<c:url var="bdt" value="/billdetail.do">
-				<c:param name="b_id" value="${ b.id }" />
+				<c:param name="bill_id" value="${ b.id }" />
 				<c:param name="page" value="${ currentPage }" />
 			</c:url>
 			<!-- 지출 클릭시 해당 글의 상세보기로 넘어가게 처리함 -->
@@ -113,23 +259,35 @@ function showWriteForm(){
 			<c:param name="page" value="1" />
 			<c:param name="date" value="${ date }"/>
 			<c:param name="userid" value="${ loginMember.userid }"/>
+							<c:param name="p1" value="${ p1 }"/>
+				<c:param name="p2" value="${ p2 }"/>
+				<c:param name="category" value="${ category }"/>
+				<c:param name="begin" value="${ begin }"/>
+				<c:param name="end" value="${ end }"/>
+				<c:param name="type" value="${ type }"/>
 		</c:url>
 		<a href="${ bl }">[맨처음]</a> &nbsp;
 	</c:if>
 	<!-- 이전 페이지그룹으로 이동 처리 -->
-	<c:if test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
+	<c:if test="${ (currentPage - 10) <= startPage and (currentPage - 10) >= 1 }">
 		<c:url var="bl2" value="/billListView.do">
-			<c:param name="page" value="${ startPage - 10 }" />
+			<c:param name="page" value="${ startPage - 1 }" />
 			<c:param name="date" value="${ date }"/>
 			<c:param name="userid" value="${ loginMember.userid }"/>
+							<c:param name="p1" value="${ p1 }"/>
+				<c:param name="p2" value="${ p2 }"/>
+				<c:param name="category" value="${ category }"/>
+				<c:param name="begin" value="${ begin }"/>
+				<c:param name="end" value="${ end }"/>
+				<c:param name="type" value="${ type }"/>
 		</c:url>
 		<a href="${ bl2 }">[이전그룹]</a> &nbsp;
 	</c:if>
-	<c:if test="${ !((currentPage - 10) < startPage and (currentPage - 10) > 1) }">
+	<c:if test="${ !((currentPage - 10) <= startPage and (currentPage - 10) >= 1) }">
 		[이전그룹] &nbsp;
 	</c:if>
 	<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
-	<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
+	<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1" >
 		<c:if test="${ p eq currentPage }">
 			<font size="4" color="red"><b>[${ p }]</b></font>
 		</c:if>
@@ -138,20 +296,32 @@ function showWriteForm(){
 				<c:param name="page" value="${ p }" />
 				<c:param name="date" value="${ date }"/>
 				<c:param name="userid" value="${ loginMember.userid }"/>
-		</c:url>
-		<a href="${ bl3 }">${ p }</a> 
+				<c:param name="p1" value="${ p1 }"/>
+				<c:param name="p2" value="${ p2 }"/>
+				<c:param name="category" value="${ category }"/>
+				<c:param name="begin" value="${ begin }"/>
+				<c:param name="end" value="${ end }"/>
+				<c:param name="type" value="${ type }"/>
+			</c:url>
+			<a href="${ bl3 }">${ p }</a> 
 		</c:if>
 	</c:forEach>
 	<!-- 다음 페이지그룹으로 이동 처리 -->
-	<c:if test="${ (currentPage + 10) > endPage and (currentPage + 10) < maxPage }">
+	<c:if test="${ (currentPage + 10) > endPage and (endPage + 1 ) < maxPage }">
 		<c:url var="bl4" value="/billListView.do">
-			<c:param name="page" value="${ endPage + 10 }" />
+			<c:param name="page" value="${ endPage+1 }" />
 			<c:param name="date" value="${ date }"/>
 			<c:param name="userid" value="${ loginMember.userid }"/>
+							<c:param name="p1" value="${ p1 }"/>
+				<c:param name="p2" value="${ p2 }"/>
+				<c:param name="category" value="${ category }"/>
+				<c:param name="begin" value="${ begin }"/>
+				<c:param name="end" value="${ end }"/>
+				<c:param name="type" value="${ type }"/>
 		</c:url>
 		<a href="${ bl4 }">[다음그룹]</a> &nbsp;
 	</c:if>
-	<c:if test="${ !((currentPage + 10) > endPage and (currentPage + 10) < maxPage) }">
+	<c:if test="${ !((currentPage + 10) > endPage and (endPage + 1) < maxPage) }">
 		[다음그룹] &nbsp;
 	</c:if>
 	<!-- 끝페이지로 이동 처리 -->
@@ -163,6 +333,12 @@ function showWriteForm(){
 			<c:param name="page" value="${ maxPage }" />
 			<c:param name="date" value="${ date }"/>
 			<c:param name="userid" value="${ loginMember.userid }"/>
+			<c:param name="p1" value="${ p1 }"/>
+				<c:param name="p2" value="${ p2 }"/>
+				<c:param name="category" value="${ category }"/>
+				<c:param name="begin" value="${ begin }"/>
+				<c:param name="end" value="${ end }"/>
+				<c:param name="type" value="${ type }"/>
 		</c:url>
 		<a href="${ bl5 }">[맨끝]</a> &nbsp;
 	</c:if>

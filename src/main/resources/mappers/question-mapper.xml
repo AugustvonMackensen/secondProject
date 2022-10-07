@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="qnaMapper">
+<mapper namespace="questionMapper">
 
-	<resultMap type="QNA" id="resultQNA" >
+	<resultMap type="Question" id="resultQuestion" >
 		<id column="q_no" property="q_no" />
 		<result column="q_writer" property="q_writer" />
 		<result column="q_title" property="q_title" />
@@ -12,11 +12,11 @@
 		<result column="q_content" property="q_content" />
 		<result column="q_original_filename" property="q_original_filename" />
 		<result column="q_rename_filename" property="q_rename_filename" />
-		<result column="readcount" property="q_readcount" />
+		<result column="q_readcount" property="q_readcount" />
 	</resultMap>
 
 	<!--  리스트 전체 목록 보기  -->
-	<select id="selectAll" resultMap="resultQNA">
+	<select id="selectAll" resultMap="resultQuestion">
 		select * 
 		from question
 	</select> 
@@ -30,7 +30,7 @@
 	
 	
 	<!-- 번호로 상세보기  -->
-	<select id="selectQNA" parameterType="_int" resultMap="resultQNA" >
+	<select id="selectQuestion" parameterType="_int" resultMap="resultQuestion" >
 		select * from question
 		where q_no = #{ q_no }
 	</select>
@@ -41,7 +41,7 @@
 		select count(*) from question
 	</select>
 	<!-- 페이징 처리 -->
-		<select id="selectList" parameterType="Paging" resultMap="resultQNA">
+		<select id="selectList" parameterType="Paging" resultMap="resultQuestion">
 		<![CDATA[
 			SELECT *  
 			FROM (SELECT ROWNUM RNUM, q_no, q_writer, 
@@ -52,22 +52,62 @@
 		]]>
 	</select>
 	
+	<!-- 원글 작성 -->
+	
+	<insert id="insertOrigin" parameterType="question">
+		insert into question (q_writer, 
+				q_title, q_date, q_content, 
+				q_original_filename, 
+				q_rename_filename,  q_readcount)
+		values ( 
+				#{q_writer}, #{q_title}, 
+				sysdate, #{q_content},
+				#{q_original_filename}, 
+				#{q_rename_filename}, 0)
+	</insert>
+	
+	<!-- 원글 수정용  -->
+	<update id="updateOrigin" parameterType="question">
+		update question
+		set q_title = #{q_title}, 
+			q_content = #{q_content}
+			<if test="q_original_filename != null">
+				, 
+				q_original_filename = #{q_original_filename},
+				q_rename_filename = #{q_rename_filename}
+			</if>
+			<if test="q_rename_filename == null">
+				, 
+				q_original_filename = null,
+				q_rename_filename = null
+			</if>
+		where q_no = #{ q_no }
+	</update>
+	
+	<!-- 원글 삭제용 -->
+	
+		<delete id="deletequestion" parameterType="question">
+		delete from question
+			where q_no = #{q_no}
+	</delete>
+	
+	
 	<!-- 검색제목 -->
-		<select id="searchTitle" resultMap="resultQNA" parameterType="string">
+		<select id="searchTitle" resultMap="resultQuestion" parameterType="string">
 		select * from question
 		where q_title like '%' || #{ keyword } || '%'
 		order by q_no desc
 	</select>
 	
 	<!-- 검색작성자 -->
-	<select id="searchWriter" resultMap="resultQNA" parameterType="string">
+	<select id="searchWriter" resultMap="resultQuestion" parameterType="string">
 		select * from question
 		where q_writer like '%' || #{ keyword } || '%'
 		order by q_no desc
 	</select>
 	
 	<!-- 검색 날짜 -->
-	<select id="searchDate" resultMap="resultQNA" parameterType="SearchDate">
+	<select id="searchDate" resultMap="resultQuestion" parameterType="SearchDate">
 		select * from question
 		where q_date between #{ begin } and #{ end }
 		order by q_no desc

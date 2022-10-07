@@ -11,12 +11,17 @@
 	<typeAliases>
 		<typeAlias type="com.deepblue.dab.bill.model.vo.Bill" alias="Bill" />
 		<typeAlias type="com.deepblue.dab.member.model.vo.Member" alias="Member" />
-		<typeAlias type="com.deepblue.dab.qna.model.vo.QNA" alias="QNA" />
+		<typeAlias type="com.deepblue.dab.qna.model.vo.Question" alias="Question" />
 		<typeAlias type="com.deepblue.dab.common.Paging" alias="Paging" />
 		<typeAlias type="com.deepblue.dab.common.SearchDate" alias="SearchDate" />
 		<typeAlias type="com.deepblue.dab.bill.utils.PagingBill" alias="PagingBill" />
 		<typeAlias type="com.deepblue.dab.member.utils.PagingMember" alias="PagingMember" />
 		<typeAlias type="com.deepblue.dab.common.SearchPaging" alias="SearchPaging" />
+		<typeAlias type="com.deepblue.dab.qna.model.vo.Answer" alias="Answer" />
+		<typeAlias type="com.deepblue.dab.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="com.deepblue.dab.common.SearchPaging" alias="SearchPaging" />
+		<typeAlias type="com.deepblue.dab.calendar.model.vo.DateData" alias="DateData" />
+		<typeAlias type="com.deepblue.dab.chart.model.vo.Chart" alias="Chart" />
 	</typeAliases>
 
 	<mappers>
@@ -24,6 +29,7 @@
 		<mapper resource="mappers/notice-mapper.xml" />
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/bill-mapper.xml" />
-		<mapper resource="mappers/qna-mapper.xml" />
+		<mapper resource="mappers/question-mapper.xml" />
+		<mapper resource="mappers/chart-mapper.xml" />
 	</mappers>
 </configuration>

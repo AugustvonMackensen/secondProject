@@ -1,6 +1,9 @@
 package com.deepblue.dab.member.controller;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.deepblue.dab.common.SearchDate;
@@ -200,6 +204,71 @@ public class MemberController {
 			model.addAttribute("message", "회원 가입 실패!");
 			return "common/error";
 		}
+	}
+	
+	//명함 회원가입
+	//2. 이미지로 업로드해서 이메일 데이터 추출
+	@PostMapping("extractImgtoTxt.do")
+	public String extractImgtoTxt(@RequestParam("nameCardFile") MultipartFile mfile, Model model, 
+			HttpServletRequest request) throws Exception {
+		String savePath = request.getSession().getServletContext().getRealPath("resources/namecard_img_files");
+		String ocrPath = request.getSession().getServletContext().getRealPath("resources/ocr_python");
+		//첨부파일이 있을때만 업로드된 파일을 폴더로 옮김
+		if(!mfile.isEmpty()) {
+			String filename = mfile.getOriginalFilename();
+			if(filename != null && filename.length() > 0) {
+				//변경할 파일 이름
+				String renameFileName = "namecard";
+				renameFileName += "." + filename.substring(filename.lastIndexOf(".") + 1);
+				
+				//파일 객체 생성
+				File originFile = new File(savePath + "\\" + filename);
+				File renameFile = new File(savePath + "\\" + renameFileName);
+				
+				mfile.transferTo(renameFile);
+				
+				String detectorFile = ocrPath + "\\" + "namecard_detector.py";
+				ProcessBuilder builder = new ProcessBuilder("python", detectorFile, 
+						ocrPath + "/ocrproject-363303-86c62cdc4683.json", savePath + "/namecard.jpg");
+				builder.redirectErrorStream(true);
+				System.out.println(builder.command());
+				Process p = builder.start();
+				
+				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), "utf-8"));
+				StringBuilder buffer = new StringBuilder();
+				String line = null;
+				while((line = br.readLine()) != null) {
+					buffer.append(line);
+				}
+				String email = buffer.toString();
+				System.out.println("추출된 이메일 : " + email);
+				
+				model.addAttribute("extractedTxt", email);
+				
+				int exitVal = p.waitFor();
+				if(exitVal != 0)  {
+				   System.out.println("비정상 종료");
+				}
+				br.close();
+				return "member/uploadCardImg";
+				
+			} else {
+				model.addAttribute("message", "데이터 추출 실패!");
+				return "common/error";
+			}
+			
+		} else {
+			model.addAttribute("message", "데이터 추출 실패!");
+			return "common/error";
+		}
+		
+	}
+	
+	//명함 데이터를 명함 회원가입 폼으로 보냄
+	@GetMapping("sendEnrollForm.do")
+	public String sendCardData(@RequestParam("extractedTxt") String email, Model model) {
+		model.addAttribute("usermail", email);
+		return "member/cardEnrollPage";
 	}
 		
 	

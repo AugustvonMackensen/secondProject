@@ -176,6 +176,18 @@ INSERT INTO ANSWER VALUES(default, 3, 'admin', '사이트 사용법', sysdate, '
 INSERT INTO BILL VALUES(default, 'user02', sysdate, 10000, '즉석떡볶이', '음식',null,null,null,null);
 INSERT INTO BILL VALUES(default, 'user03', sysdate, 30800, '피아노 학원 등록', '취미',null,null,null,null);
 INSERT INTO BILL VALUES(default, 'user04', sysdate, 42000, '택시비 및 버스비', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 01 10', 'yyyy mm dd') , 15573, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 02 10', 'yyyy mm dd') , 13722, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 03 10', 'yyyy mm dd') , 94135, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 04 10', 'yyyy mm dd') , 785541, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 05 10', 'yyyy mm dd') , 357721, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 06 10', 'yyyy mm dd') , 12370570, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 07 10', 'yyyy mm dd') , 1242720, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 08 10', 'yyyy mm dd') , 75818, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 09 10', 'yyyy mm dd') , 12087857, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 11 10', 'yyyy mm dd') , 12078312, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 12 10', 'yyyy mm dd') , 07851254, '더미 데이터', '교통비',null,null,null,null);
+
 COMMIT;
 
 -- 관리자인 'admin' 인 아이디의 컬럼값 변경
