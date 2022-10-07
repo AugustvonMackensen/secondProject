@@ -22,12 +22,7 @@
 	//for(var i in "${dateList}") {
 	//	console.log(i);
 	//}
-	var dlist = JSON.stringify(${dateList})
-	console.log(dlist)
-	
-	for(var i in dlist) {
-		console.log(dlist[i]);
-	}
+
 	</script>
 
 	<style TYPE="text/css">
@@ -290,7 +285,7 @@ html, body {
 							</c:url>
 							<br>
 							<c:if test="${ dateList.totalPrice != '0' }">
-							<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+							<a  style="color: red; background-color: white; display: inline-block;" href="${ dayRecipt }">-<fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
 							</c:if>
 							
 						</c:if>
@@ -310,7 +305,7 @@ html, body {
 							</c:url>
 							<br>
 							<c:if test="${ dateList.totalPrice != '0' }">
-							<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+							<a  style="color: red; background-color: white; display: inline-block;" href="${ dayRecipt }">-<fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
 							</c:if>
 							
 							</c:if>
@@ -333,7 +328,7 @@ html, body {
 							</c:url>
 							<br>
 				<c:if test="${ dateList.totalPrice != '0' }">
-				<a  style="background-color: white;" href="${ dayRecipt }">지출 <fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
+				<a  style="color: red; background-color: white; display: inline-block;" href="${ dayRecipt }">-<fmt:formatNumber type="number" maxFractionDigits="3" value="${dateList.totalPrice}" /></a>
 				</c:if>
 				
 			</c:if>

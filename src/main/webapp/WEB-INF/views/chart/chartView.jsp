@@ -9,11 +9,65 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script type="text/javascript">
 
+<script type="text/javascript">
+function getPieChart() {
+	let monthList = [];
+	let posList = [];
+	$.ajax({
+		url:"CategoryChart.do",
+		type:"get",
+		data:{ userid: "${loginMember.userid}" },
+		dataType:"json",
+		success: (data) => {
+			
+			for (let i = 0; i<data.length;i++){    				  
+				monthList.push(data[i].label);    				  
+				posList.push(data[i].sumPrice);    				  
+		 	 }
+		console.log(monthList);
+		console.log(posList);
+		
+		var dataset={ 
+				labels: "카테고리 별 지출",
+				backgroundColor: ['#ffd950', '#02bc77', '#28c3d7', '#FF6384'],
+			    borderColor: '#22252B',
+			    data: posList 
+		};
+		
+		var datasets={ datasets:[dataset], labels: monthList}
+		
+		new Chart(document.getElementById("line-chart2"), {
+	    	  type: 'pie',
+	    	  data: datasets,
+	    	  options: {
+	    		  responsive: true,
+	    	        maintainAspectRatio: false, //true 하게 되면 캔버스 width,height에 따라 리사이징된다.
+	    	        legend: {
+	    	            position: 'top',
+	    	            fontColor: 'black',
+	    	            align: 'center',
+	    	            display: true,
+	    	            fullWidth: true,
+	    	            labels: {
+	    	                fontColor: 'rgb(0, 0, 0)'
+	    	            }
+	    	        }
+	    	  }
+	    	  
+		}); //그래프
+		},
+		error: (jqXHR , textStatus, errorThrown) => {
+			console.log("ntop3 error : "+ jqXHR+", " + textStatus +", " +errorThrown);
+			
+			}
+	})
+}
 function getChart() {
 	let monthList = [];
 	let posList = [];
+	
+	
 	
 	$.ajax({
 		url:"currentYearChart.do",
@@ -61,6 +115,7 @@ function getChart() {
 
 $(() => {
 	getChart();
+	getPieChart();
 });
 
 </script>
@@ -98,34 +153,32 @@ $(() => {
               <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                 <div class="row">
                   <div class="col-lg-12">
-                    <span style="color: #3BF766; font-size: 80px;">D</span>
-                    <span style="color: #7353D4; font-size: 70px;">eep</span>
-                    <span style="color: #3BF766; font-size: 80px;">A</span>
-                    <span style="color: #7353D4; font-size: 70px;">ccount</span></h1>
-                    <span style="color: #3BF766; font-size: 80px;">B</span>
-                    <span style="color: #7353D4; font-size: 70px;">ook</span></h1>
-                    
-                  </div>
-                  <div class="col-lg-12">
-                    <div class="white-button first-button scroll-to-section">
-                      <a href="${ pageContext.servletContext.contextPath }/calendarListView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
-                    </div>
-                    <a href="${ pageContext.servletContext.contextPath }/chartView.do">차트 보러가기</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                   <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
                 
 				<c:if test="${ loginMember != null }">
 				<canvas id="line-chart" width="300" height="250"></canvas>
 				</c:if>
-				<c:if test="${ loginMember == null }">
-                <img style="margin-left : 200px" src="resources/assets/images/slider-dec.png" alt="">
-              	</c:if>
+				
+              </div>
+                  </div>
+                  
+                  <div class="col-lg-12">
+                  </div>
+                  
+                </div>
               </div>
             </div>
+            
+            <div class="col-lg-6">
+              <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                
+				<c:if test="${ loginMember != null }">
+				<canvas id="line-chart2" width="300" height="250"></canvas>
+				</c:if>
+				
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>
