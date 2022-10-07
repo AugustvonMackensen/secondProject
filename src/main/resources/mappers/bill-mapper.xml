@@ -54,6 +54,33 @@
 		where to_char(bill_timestamp, 'yyyy mm dd') = #{ date } and	userid = #{userid}
 	</select>
 
+	<select id="selectListCountSearch" parameterType="Map" resultType="_int">
+		select count(*)
+		from bill
+		where to_char(bill_timestamp, 'yyyy mm dd') = #{ date } and	userid = #{userid}
+		<if test="type != null and type =='searchPrice'">
+			and bill_price between #{p1} and #{p2}
+		</if>
+		<if test="type != null and type =='searchCategory'">
+			and bill_category = #{category}
+		</if>
+		<if test="type != null and type =='searchDate'">
+			and bill_timestamp between #{begin} and #{end}
+		</if>
+	</select>
+	
+	<select id="getTotalPrice" parameterType="Map" resultType="_int">
+		select sum(bill_price)
+		from bill
+		where userid=#{userid} 
+		<if test="date!= null and date.length() == 10 ">
+			and to_char(bill_timestamp, 'yyyy mm dd') = #{date}
+		</if>
+		<if test="date!= null and date.length() == 7 ">
+			and to_char(bill_timestamp, 'yyyy mm') = #{date}
+		</if>
+	</select>
+	
 	<select id="selectList" parameterType="PagingBill" 
 		resultMap="resultBill">
 		<![CDATA[
@@ -74,7 +101,37 @@
 		]]>
 
 	</select>
-	
+
+
+	<select id="selectListSearch" parameterType="Map" 
+		resultMap="resultBill">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, b.*
+			       FROM (SELECT * FROM bill ]]>
+					<if test="date!= null and date.length() == 10 ">
+						where to_char(bill_timestamp, 'yyyy mm dd') = #{ date } and userid = #{userid}
+					</if>
+					<if test="date!= null and date.length() == 7 ">
+						where to_char(bill_timestamp, 'yyyy mm') = #{ date } and userid = #{userid}
+					</if>
+					<if test="date == null">
+						where userid = #{userid}
+					</if>
+					<if test="type != null and type =='searchPrice'">
+						and bill_price between #{p1} and #{p2}
+					</if>
+					<if test="type != null and type =='searchCategory'">
+						and bill_category = #{category}
+					</if>
+					<if test="type != null and type =='searchDate'">
+						and bill_timestamp between #{begin} and #{end}
+					</if>
+		<![CDATA[	       ORDER BY BILL_TIMESTAMP ASC) b )  
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+
+	</select>
 	
 	<select id="selectBill" parameterType="_int" resultType="Bill">
 		select * from bill where id = #{id}

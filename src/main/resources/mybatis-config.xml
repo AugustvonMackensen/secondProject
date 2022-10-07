@@ -18,6 +18,7 @@
 		<typeAlias type="com.deepblue.dab.qna.model.vo.Answer" alias="Answer" />
 		<typeAlias type="com.deepblue.dab.notice.model.vo.Notice" alias="Notice" />
 		<typeAlias type="com.deepblue.dab.common.SearchPaging" alias="SearchPaging" />
+		<typeAlias type="com.deepblue.dab.calendar.model.vo.DateData" alias="DateData" />
 	</typeAliases>
 
 	<mappers>

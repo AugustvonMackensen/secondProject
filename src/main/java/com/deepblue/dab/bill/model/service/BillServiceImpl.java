@@ -47,6 +47,61 @@ public class BillServiceImpl implements BillService{
 		// TODO Auto-generated method stub
 		return billDao.deleteBill(id);
 	}
+
+	@Override
+	public int totalPrice(Map<String, Object> map) {
+		return billDao.totalPrice(map);
+	}
+
+	@Override
+	public ArrayList<Bill> selectListSearchPrice(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Bill> selectListSearchCategory(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Bill> selectListSearchDate(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int selectListCountSearchPrice(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;//billDao.selectListCountSearchPrice(map);
+	}
+
+	@Override
+	public int selectListCountSearchCategory(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;//billDao.selectListCountSearchCategory(map);
+	}
+
+	@Override
+	public int selectListCountSearchDate(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;//billDao.selectListCountSearchDate(map);
+	}
+
+	@Override
+	public int selectListCountSearch(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return billDao.selectListCountSearch(map);
+	}
+
+	@Override
+	public ArrayList<Bill> selectListSearch(Map<String, Object> map) {
+		// 검색용 담당
+		return billDao.selectListSearch(map);
+	}
+
+
 	
 	
 }
