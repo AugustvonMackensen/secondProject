@@ -33,6 +33,7 @@
             </a>
             <ul class="nav">
               <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
+              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li>
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="${ pageContext.servletContext.contextPath }/qnaListView.do">Q&A게시판</a></li>
               <!-- 로그인시에만 가계부메뉴 보임 -->
               <c:if test="${ !empty sessionScope.loginMember }">
