@@ -41,6 +41,9 @@ public class CalendarController {
 		String userid = ((Member)request.getSession().getAttribute("loginMember")).getUserid();
 		logger.info(userid);
 		
+		// 해당 월의 총가격합계를 위한 변수
+		int monthTotalPrice=0;
+		
 		Calendar cal = Calendar.getInstance();
 		DateData calendarData;
 		//검색 날짜
@@ -77,8 +80,9 @@ public class CalendarController {
 				String cdate = 	calendarData.getYear() + " " + m + " " + d; // yyyy MM dd 형식
 				logger.info(cdate);
 				map.put("date", cdate);
-				
-				calendarData.setTotalPrice(billService.totalPrice(map)); // 해당 날짜의 지출합계를 구함
+				int stprice = billService.totalPrice(map);
+				monthTotalPrice += stprice;
+				calendarData.setTotalPrice(stprice); // 해당 날짜의 지출합계를 구함
 			}
 			
 			dateList.add(calendarData);
@@ -100,6 +104,7 @@ public class CalendarController {
 		//배열에 담음
 		model.addAttribute("dateList", dateList);		//날짜 데이터 배열
 		model.addAttribute("today_info", today_info);
+		model.addAttribute("monthTotalPrice", monthTotalPrice);
 		return "calendar/calendarListView";
 	}
 

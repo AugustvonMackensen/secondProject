@@ -170,7 +170,7 @@ public class BillController {
 						System.out.println("JSONObject 가져오기 완료");
 
 						FileReaderTest fText = new FileReaderTest();
-						sendJson = fText.printInfo(o);
+						sendJson = fText.printInfo(o); // 전달할 값들 가공
 						model.addAttribute("test", "문자어캐꺼냄?");
 					}
 				} catch (Exception e) {
@@ -208,7 +208,7 @@ public class BillController {
 	@RequestMapping("billListView.do")
 	public ModelAndView billListMethod(
 			@RequestParam(name="page", required=false) String page,
-			@RequestParam("date") String date,
+			@RequestParam(name="date") String date,
 			@RequestParam(name="userid",required=false) String userid,
 			// 검색용 파라미터이지만 여기는 get요청 => 페이지 누름
 			@RequestParam(name="type",required=false) String type,
@@ -225,16 +225,20 @@ public class BillController {
 		
 		String[] tokken = date.split(" ");
 		String[] origin = tokken.clone();
-		logger.info("년 + " +tokken[0]);
-		logger.info("월 + " +tokken[1]);
-		logger.info("일 + " +tokken[2]);
-		if(tokken[1].length() == 1)
-			tokken[1] = "0" + tokken[1];
-		if(tokken[2].length() == 1)
-			tokken[2] = "0" + tokken[2];
+		
+		if(tokken.length == 3) {
+			if(tokken[1].length() == 1)
+				tokken[1] = "0" + tokken[1];
+			if(tokken[2].length() == 1)
+				tokken[2] = "0" + tokken[2];
+			date = tokken[0] +" "+ tokken[1] + " " + tokken[2];
+		}else if (tokken.length == 2)  {
+			if(tokken[1].length() == 1)
+				tokken[1] = "0" + tokken[1];
+			date = tokken[0] +" "+ tokken[1];
+		}
 		
 		
-		date = tokken[0] +" "+ tokken[1] + " " + tokken[2];
 //		logger.info(date);
 		int currentPage = 1;
 		if(page != null) {
@@ -269,11 +273,12 @@ public class BillController {
 		}
 		int limit = 10;  
 
-		if(type!=null && type.length() > 0) {
+		if(type!=null && type.length() > 2) {
 			map.put("type",type); // 이걸안넣어줘서 ㅋㅋ
 			mv.addObject("type",type);
 			listCount = billService.selectListCountSearch(map);
 		} else { // 검색을 이용하지 않은 페이지 선택 또는 메인 listview 페이지 count
+			mv.addObject("type","0");
 			listCount = billService.selectListCountDay(map); //해당 날짜 를 매개변수로 줘서 몇개인지 계산
 		}
 		logger.info("받음 + listCount : " + listCount);
@@ -433,16 +438,20 @@ public class BillController {
 		
 		String[] tokken = date.split(" ");
 		String[] origin = tokken.clone();
-		logger.info("년 + " +tokken[0]);
-		logger.info("월 + " +tokken[1]);
-		logger.info("일 + " +tokken[2]);
-		if(tokken[1].length() == 1)
-			tokken[1] = "0" + tokken[1];
-		if(tokken[2].length() == 1)
-			tokken[2] = "0" + tokken[2];
+		
+		if(tokken.length == 3) {
+			if(tokken[1].length() == 1)
+				tokken[1] = "0" + tokken[1];
+			if(tokken[2].length() == 1)
+				tokken[2] = "0" + tokken[2];
+			date = tokken[0] +" "+ tokken[1] + " " + tokken[2];
+		}else if (tokken.length == 2)  {
+			if(tokken[1].length() == 1)
+				tokken[1] = "0" + tokken[1];
+			date = tokken[0] +" "+ tokken[1];
+		}
 		
 		
-		date = tokken[0] +" "+ tokken[1] + " " + tokken[2];
 //		logger.info(date);
 		int currentPage = 1;
 //		if(page != null) {

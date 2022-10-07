@@ -10,10 +10,6 @@ public interface BillService {
 
 	int insertBill(Bill bill);
 
-	int selectListCountDay(Map<String, Object> map);
-
-	ArrayList<Bill> selectList(PagingBill paging);
-
 	Bill selectBill(int bill_id);
 
 	int updateBill(Bill bill);
@@ -22,19 +18,9 @@ public interface BillService {
 
 	int totalPrice(Map<String, Object> map);
 
-	ArrayList<Bill> selectListSearchPrice(Map<String, Object> map);
-
-	ArrayList<Bill> selectListSearchCategory(Map<String, Object> map);
-
-	ArrayList<Bill> selectListSearchDate(Map<String, Object> map);
-
-	int selectListCountSearchPrice(Map<String, Object> map);
-
-	int selectListCountSearchCategory(Map<String, Object> map);
-
-	int selectListCountSearchDate(Map<String, Object> map);
-
+	int selectListCountDay(Map<String, Object> map);
+	ArrayList<Bill> selectList(PagingBill paging);
+	
 	int selectListCountSearch(Map<String, Object> map);
-
 	ArrayList<Bill> selectListSearch(Map<String, Object> map);
 }

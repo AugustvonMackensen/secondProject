@@ -11,14 +11,19 @@
 <c:set var="currentPage" value= "${currentPage}"></c:set>
 <c:set var="currentDate" value= "${currentDate}"></c:set>
 
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
-table th { background-color: #99ffff; }
+table th { background-color: #99ffff; border-bottom: 1px solid #444444;}
+table td {border-bottom: 1px solid #444444;}
 table#outer { border: 2px solid navy; }
+
+
+
 </style>
 <script type="text/javascript" 
 src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
@@ -42,76 +47,105 @@ function removeChar(event) {
     
 }
 
-function comma(obj) {
-
-    var regx = new RegExp(/(-?\d+)(\d{3})/);
-    var bExists = obj.indexOf(".", 0);
-    var strArr = obj.split('.');
-    
-    while (regx.test(strArr[0])) {
-    
-        strArr[0] = strArr[0].replace(regx, "$1,$2");
-    }
-    
-    if (bExists > -1) {
-        
-        obj = strArr[0] + "." + strArr[1];
-        
-    } else { 
-    
-        obj = strArr[0];
-        
-    }
-    
-    return obj;
-    
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 }
 
 function inputNumberFormat(obj) {
 
-    obj.value = comma(obj.value);
+    obj.value = comma(uncomma(obj.value));
     
 }
 
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+
 checkPrice = () => {
+	var m1 = parseInt(uncomma(searchPFrom.p1.value));
+	var m2 = parseInt(uncomma(searchPFrom.p2.value));
+	console.log(m1);
+	console.log(m2);
+	
 	
 	if( searchPFrom.p2.value == ""  ) {
-		alert("금액을 입력해주세요")
-		
+		alert("금액을 입력해주세요");
 		return false;
-	} else if( searchPFrom.p1.value > searchPFrom.p2.value ){
-		alert("가격을 확인해주십시오.\n시작가격은 마지막 가격보다 클 수 없습니다.")
+	} else if( m1 > m2 ){
+		alert("가격을 확인해주십시오.\n시작가격은 마지막 가격보다 클 수 없습니다.");
 		return false;
 	} else if( searchPFrom.p1.value=="" && searchPFrom.p2.value != ""){
 		searchPFrom.p1.value=0;
 	}
+	searchPFrom.p1.value = m1;
+	searchPFrom.p2.value = m2;
+}
+checkCategory = () => {
+	
+}
+checkDate = () => {
+	
+	
+	
+	if( searchDFrom.end.value == "" || searchDFrom.begin.value == ""  ) {
+		alert("날짜를 입력해주세요")
+		return false;
+	} else if(!( searchDFrom.end.value == "" || searchDFrom.begin.value == ""  )){
+		var d1 = new Date(searchDFrom.begin.value);
+		var d2 = new Date(searchDFrom.end.value);
+		if( d1 >= d2 ){
+			alert("날짜를 확인해주십시오.\n시작날짜는 마지막 날짜보다 클 수 없습니다.")
+			return false;
+		} 
+	}
 
 }
 
+
 function showDiv(){
 	if($('input[name=item]').eq(0).is(":checked")){
-		$("#titleDiv").css("display", "block");
-		$("#writerDiv").css("display", "none");
-		$("#dateDiv").css("display", "none");
+		$("#searchPriceDiv").css("display", "block");
+		$("#searchDateDiv").css("display", "none");
+		$("#searchCategoryDiv").css("display", "none");
 	}
 	if($('input[name=item]').eq(1).is(":checked")){
-		$("#titleDiv").css("display", "none");
-		$("#writerDiv").css("display", "block");
-		$("#dateDiv").css("display", "none");
+		$("#searchPriceDiv").css("display", "none");
+		$("#searchDateDiv").css("display", "block");
+		$("#searchCategoryDiv").css("display", "none");
 	}
 	if($('input[name=item]').eq(2).is(":checked")){
-		$("#titleDiv").css("display", "none");
-		$("#writerDiv").css("display", "none");
-		$("#dateDiv").css("display", "block");
+		$("#searchPriceDiv").css("display", "none");
+		$("#searchDateDiv").css("display", "none");
+		$("#searchCategoryDiv").css("display", "block");
 	}
 }
 
 $(function(){
+	
+	if(${type == "searchPrice"}) {
+		$("input[name=p1]").val(comma(${p1}))
+		$("input[name=p2]").val(comma(${p2}))
+	}else if(${type == "searchCategory" }) {
+		$("input:radio[name=category]:input[value=${category}]").attr("checked", true)
+		$("input:radio[name=item]:input[value=category]").attr("checked", true)
+	}else if(${type == "searchDate" } ) {
+		$("input[name=begin]").val("${begin}")
+		$("input[name=end]").val("${end}")
+		$("input:radio[name=item]:input[value=date]").attr("checked", true)
+	}
+	
 	showDiv();
+	
+	
 	
 	$('input[name=item]').on("change", function(){
 		showDiv();
 	});
+
+	
+	
 });
 
 
@@ -120,6 +154,8 @@ function showWriteForm(){
 	// 게시 원글 쓰기 페이지로 이동 처리
 	location.href = "${pageContext.servletContext.contextPath}/bwform.do";
 }
+
+
 
 
 </script>
@@ -141,21 +177,23 @@ function showWriteForm(){
 <div>
 	<h2>검색할 항목을 선택하세요.</h2>
 	<input type="radio" name="item" value="title" checked> 금액 &nbsp; &nbsp;
-	<input type="radio" name="item" value="writer"> 날짜 &nbsp; &nbsp;
-	<input type="radio" name="item" value="date"> 카테고리 &nbsp; &nbsp;
+	<input type="radio" name="item" value="date"> 날짜 &nbsp; &nbsp;
+	<input type="radio" name="item" value="category"> 카테고리 &nbsp; &nbsp;
 </div>
-<div id="titleDiv">
+<div id="searchPriceDiv">
 	<form name="searchPFrom" action="billListView.do" method="post" onSubmit="return checkPrice()">
 		<input type="hidden" name="type" value="searchPrice">
+		<input type="hidden" name="date" value="${ date }">
+		<input type="hidden" name="userid" value="${ loginMember.userid }">
 		<input type="text" name="p1" class="input--text-item start_price" placeholder="0" onkeyup="removeChar(event);inputNumberFormat(this);">
 		 ~ 
 		<input type="text" name="p2" class="input--text-item end_price" placeholder="999,999,999" onkeyup="removeChar(event);inputNumberFormat(this);">
 		<input type="submit" value="검색">
 	</form>
 </div>
-<div id="dateDiv">
-	<form action="billListView.do" method="post">
-	<input type="hidden" name="type" value="searchCategory">
+<div id="searchCategoryDiv">
+	<form name="searchCFrom" action="billListView.do" method="post">
+	<input type="hidden" name="type" value="searchCategory" onSubmit="return checkCategory()">
 	<input type="hidden" name="date" value="${ date }">
 	<input type="hidden" name="userid" value="${ loginMember.userid }">
 		<label>검색할 카테고리를 입력하세요 :
@@ -167,9 +205,11 @@ function showWriteForm(){
 		<input type="submit" value="검색">
 	</form>
 </div>
-<div id="writerDiv">
-	<form action="billListView.do" method="post">
+<div id="searchDateDiv">
+	<form name="searchDFrom" action="billListView.do" method="post" onSubmit="return checkDate()">
 	<input type="hidden" name="type" value="searchDate">
+	<input type="hidden" name="date" value="${ date }">
+	<input type="hidden" name="userid" value="${ loginMember.userid }">
 		<label>검색할 결제날짜를 입력하세요 :
 			<input type="date" name="begin"> ~
 			<input type="date" name="end">

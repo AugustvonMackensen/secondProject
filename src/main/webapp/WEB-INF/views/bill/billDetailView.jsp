@@ -19,6 +19,7 @@
 		color:#880000; 
 		background-color: #d3d3d3;
 	}
+	
 </style>
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
