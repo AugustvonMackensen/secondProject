@@ -24,5 +24,6 @@
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/bill-mapper.xml" />
 		<mapper resource="mappers/question-mapper.xml" />
+		<mapper resource="mappers/answer-mapper.xml" />
 	</mappers>
 </configuration>

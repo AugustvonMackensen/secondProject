@@ -19,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.deepblue.dab.common.Paging;
 import com.deepblue.dab.common.SearchDate;
+import com.deepblue.dab.qna.model.service.AnswerService;
 import com.deepblue.dab.qna.model.service.QuestionService;
+import com.deepblue.dab.qna.model.vo.Answer;
 import com.deepblue.dab.qna.model.vo.Question;
 
 @Controller
@@ -28,6 +30,8 @@ public class QuestionController {
 	
 	@Autowired
 	private QuestionService qnaService;
+	@Autowired
+	private AnswerService answerService;
 	
 	@RequestMapping("qnaListView.do")
 	public ModelAndView qnaListMethod(
@@ -95,10 +99,15 @@ public class QuestionController {
 		//해당 게시글 조회
 		Question qna = qnaService.selectQuestion(q_no);
 		
+		ArrayList<Answer> replylist = answerService.replyList(q_no); 
+
+		
 		if(qna !=null) {
 			mv.addObject("question", qna);
 			mv.addObject("currentPage", currentPage);
+			mv.addObject("replylist", replylist);
 			mv.setViewName("qna/qnaDetailView"); //디테일만 바꿈
+			
 		}else {
 			mv.addObject("message", 
 					q_no + "번 게시글 조회 실패");
