@@ -21,7 +21,6 @@ public class MailSendService {
 	public String mailMessage(String email) {
 		Random rdm = new Random();
 		int checkNum = rdm.nextInt(888888) + 111111;
-		System.out.println("인증번호 : " +  checkNum);
 		auth_num = checkNum;
 		
 		String setFrom = "holyromanempire16th@gmail.com";
@@ -37,7 +36,6 @@ public class MailSendService {
 	public String sendTempPwd(String userid, String email) {
 		String memberKey = 
 				RandomStringUtils.random(10, 33, 125, false, false);
-		System.out.println("임시비밀번호 : " +  memberKey);
 		String setFrom = "holyromanempire16th@gmail.com";
 		String toMail = email;
 		String title = "임시 비밀번호를 발급해드립니다.";

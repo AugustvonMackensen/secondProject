@@ -113,8 +113,9 @@ $(() => {
                   <div class="col-lg-12">
                     <div class="white-button first-button scroll-to-section">
                       <a href="${ pageContext.servletContext.contextPath }/calendarListView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
-                    </div>
-                    <a href="${ pageContext.servletContext.contextPath }/chartView.do">차트 보러가기</a>
+                    &nbsp;  &nbsp;  &nbsp;
+                    <a href="${ pageContext.servletContext.contextPath }/chartView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">차트 보러가기</a>
+                  		</div>
                   </div>
                 </div>
               </div>

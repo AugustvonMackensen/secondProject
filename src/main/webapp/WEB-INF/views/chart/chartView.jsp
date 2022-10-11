@@ -244,7 +244,7 @@ $(() => {
                 	
                 	<div align="left">
                 	<div style="width:200px;">
-					  <input class="custom-control-input" type="radio" name="radio" id="r1" value="1"><label for="r1">년도</label>
+					  <input  type="radio" name="radio" id="r1" value="1"><label for="r1">년도</label>
 					</div>
                 	<input style="display: none;" name="barChartMonth" type="month" min="2020-01" max="2022-12">
                     <select style="display: none;" name="barChartYear"id="resv_program_type" class="form-control">
@@ -254,7 +254,7 @@ $(() => {
 				    </select>
 				    </div>
 				<c:if test="${ loginMember != null }">
-				<canvas id="line-chart" width="300" height="250"></canvas>
+				<canvas id="line-chart" width="250" height="200"></canvas>
 				</c:if>
 				
               </div>
@@ -269,9 +269,9 @@ $(() => {
             
             <div class="col-lg-6" style="z-index: 10;">
             		<div align="center">
-                	<div class="custom-control custom-radio" style="width:200px;">
-					  <input class="custom-control-input" type="radio" name="radio2" id="r1" value="1"><label class="custom-control-label" for="r1">년도</label>
-					  <input class="custom-control-input" type="radio" name="radio2" id="r2" value="0"><label class="custom-control-label" for="r2">월</label>
+                	<div style="width:200px;">
+					  <input type="radio" name="radio2" id="r1" value="1"><label for="r1">년도</label>
+					  <input type="radio" name="radio2" id="r2" value="0"><label for="r2"> 월</label>
 					</div>
                 	<input style="display: none;" name="pieChartMonth" type="month" min="2020-01" max="2022-12">
                     <select style="display: none; width: 100px;" name="pieChartYear"id="resv_program_type" class="form-control">
@@ -284,7 +284,7 @@ $(() => {
                 
                 
 				<c:if test="${ loginMember != null }">
-				<canvas name="pie" style="z-index: 10;" id="line-chart2" width="300" height="250"></canvas>
+				<canvas name="pie" style="z-index: 10;" id="line-chart2" width="400" height="350"></canvas>
 				</c:if>
 				
               </div>

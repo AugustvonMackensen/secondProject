@@ -45,11 +45,6 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public ArrayList<Question> selectSearchWriter(String keyword) {
-		return qnaDao.selectSearchWriter(keyword);
-	}
-
-	@Override
 	public ArrayList<Question> selectSearchDate(SearchDate date) {
 		return qnaDao.selectSearchDate(date);
 	}
@@ -68,12 +63,9 @@ public class QuestionServiceImpl implements QuestionService {
 	public int deletequestion(Question question) {
 		return qnaDao.deleteQuestion(question);
 	}
-
 	
-
-
-
-
-
-
+	   @Override
+	   public ArrayList<Question> selectSearchWriter(String keyword) {
+	      return qnaDao.selectSearchWriter(keyword);
+	   }
 }

@@ -19,6 +19,8 @@ table, tr, th, td {
         height: 300px;
       }
 </style>
+
+
 <title>Insert title here</title>
 <script type="text/javascript">
 function showreplydiv(){
@@ -35,9 +37,14 @@ function showreplydiv(){
 
 </head>
 <body>
+
 	<!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 	<c:import url="/WEB-INF/views/common/menubar.jsp" />
-
+<style type="text/css" >
+html, body {
+		overflow: scroll;
+	}	
+</style>
 	<h2 align="center">${ requestScope.question.q_no }번 게시글 상세보기</h2>
 	<br>
 	<table align="center" border="1" cellspacing="0"
@@ -85,8 +92,11 @@ function showreplydiv(){
 				<c:param name="q_rename_filename" value="${ question.q_rename_filename}" />
 			</c:url>
 			<a href="${ bdl }">[글삭제]</a> &nbsp;
+		</c:if>
+		<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
 			<button onclick="showreplydiv();" id="replybtn">댓글달기</button> &nbsp;
 		</c:if>
+		
 		</tr>
 		</tr>
 	</table>
@@ -131,17 +141,19 @@ function showreplydiv(){
 			<td>${r.a_content }</td>
 			</tr>
 			<div>
-			<c:url var="aup" value="/aupview.do">
-				<c:param name="a_ref" value="${ r.a_ref }" />
-				<c:param name="page" value="${ currentPage }" />
-			</c:url>
-			<a href="${ aup }">[수정페이지로 이동]</a> &nbsp;
-			<c:url var="bdl" value="/adel.do">
-				<c:param name="a_ref" value="${ r.a_ref }" />
-				<c:param name="page" value="${ currentPage }" />
-			</c:url>
-			<a href="${ bdl }">[글삭제]</a> &nbsp;
-				</div>
+			<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
+				<c:url var="aup" value="/aupview.do">
+					<c:param name="a_ref" value="${ r.a_ref }" />
+					<c:param name="page" value="${ currentPage }" />
+				</c:url>
+				<a href="${ aup }">[수정페이지로 이동]</a> &nbsp;
+				<c:url var="bdl" value="/adel.do">
+					<c:param name="a_ref" value="${ r.a_ref }" />
+					<c:param name="page" value="${ currentPage }" />
+				</c:url>
+				<a href="${ bdl }">[글삭제]</a> &nbsp;
+			</c:if>
+			</div>
 			<hr>
 	</c:forEach>
 	<c:import url="/WEB-INF/views/common/footer.jsp" />

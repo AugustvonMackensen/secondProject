@@ -11,11 +11,10 @@
 <body>
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-<hr>
+<br>
 <h2 align="center">${ requestScope.notice.noticeno } 번 공지글 상세보기</h2>
 <br>
-<table align="center" width="500" border="1" cellspacing="0" 
-cellpadding="5">
+<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
 	<tr><th>제 목</th><td>${ notice.noticetitle }</td></tr>
 	<tr><th>작성자</th><td>${ notice.noticewriter }</td></tr>
 	<tr><th>날 짜</th><td>${ notice.noticedate }</td></tr>
@@ -49,7 +48,3 @@ cellpadding="5">
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
-
-
-
-

@@ -28,13 +28,14 @@
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="${ pageContext.servletContext.contextPath }/main.do" class="logo">
-              <span style="font-size :30px; color: #0d6efd;">DeepAccountBook</span>
+              <span style="font-size :30px; color: #0d6efd; margin-left: -50px;">DeepAccountBook</span>
             <a href="index.html" class="logo">
             </a>
             <ul class="nav">
               <li class="scroll-to-section"><a href="${ pageContext.servletContext.contextPath }/main.do" class="active">Home</a></li>
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li>
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="${ pageContext.servletContext.contextPath }/qnaListView.do">Q&A게시판</a></li>
+              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/blist.do">자유게시판</a></li>
               <!-- 로그인시에만 가계부메뉴 보임 -->
               <c:if test="${ !empty sessionScope.loginMember }">
               	<li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/calendarListView.do">가계부</a></li>
