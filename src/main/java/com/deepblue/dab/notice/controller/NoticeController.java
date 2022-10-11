@@ -238,63 +238,6 @@ public class NoticeController {
 		}
 	}
 	
-	//공지글 작성자 검색용
-	@RequestMapping(value="nsearchWriter.do", method=RequestMethod.GET)
-	public String noticeSearchWriterMethod(
-			@RequestParam("keyword") String keyword, 
-			@RequestParam(name="page", required=false) String page,
-			Model model) {
-		int currentPage = 1;
-		if(page != null) {
-			currentPage = Integer.parseInt(page);
-		}
-		
-		//한 페이지에 게시글 10개씩 출력되게 하는 경우
-		//페이징 계산 처리 -- 별도의 클래스로 작성해도 됨 ---------------
-		//별도의 클래스의 메소드에서 Paging 을 리턴하면 됨
-		int limit = 10;  //한 페이지에 출력할 목록 갯수
-		//전체 페이지 갯수 계산을 위해 총 목록 갯수 조회해 옴
-		int listCount = noticeService.selectSearchWListCount(keyword);
-		//페이지 수 계산
-		//주의 : 목록이 11개이면 페이지 수는 2페이지가 됨
-		// 나머지 목록 1개도 1페이지가 필요함
-		int maxPage = (int)((double)listCount / limit + 0.9);
-		//현재 페이지가 포함된 페이지 그룹의 시작값 지정
-		// => 뷰 아래쪽에 표시할 페이지 수를 10개로 하는 경우
-		int startPage = (currentPage / 10) * 10 + 1;
-		//현재 페이지가 포함된 페이지 그룹의 끝값 지정
-		int endPage = startPage + 10 - 1;
-		
-		if(maxPage < endPage) {
-			endPage = maxPage;
-		}
-		
-		//쿼리문에 전달할 현재 페이지에 적용할 목록의 시작행과 끝행 계산
-		int startRow = (currentPage - 1) * limit + 1;
-		int endRow = startRow + limit - 1;
-		
-		//페이징 계산 처리 끝 ---------------------------------------
-		SearchPaging searchpaging = new SearchPaging(keyword, startRow, endRow);
-		ArrayList<Notice> list = noticeService.selectSearchWriter(searchpaging);
-		
-		if(list.size() > 0) {
-			model.addAttribute("list", list);
-			model.addAttribute("listCount", listCount);
-			model.addAttribute("maxPage", maxPage);
-			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("startPage", startPage);
-			model.addAttribute("endPage", endPage);
-			model.addAttribute("limit", limit);
-			model.addAttribute("action", "writer");
-			model.addAttribute("keyword", keyword);
-			return "notice/noticeListView";
-		}else {
-			model.addAttribute("message", 
-					keyword + "로 검색된 공지글 정보가 없습니다.");
-			return "common/error";
-		}
-	}
-	
 	//공지글 등록날짜 검색용 
 	@RequestMapping(value="nsearchDate.do", method=RequestMethod.GET)
 	public String noticeSearchDateMethod(SearchDate date, 

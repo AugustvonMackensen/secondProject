@@ -85,8 +85,11 @@ function showreplydiv(){
 				<c:param name="q_rename_filename" value="${ question.q_rename_filename}" />
 			</c:url>
 			<a href="${ bdl }">[글삭제]</a> &nbsp;
+		</c:if>
+		<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
 			<button onclick="showreplydiv();" id="replybtn">댓글달기</button> &nbsp;
 		</c:if>
+		
 		</tr>
 		</tr>
 	</table>
@@ -131,17 +134,19 @@ function showreplydiv(){
 			<td>${r.a_content }</td>
 			</tr>
 			<div>
-			<c:url var="aup" value="/aupview.do">
-				<c:param name="a_ref" value="${ r.a_ref }" />
-				<c:param name="page" value="${ currentPage }" />
-			</c:url>
-			<a href="${ aup }">[수정페이지로 이동]</a> &nbsp;
-			<c:url var="bdl" value="/adel.do">
-				<c:param name="a_ref" value="${ r.a_ref }" />
-				<c:param name="page" value="${ currentPage }" />
-			</c:url>
-			<a href="${ bdl }">[글삭제]</a> &nbsp;
-				</div>
+			<c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
+				<c:url var="aup" value="/aupview.do">
+					<c:param name="a_ref" value="${ r.a_ref }" />
+					<c:param name="page" value="${ currentPage }" />
+				</c:url>
+				<a href="${ aup }">[수정페이지로 이동]</a> &nbsp;
+				<c:url var="bdl" value="/adel.do">
+					<c:param name="a_ref" value="${ r.a_ref }" />
+					<c:param name="page" value="${ currentPage }" />
+				</c:url>
+				<a href="${ bdl }">[글삭제]</a> &nbsp;
+			</c:if>
+			</div>
 			<hr>
 	</c:forEach>
 	<c:import url="/WEB-INF/views/common/footer.jsp" />

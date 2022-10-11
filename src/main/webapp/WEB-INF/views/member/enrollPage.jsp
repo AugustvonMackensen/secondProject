@@ -191,6 +191,7 @@ function chkCode(){
 </script>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
 <h1 align="center">회원 가입 페이지</h1>
 <br>
 <form action="enroll.do" method="post" id="signUp" name="signUp" onsubmit="return validate();">

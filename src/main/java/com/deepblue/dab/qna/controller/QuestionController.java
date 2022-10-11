@@ -98,11 +98,11 @@ public class QuestionController {
 		
 		//해당 게시글 조회
 		Question qna = qnaService.selectQuestion(q_no);
-		
 		ArrayList<Answer> replylist = answerService.replyList(q_no); 
 
 		
 		if(qna !=null) {
+
 			mv.addObject("question", qna);
 			mv.addObject("currentPage", currentPage);
 			mv.addObject("replylist", replylist);
@@ -326,35 +326,19 @@ public class QuestionController {
 		}
 	}
 	
-	//공지글 작성자 검색용
-		@RequestMapping(value="qnasearchWriter.do", method=RequestMethod.POST)
-		public String noticeSearchWriterMethod(
-				@RequestParam("keyword") String keyword, Model model) {
-			ArrayList<Question> list = qnaService.selectSearchWriter(keyword);
-			
-			if(list.size() > 0) {
-				model.addAttribute("list", list);
-				return "qna/qnaListView";
-			}else {
-				model.addAttribute("message", 
-						keyword + "로 검색된 공지글 정보가 없습니다.");
-				return "common/error";
-			}
+	//공지글 등록날짜 검색용 
+	@RequestMapping(value="qnasearchDate.do", method=RequestMethod.POST)
+	public String noticeSearchDateMethod(SearchDate date, Model model) {
+		ArrayList<Question> list = qnaService.selectSearchDate(date);
+		
+		if(list.size() > 0) {
+			model.addAttribute("list", list);
+			return "qna/qnaListView";
+		}else {
+			model.addAttribute("message", "해당 날짜에 등록된 공지사항 정보가 없습니다.");
+			return "common/error";
 		}
-	
-		//공지글 등록날짜 검색용 
-		@RequestMapping(value="qnasearchDate.do", method=RequestMethod.POST)
-		public String noticeSearchDateMethod(SearchDate date, Model model) {
-			ArrayList<Question> list = qnaService.selectSearchDate(date);
-			
-			if(list.size() > 0) {
-				model.addAttribute("list", list);
-				return "qna/qnaListView";
-			}else {
-				model.addAttribute("message", "해당 날짜에 등록된 공지사항 정보가 없습니다.");
-				return "common/error";
-			}
-		}
+	}
 		
 		
 	
