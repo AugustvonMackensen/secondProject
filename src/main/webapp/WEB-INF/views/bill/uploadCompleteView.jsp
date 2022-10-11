@@ -11,9 +11,41 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
-table th { background-color: #99ffff; border-bottom: 1px solid #444444;}
-table td {border-bottom: 1px solid #444444;}
-table#outer { border: 2px solid navy; }
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: blue; text-decoration: underline;}
+table.qa-table{
+	width: 1300px;
+	text-align:center;
+	border : 1px solid #ccc;
+	margin-left: auto; 
+	margin-right: auto;
+	border-collapse: collapse;
+	line-height: 1.5;
+}
+table.qa-table thead{
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	background: #4886FA;
+}
+table.qa-table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+}
+table.qa-table tbody tr{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #F0F8FF;
+	height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+	text-align : center;
+}
 
 
 
@@ -90,7 +122,7 @@ function showWriteForm(){
 
 <!-- 목록 출력 영역 -->
 <br>
-<table align="center" width="700" border="1" cellspacing="0" cellpadding="1">
+<table class="qa-table" align="center" width="700" border="1" cellspacing="0" cellpadding="1">
 	<tr align="center">
 		<th>번호</th>
 		<th>지출 금액</th>

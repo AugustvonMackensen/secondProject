@@ -19,7 +19,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class OCRGeneralAPIDemo2receipt2tofuc {
+public class ReceiptOCR {
 
 	private static JSONParser jsonParser = new JSONParser();
 
