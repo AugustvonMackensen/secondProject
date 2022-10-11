@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE configuration PUBLIC
 "-//mybatis.org//DTD Config 3.0//EN"
@@ -34,3 +35,41 @@
 		<mapper resource="mappers/chart-mapper.xml" />
 	</mappers>
 </configuration>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC
+"-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		<setting name="cacheEnabled" value="false"/>
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.deepblue.dab.bill.model.vo.Bill" alias="Bill" />
+		<typeAlias type="com.deepblue.dab.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.deepblue.dab.qna.model.vo.Question" alias="Question" />
+		<typeAlias type="com.deepblue.dab.common.Paging" alias="Paging" />
+		<typeAlias type="com.deepblue.dab.common.SearchDate" alias="SearchDate" />
+		<typeAlias type="com.deepblue.dab.bill.utils.PagingBill" alias="PagingBill" />
+		<typeAlias type="com.deepblue.dab.member.utils.PagingMember" alias="PagingMember" />
+		<typeAlias type="com.deepblue.dab.common.SearchPaging" alias="SearchPaging" />
+		<typeAlias type="com.deepblue.dab.qna.model.vo.Answer" alias="Answer" />
+		<typeAlias type="com.deepblue.dab.notice.model.vo.Notice" alias="Notice" />
+		<typeAlias type="com.deepblue.dab.common.SearchPaging" alias="SearchPaging" />
+		<typeAlias type="com.deepblue.dab.calendar.model.vo.DateData" alias="DateData" />
+		<typeAlias type="com.deepblue.dab.chart.model.vo.Chart" alias="Chart" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mappers/member-mapper.xml" />
+		<mapper resource="mappers/notice-mapper.xml" />
+		<mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/bill-mapper.xml" />
+		<mapper resource="mappers/question-mapper.xml" />
+		<mapper resource="mappers/answer-mapper.xml" />
+		<mapper resource="mappers/chart-mapper.xml" />
+	</mappers>
+</configuration>
+>>>>>>> branch 'master' of https://github.com/uforset/secondprj.git

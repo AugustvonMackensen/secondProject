@@ -20,13 +20,31 @@ public class ChartController {
 	@Autowired
 	private ChartService chartService;
 	
-	@RequestMapping("currentYearCart.do")
+	//막대 차트용
+	@RequestMapping("currentYearChart.do")
 	@ResponseBody
-	public List<Chart> countTurtle(Model model, HttpSession session) {
+	public List<Chart> YearChartMethod(Model model, HttpSession session) {
 		
 		String userid = ((Member)session.getAttribute("loginMember")).getUserid();
 		List<Chart> list = chartService.selectCurrentMonthList(userid);
 		model.addAttribute("list", list);
 		return list;
+	}
+	
+	//파이
+	@RequestMapping("CategoryChart.do")
+	@ResponseBody
+	public List<Chart> pieChartMehtod(Model model, HttpSession session) {
+		
+		String userid = ((Member)session.getAttribute("loginMember")).getUserid();
+		List<Chart> list = chartService.selectCategoryList(userid);
+		model.addAttribute("list", list);
+		return list;
+	}
+	
+	@RequestMapping("chartView.do")
+	public String moveChartView(Model model) {
+		
+		return "chart/chartView";
 	}
 }

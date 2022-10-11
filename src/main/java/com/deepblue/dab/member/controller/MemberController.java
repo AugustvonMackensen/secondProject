@@ -372,6 +372,7 @@ public class MemberController {
 			return "common/error";
 		}
 	}
+
 	
 	// 회원관리용 회원전체목록 처리용
 	@RequestMapping("mlist.do")

@@ -53,23 +53,6 @@
 		]]>
 	</select>
 	
-	<select id="searchWriter" resultMap="resultNotice" parameterType="SearchPaging">
-		<![CDATA[
-		SELECT *  
-			FROM (SELECT ROWNUM RNUM, NOTICENO, NOTICETITLE, 
-						  NOTICEDATE, NOTICEWRITER, 
-						  NOTICECONTENT,  
-			               ORIGINAL_FILEPATH, RENAME_FILEPATH, 
-			               READCOUNT, IMPORTANCE
-			       FROM (SELECT * FROM NOTICE
-			       		   where noticewriter like '%' || #{ keyword } || '%'
-			               ORDER BY NOTICENO DESC, 
-			              			NOTICENO DESC
-			                        )) 
-			where rnum >= #{startRow} and rnum <= #{endRow}
-		]]>
-	</select>
-	
 	<select id="searchDate" resultMap="resultNotice" parameterType="SearchPaging">
 		<![CDATA[
 		SELECT *  
@@ -150,11 +133,6 @@
 	<select id="getSearchTListCount" resultType="_int" parameterType="string">
 		select count(*) from notice
 		where noticetitle like '%' || #{ keyword } || '%'
-	</select>
-	
-	<select id="getSearchWListCount" resultType="_int" parameterType="string">
-		select count(*) from notice
-		where noticewriter like '%' || #{ keyword } || '%'
 	</select>
 	
 	<select id="getSearchDListCount" resultType="_int" parameterType="SearchDate">

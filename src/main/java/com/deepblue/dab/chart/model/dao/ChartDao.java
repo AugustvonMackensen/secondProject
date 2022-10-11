@@ -17,5 +17,9 @@ public class ChartDao {
 	public List<Chart> selectCurrentMonthList(String userid) {
 		return session.selectList("chartMapper.selectCurrentMonthList", userid);
 	}
+
+	public List<Chart> selectCategoryList(String userid) {
+		return session.selectList("chartMapper.selectCategoryList", userid);
+	}
 	
 }

@@ -12,7 +12,7 @@
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 <hr>
-<h2 align="center">${ requestScope.notice.noticeno } 번 공지글 상세보기 (관리자용)</h2>
+<h2 align="center">${ requestScope.notice.noticeno } 번 공지글 상세보기 [관리자용]</h2>
 <br>
 <table align="center" width="500" border="1" cellspacing="0" 
 cellpadding="5">
