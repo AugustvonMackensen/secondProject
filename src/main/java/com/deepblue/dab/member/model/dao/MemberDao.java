@@ -55,19 +55,6 @@ public class MemberDao {
 		return session.update("memberMapper.updateLoginOK", member);
 	}
 	
-	// 검색 처리용 --------------------------------
-	public ArrayList<Member> selectSearchUserid(String keyword) {
-		List<Member> list = session.selectList("memberMapper.selectSearchUserid", keyword);
-		return (ArrayList<Member>)list;
-	}
-	public ArrayList<Member> selectSearchEnrollDate(SearchDate searchDate) {
-		List<Member> list = session.selectList("memberMapper.selectSearchEnrollDate", searchDate);
-		return (ArrayList<Member>)list;
-	}
-	public ArrayList<Member> selectSearchLoginOK(String keyword) {
-		List<Member> list = session.selectList("memberMapper.selectSearchLoginOK", keyword);
-		return (ArrayList<Member>)list;
-	}
 	
 	// 관리자 모드에서 회원 수정용
 	public int aupdateMember(Member member) {

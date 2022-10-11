@@ -16,7 +16,7 @@ function getChart() {
 	let posList = [];
 	
 	$.ajax({
-		url:"currentYearChart.do",
+		url:"currentYearCart.do",
 		type:"get",
 		data:{ userid: "${loginMember.userid}" },
 		dataType:"json",
