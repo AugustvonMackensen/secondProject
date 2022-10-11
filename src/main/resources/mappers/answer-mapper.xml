@@ -39,10 +39,10 @@
 	<!-- 댓글수정 -->
 	<update id="replyModify" parameterType="Answer">
 	update answer set
-		a_writer = #{a_writer},
+		a_title = #{a_title},
 		a_content = #{a_content}
 	where 
-a_ref = #{a_ref}
+	a_ref = #{a_ref}
 	</update>
 	
 	

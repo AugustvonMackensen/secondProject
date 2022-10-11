@@ -6,13 +6,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 댓글 수정 페이지</title>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp" /><br>
 <form action="areplyup.do" method="post" >	
-	<input type="hidden" name="a_ref" value="${ a_ref }">
-	<input type="hidden" name="page" value="${ currentPage }">
-	
+	<input type="hidden" name="a_ref" value="${ answer.a_ref }">
+	<input type="hidden" name="page" value="${ page }">
+	<input type="hidden" name="a_id" value="${ answer.a_id }">
 <table align="center" width="500" border="1" cellspacing="0" 
 cellpadding="5">
 	<tr><th>제 목</th><td><input type="text" name="a_title" value="${ answer.a_title }"></td></tr>

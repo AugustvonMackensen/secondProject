@@ -48,6 +48,7 @@ public class AnswerController {
 		Answer answer = answerService.selectAnswer(a_ref);
 		if(answer != null) {
 			model.addAttribute("answer", answer);
+			// currentPage 값을 page 로 값을 전달
 			model.addAttribute("page", currentPage);
 			return "qna/qnaReplyUpdateForm";
 		}else {
@@ -63,9 +64,9 @@ public class AnswerController {
 			@RequestParam("page") int page, Model model) {
 		if(answerService.updatereplyModify(answer) > 0) {
 			//댓글, 대댓글 수정 성공시 다시 상세페이지가 보여지게 한다면
-			model.addAttribute("a_ref", answer.getA_ref());
+			model.addAttribute("q_no", answer.getA_ref());
 			model.addAttribute("page", page);
-			return "redirect:qnadetail.do?q_no="+answer.getA_ref() +"&page=" + page;
+			return "redirect:qnadetail.do";
 		}else {
 			model.addAttribute("message", 
 					answer.getA_ref() + "번 글 수정 실패");
@@ -80,8 +81,7 @@ public class AnswerController {
 			HttpServletRequest request, Model model) {
 		
 		if(answerService.replyDelete(answer) > 0) {
-			
-			return "redirect:qnaListView.do";
+			return "redirect:qnadetail.do?q_no="+answer.getA_ref();
 		}else {
 			model.addAttribute("message", 
 					answer.getA_ref() + "번 글 삭제 실패");
