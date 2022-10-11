@@ -30,6 +30,7 @@
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/bill-mapper.xml" />
 		<mapper resource="mappers/question-mapper.xml" />
+		<mapper resource="mappers/answer-mapper.xml" />
 		<mapper resource="mappers/chart-mapper.xml" />
 	</mappers>
 </configuration>

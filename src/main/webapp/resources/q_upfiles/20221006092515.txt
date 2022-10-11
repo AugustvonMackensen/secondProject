@@ -1,0 +1,16 @@
+개선된 얼굴 인식 기능 참고용 사이트
+https://www.wolfram.com/language/12/machine-learning-for-images/improved-face-detection.html.ko?product=language
+
+간단한얼굴 인식 사이트
+https://www.wolfram.com/language/12/machine-learning-for-images/simple-face-recognition.html.ko?product=language
+
+프로젝트때 참고용 사이트
+https://developers.google.com/codelabs/classify-images-tensorflow-serving?authuser=1&hl=ko#0
+
+
+html 디자인 참고용( 조금 별로인거 같아요 다른곳 좀더 찾아볼게요)
+https://inpa.tistory.com/entry/%E2%9A%9B%EF%B8%8F-%EC%98%A8%EB%9D%BC%EC%9D%B8-%EC%9D%B4%EB%AF%B8%EC%A7%80-AI-%ED%99%95%EB%8C%80-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EB%AA%A8%EC%9D%8C
+
+
+
+
