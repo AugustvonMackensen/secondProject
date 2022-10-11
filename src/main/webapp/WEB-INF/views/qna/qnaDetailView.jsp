@@ -19,6 +19,8 @@ table, tr, th, td {
         height: 300px;
       }
 </style>
+
+
 <title>Insert title here</title>
 <script type="text/javascript">
 function showreplydiv(){
@@ -35,9 +37,14 @@ function showreplydiv(){
 
 </head>
 <body>
+
 	<!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 	<c:import url="/WEB-INF/views/common/menubar.jsp" />
-
+<style type="text/css" >
+html, body {
+		overflow: scroll;
+	}	
+</style>
 	<h2 align="center">${ requestScope.question.q_no }번 게시글 상세보기</h2>
 	<br>
 	<table align="center" border="1" cellspacing="0"

@@ -11,14 +11,14 @@
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 <br>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9">
-	Swal.fire({
-		timer: 50000,
-  		title: 'Deep Account Book 을 사용해주셔서 감사합니다.',    
-  		text: '탈퇴가 완료됐습니다.',  
-  		icon: 'warning',                     
-	});
-</script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	function message()
+	{
+		swal("Deep Account Book 을 사용해주셔서 감사합니다.","탈퇴가 완료됐습니다.");
+	};
+	</script>
 
 
 <h1 align="center">내 정보 보기</h1>
@@ -47,7 +47,7 @@
 			<c:url var="mdel" value="/mdel.do">
 				<c:param name="userid" value="${ member.userid }"/>
 			</c:url>
-			<a href="${ mdel }" onclick="Swal.fire()">탈퇴하기</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a onClick="alert('탈퇴가 완료되었습니다.')" href="${ mdel }" >탈퇴하기</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			
 			</c:if>
 			<a href="main.do">시작페이지로 이동</a>

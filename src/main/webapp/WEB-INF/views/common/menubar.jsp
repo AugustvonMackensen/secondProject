@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="resources/assets/css/templatemo-chain-app-dev.css">
     <link rel="stylesheet" href="resources/assets/css/animated.css">
     <link rel="stylesheet" href="resources/assets/css/owl.css">
+
   </head>
 <meta charset="UTF-8">
 <title>deep account book</title>
@@ -28,27 +29,28 @@
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="${ pageContext.servletContext.contextPath }/main.do" class="logo">
-              <span style="font-size :30px; color: #0d6efd;">DeepAccountBook</span>
+              <span style=  " margin-left:-6em; font-size :30px; color: #0d6efd;">DeepAccountBook</span>
             <a href="index.html" class="logo">
             </a>
             <ul class="nav">
-              <li class="scroll-to-section"><a href="${ pageContext.servletContext.contextPath }/main.do" class="active">Home</a></li>
+              <li class="scroll-to-section"><a href="${ pageContext.servletContext.contextPath }/main.do" class="active">Home</a></li>        
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="${ pageContext.servletContext.contextPath }/nlist.do">공지사항</a></li>
               <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="${ pageContext.servletContext.contextPath }/qnaListView.do">Q&A게시판</a></li>
+              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif"><a href="${ pageContext.servletContext.contextPath }/qnaListView.do">자유게시판</a></li>
               <!-- 로그인시에만 가계부메뉴 보임 -->
               <c:if test="${ !empty sessionScope.loginMember }">
-              	<li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/calendarListView.do">가계부</a></li>
+              	<li class="scroll-to-section" style="font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/calendarListView.do">가계부</a></li>
               </c:if>
               <c:if test="${ empty sessionScope.loginMember }">
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/pickEnroll.do"> 회원가입</a></div></li> 
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/loginPage.do"> Login</a></div></li>
               </c:if>
               <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y' }">
-				<li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/mlist.do">회원관리</a></li>
+				<li class="scroll-to-section" style="font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/mlist.do">회원관리</a></li>
 			 </c:if>
 			
               <c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
-	              <li><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록Test</a></li>
+					<li background="black" class="scroll-to-section"  style="font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록</a></li>
 	              <li>
 	              <div class="gradient-button" >
 	              	<c:url var="callMyinfo" value="/myinfo.do">
