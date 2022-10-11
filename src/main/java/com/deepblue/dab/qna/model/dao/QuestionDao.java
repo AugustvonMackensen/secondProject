@@ -46,11 +46,6 @@ public class QuestionDao {
 		return (ArrayList<Question>)list;
 	}
 
-	public ArrayList<Question> selectSearchWriter(String keyword) {
-		List<Question> list = session.selectList("questionMapper.searchWriter", keyword);
-		return (ArrayList<Question>)list;
-	}
-
 	public ArrayList<Question> selectSearchDate(SearchDate date) {
 		List<Question> list = session.selectList("questionMapper.searchDate", date);
 		return (ArrayList<Question>)list;

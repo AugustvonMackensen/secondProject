@@ -34,11 +34,6 @@ public class NoticeDao {
 		return (ArrayList<Notice>)list;
 	}
 	
-	public ArrayList<Notice> selectSearchWriter(SearchPaging searchpaging){
-		List<Notice> list = session.selectList("noticeMapper.searchWriter", searchpaging);
-		return (ArrayList<Notice>)list;
-	}
-	
 	public ArrayList<Notice> selectSearchDate(SearchPaging searchpaging){
 		List<Notice> list = session.selectList("noticeMapper.searchDate", searchpaging);
 		return (ArrayList<Notice>)list;
@@ -80,10 +75,6 @@ public class NoticeDao {
 
 	public int selectSearchTListCount(String keyword) {
 		return session.selectOne("noticeMapper.getSearchTListCount", keyword);
-	}
-
-	public int selectSearchWListCount(String keyword) {
-		return session.selectOne("noticeMapper.getSearchWListCount", keyword);
 	}
 
 	public int selectSearchDListCount(SearchDate date) {

@@ -17,11 +17,9 @@ public interface NoticeService {
 	int selectListCount();	//총 게시글 갯수 조회용(페이지 수 계산용)
 	ArrayList<Notice> selectNewTop3();
 	ArrayList<Notice> selectSearchTitle(SearchPaging searchpaging);
-	ArrayList<Notice> selectSearchWriter(SearchPaging searchpaging);
 	ArrayList<Notice> selectSearchDate(SearchPaging searchpaging);
 	ArrayList<Notice> selectList(Paging page);  //한 페이지 출력할 공지사항 조회용
 	int selectSearchTListCount(String keyword);
-	int selectSearchWListCount(String keyword);
 	int selectSearchDListCount(SearchDate date);
 
 }
