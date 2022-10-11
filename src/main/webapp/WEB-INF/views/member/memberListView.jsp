@@ -15,6 +15,44 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
+
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: blue; text-decoration: underline;}
+
+table.qa-table{
+	width: 1300px;
+	text-align:center;
+	border : 1px solid #ccc;
+	margin-left: auto; 
+	margin-right: auto;
+	border-collapse: collapse;
+	line-height: 1.5;
+}
+table.qa-table thead{
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	background: #4886FA;
+}
+table.qa-table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+}
+table.qa-table tbody tr{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #F0F8FF;
+	height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+	text-align : center;
+}
+
 form.sform {
 	display: none; /*안 보이게 설정*/
 	background: lightgray;
@@ -24,6 +62,7 @@ form.sform {
 	color:#417556;
 	background: #F0F8FF;
 }
+
 </style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -62,7 +101,7 @@ function changeLogin(element){
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 
-<h1 align="center" class="user">회원 관리 페이지</h1>
+<h1 align="center">회원 관리 페이지</h1>
 <br>
 <h4 align="center">현재 회원 수 : ${listCount} 명</h4>
 <br>
@@ -104,7 +143,7 @@ function changeLogin(element){
 
 	
 <!-- 조회해 온 회원 리스트 정보 출력 처리 -->
-<table align="center" border="1" cellspacing="0" cellpadding="3">
+<table align="center" border="1" cellspacing="0" cellpadding="3" class="qa-table" class="user">
 	<tr>
 		<th>아이디</th>
 		<th>이메일</th>

@@ -124,6 +124,7 @@
 			</c:url>
 			
 			<td align="left">
+<<<<<<< HEAD
          
 			
 			
@@ -141,6 +142,22 @@
 			<td><fmt:formatDate value="${ b.board_date }" pattern="yyyy-MM-dd" /></td>
 			<td>${ b.board_readcount }</td>
 			
+=======
+               <!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
+               들여쓰기 처리 : 원글과 구분지음 --> <c:if test="${ b.board_lev eq 2 }">&nbsp; &nbsp; ▶</c:if>
+               <c:if test="${ b.board_lev eq 3 }">&nbsp; &nbsp; &nbsp; &nbsp; ▶▶</c:if>
+			
+			
+			<td>${ b.board_num }</td>
+			<td><a href="${ bdt }">${ b.board_title }</a></td>
+			<td>${ b.board_writer }</td>
+			<td>
+				<c:if test="${ !empty b.board_original_filename }">◎</c:if>
+				<c:if test="${ empty b.board_original_filename }">&nbsp;</c:if>
+			</td>
+			<td><fmt:formatDate value="${ b.board_date }" pattern="yyyy-MM-dd" /></td>
+			<td>${ b.board_readcount }</td>
+>>>>>>> branch 'master' of https://github.com/uforset/secondprj.git
 		</tr>
 		
 	</c:forEach>

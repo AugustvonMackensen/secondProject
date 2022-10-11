@@ -48,6 +48,7 @@
 		select count(*) from board
 	</select>
 	
+<<<<<<< HEAD
 	<!-- <select id="selectList" parameterType="Paging" resultMap="resultBoard">
 		<![CDATA[
 			SELECT *  
@@ -287,6 +288,208 @@
 	set reply_count = (select count(reply_number) from reply where board_num = #{board_num})
 	where board_num = #{board_num}
 	</update>
+=======
+	<select id="selectList" parameterType="Paging" resultMap="resultBoard">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT ROWNUM RNUM, BOARD_NUM, BOARD_TITLE, 
+						  BOARD_WRITER, BOARD_CONTENT, 
+						  BOARD_ORIGINAL_FILENAME,  
+			               BOARD_RENAME_FILENAME, BOARD_DATE, 
+			               BOARD_LEV, BOARD_REF, BOARD_REPLY_REF, 
+			               BOARD_REPLY_SEQ, BOARD_READCOUNT 
+			       FROM (SELECT * FROM BOARD 
+			              ORDER BY BOARD_REF DESC, 
+			              			BOARD_REPLY_REF DESC,
+			                        BOARD_LEV ASC, 
+			                        BOARD_REPLY_SEQ ASC))  
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<update id="addReadCount" parameterType="_int">
+		update board
+		set board_readcount = board_readcount + 1
+		where board_num = #{ board_num }
+	</update>
+	
+	<select id="selectBoard" parameterType="_int" resultMap="resultBoard">
+		select * from board
+		where board_num = #{ board_num }
+	</select>
+	
+	<update id="updateReplySeq1" parameterType="Board">
+		update board
+		set board_reply_seq = board_reply_seq + 1
+		where board_ref = #{ board_ref }
+		and board_lev = #{ board_lev }
+	</update>
+	
+	<update id="updateReplySeq2" parameterType="Board">
+		update board
+		set board_reply_seq = board_reply_seq + 1
+		where board_ref = #{ board_ref }
+		and board_lev = #{ board_lev }
+		and board_reply_ref = #{ board_reply_ref }
+	</update>
+	
+	<insert id="insertReply1" parameterType="Board">
+		insert into board (board_num, board_title, 
+				board_writer, board_content, board_date, 
+				board_original_filename, 
+				board_rename_filename, board_lev, 
+				board_ref, board_reply_ref, 
+				board_reply_seq, board_readcount)
+		values ((select max(board_num) + 1 from board), 
+				#{board_title}, #{board_writer}, 
+				#{board_content}, sysdate, null, null, 
+				2, #{board_ref}, 
+				(select max(board_num) + 1 from board),
+				#{board_reply_seq}, default)
+	</insert>
+	
+	<insert id="insertReply2" parameterType="Board">
+		insert into board (board_num, board_title, 
+				board_writer, board_content, board_date, 
+				board_original_filename, 
+				board_rename_filename, board_lev, 
+				board_ref, board_reply_ref, 
+				board_reply_seq, board_readcount)
+		values ((select max(board_num) + 1 from board), 
+				#{board_title}, #{board_writer}, 
+				#{board_content}, sysdate, null, null, 
+				3, #{board_ref}, #{board_reply_ref},
+				#{board_reply_seq}, default)
+	</insert>
+	
+	<insert id="insertOrigin" parameterType="Board">
+		insert into board (board_num, board_title, 
+				board_writer, board_content, board_date, 
+				board_original_filename, 
+				board_rename_filename, board_lev, 
+				board_ref, board_reply_ref, 
+				board_reply_seq, board_readcount)
+		values ((select max(board_num) + 1 from board), 
+				#{board_title}, #{board_writer}, 
+				#{board_content}, sysdate, 
+				#{board_original_filename}, 
+				#{board_rename_filename}, 
+				1, (select max(board_num) + 1 from board),
+				null, default, default)
+	</insert>
+	
+	<delete id="deleteBoard" parameterType="Board">
+		delete from board
+		<if test="board_lev == 1">
+			where board_ref = #{board_num}
+		</if>
+		<if test="board_lev == 2">
+			where board_reply_ref = #{board_num}
+		</if>
+		<if test="board_lev == 3">
+			where board_num = #{board_num}
+		</if>
+	</delete>
+	
+	<update id="updateReply" parameterType="Board">
+		update board
+		set board_title = #{board_title}, 
+			board_content = #{board_content}
+		where board_num = #{ board_num }
+	</update>
+	
+	<update id="updateOrigin" parameterType="Board">
+		update board
+		set board_title = #{board_title}, 
+			board_content = #{board_content}
+			<if test="board_original_filename != null">
+				, 
+				board_original_filename = #{board_original_filename},
+				board_rename_filename = #{board_rename_filename}
+			</if>
+			<if test="board_original_filename == null">
+				, 
+				board_original_filename = null,
+				board_rename_filename = null
+			</if>
+		where board_num = #{ board_num }
+	</update>
+	
+	<select id="searchTitle" resultMap="resultBoard" parameterType="SearchPaging">
+		<![CDATA[
+			SELECT *  
+			FROM (SELECT rownum rnum, board_num, board_title, 
+						  board_writer, board_content, 
+						  board_original_filename,  
+			               board_rename_filename, board_date, 
+			               board_lev, board_ref, board_reply_ref, 
+			               board_reply_seq, board_readcount
+			       FROM (SELECT * FROM board
+			       		   where board_title like '%' || #{ keyword } || '%'
+			               ORDER BY BOARD_REF DESC, 
+			              			BOARD_REPLY_REF DESC,
+			                        BOARD_LEV ASC, 
+			                        BOARD_REPLY_SEQ ASC
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="searchWriter" resultMap="resultBoard" parameterType="SearchPaging">
+		<![CDATA[
+		SELECT *  
+			FROM (SELECT rownum rnum, board_num, board_title, 
+						  board_writer, board_content, 
+						  board_original_filename,  
+			               board_rename_filename, board_date, 
+			               board_lev, board_ref, board_reply_ref, 
+			               board_reply_seq, board_readcount
+			       FROM (SELECT * FROM board
+			       		   where board_writer like '%' || #{ keyword } || '%'
+			               ORDER BY BOARD_REF DESC, 
+			              			BOARD_REPLY_REF DESC,
+			                        BOARD_LEV ASC, 
+			                        BOARD_REPLY_SEQ ASC 
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="searchDate" resultMap="resultBoard" parameterType="SearchPaging">
+		<![CDATA[
+		SELECT *  
+			FROM (SELECT rownum rnum, board_num, board_title, 
+						  board_writer, board_content, 
+						  board_original_filename,  
+			               board_rename_filename, board_date, 
+			               board_lev, board_ref, board_reply_ref, 
+			               board_reply_seq, board_readcount
+			       FROM (SELECT * FROM board
+			       		   where board_date between #{ begin } and #{ end }
+			              ORDER BY BOARD_REF DESC, 
+			              			BOARD_REPLY_REF DESC,
+			                        BOARD_LEV ASC, 
+			                        BOARD_REPLY_SEQ ASC 
+			                        )) 
+			where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="getSearchTListCount" resultType="_int" parameterType="string">
+		select count(*) from board
+		where board_title like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchWListCount" resultType="_int" parameterType="string">
+		select count(*) from board
+		where board_writer like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchDListCount" resultType="_int" parameterType="SearchDate">
+		select count(*) from board
+		where board_date between #{ begin } and #{ end }
+	</select>
+>>>>>>> branch 'master' of https://github.com/uforset/secondprj.git
 	
 	
 	

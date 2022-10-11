@@ -149,10 +149,13 @@ public class Board implements java.io.Serializable {
 	
 
 	
+<<<<<<< HEAD
 
 	
 
 	
+=======
+>>>>>>> branch 'master' of https://github.com/uforset/secondprj.git
 	
 }
 

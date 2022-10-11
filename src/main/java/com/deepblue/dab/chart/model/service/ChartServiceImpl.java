@@ -17,4 +17,9 @@ public class ChartServiceImpl implements ChartService {
 	public List<Chart> selectCurrentMonthList(String userid) {
 		return chartDao.selectCurrentMonthList(userid);
 	}
+
+	@Override
+	public List<Chart> selectCategoryList(String userid) {
+		return chartDao.selectCategoryList(userid);
+	}
 }

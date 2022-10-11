@@ -68,12 +68,6 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public int selectSearchWListCount(String keyword) {
-		return noticeDao.selectSearchWListCount(keyword);
-		
-	}
-
-	@Override
 	public int selectSearchDListCount(SearchDate date) {
 		return noticeDao.selectSearchDListCount(date);
 	}
@@ -81,11 +75,6 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public ArrayList<Notice> selectSearchTitle(SearchPaging searchpaging) {
 		return noticeDao.selectSearchTitle(searchpaging);
-	}
-
-	@Override
-	public ArrayList<Notice> selectSearchWriter(SearchPaging searchpaging) {
-		return noticeDao.selectSearchWriter(searchpaging);
 	}
 
 	@Override

@@ -25,8 +25,11 @@ public interface BoardService {
 	int selectSearchWListCount(String keyword);
 	int selectSearchTListCount(String keyword);
 	int selectSearchDListCount(SearchDate date);
+<<<<<<< HEAD
 	ArrayList<Board> selectReply(int board_ref);
 	
+=======
+>>>>>>> branch 'master' of https://github.com/uforset/secondprj.git
 	
 	
 }

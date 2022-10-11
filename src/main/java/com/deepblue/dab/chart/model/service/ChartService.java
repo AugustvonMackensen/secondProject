@@ -8,4 +8,6 @@ public interface ChartService {
 
 	
 	List<Chart> selectCurrentMonthList(String userid);
+
+	List<Chart> selectCategoryList(String userid);
 }

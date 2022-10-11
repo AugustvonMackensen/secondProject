@@ -4,5 +4,53 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="answerMapper">
  <!-- 댓글 조회 -->
- 
+ 	<resultMap type="Answer" id="resultAnswer" >
+ 	
+		<id column="a_id" property="a_id" /> <!-- 시퀀스 -->
+		<result column="a_ref" property="a_ref" /> <!-- 원글질문에대한 답변번호 -->
+		<result column="a_writer" property="a_writer" /> <!-- 관리자 admin -->
+		<result column="a_title" property="a_title" /> <!-- 제목 -->
+		<result column="a_date" property="a_date" /> <!-- 날짜 -->
+		<result column="a_content" property="a_content" /> <!-- 답변내용 -->
+
+	</resultMap>
+	
+
+	<!-- 댓글 조회 -->
+	<select id="replyReply" parameterType="int" resultMap="resultAnswer">
+		select a_id, a_ref, a_writer, a_title, a_date, a_content
+		from answer
+		where a_ref = #{a_ref}
+	</select>
+	
+	<!-- 대답 -->
+		<select id="selectAnswer" parameterType="_int" resultMap="resultAnswer">
+		select * from answer
+		where a_ref = #{ a_ref }
+	</select>
+	
+	<!-- 댓글작성 -->
+	<insert id="replyWrite" parameterType="Answer">
+	insert into answer(a_id, a_ref, a_writer, a_title, a_date, a_content)
+	values (default, #{a_ref}, #{a_writer}, #{a_title}, sysdate, #{a_content})
+	</insert>
+	
+	
+	<!-- 댓글수정 -->
+	<update id="replyModify" parameterType="Answer">
+	update answer set
+		a_title = #{a_title},
+		a_content = #{a_content}
+	where 
+	a_ref = #{a_ref}
+	</update>
+	
+	
+	<!-- 댓글 삭제 -->
+	<delete id="replyDelete" parameterType="Answer">
+		delete from answer
+		where a_ref = ${a_ref}	
+	</delete>
+
+	
 </mapper>

@@ -150,7 +150,9 @@ function showWriteForm(){
 			<c:if test="${ !empty sessionScope.loginMember }">
 					<a href="${ bdt }">${ b.q_title }</a>
 			</c:if> 
-
+			<c:if test="${ empty sessionScope.loginMember }">
+					${ b.q_title }
+			</c:if> 
 			</td>
 			<td>${ b.q_writer }</td>
 			<td><fmt:formatDate value="${ b.q_date }" pattern="yyyy-MM-dd" /></td>

@@ -74,6 +74,7 @@ cellpadding="5">
 			</c:url>
 			<a href="${ bdl }">[삭제하기]</a> &nbsp;
 		</c:if>
+<<<<<<< HEAD
 		
 			
 			
@@ -97,6 +98,13 @@ cellpadding="5">
 		</tr>
 		
 	</c:forEach>
+=======
+			
+			
+		
+		
+	</th></tr>
+>>>>>>> branch 'master' of https://github.com/uforset/secondprj.git
 </table>
 <br>
 <hr>

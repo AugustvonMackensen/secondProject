@@ -102,6 +102,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectSearchDListCount(date);
 	}
 
+<<<<<<< HEAD
 	@Override
 	public ArrayList<Board> selectReply(int board_ref) {
 		return boardDao.selectReply(board_ref);
@@ -110,6 +111,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	
 
+=======
+>>>>>>> branch 'master' of https://github.com/uforset/secondprj.git
 	
 	
 	
