@@ -109,6 +109,7 @@ $(() => {
                   <div class="col-lg-12">
                     <div class="white-button first-button scroll-to-section">
                       <a href="${ pageContext.servletContext.contextPath }/calendarListView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
+                      <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/blist.do">자유게시판</a></li>
                     </div>
                   </div>
                 </div>
