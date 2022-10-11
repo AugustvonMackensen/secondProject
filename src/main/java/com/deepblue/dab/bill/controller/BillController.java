@@ -458,7 +458,8 @@ public class BillController {
 			@RequestParam(name="category",required=false) String category,
 			//
 			ModelAndView mv) {
-
+		
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		mv.addObject("date",date); //페이징 으로인해 다시 date값 전달
 		
@@ -489,7 +490,7 @@ public class BillController {
 		int listCount = 0;
 		switch (type) { // 검색 종류 판단
 		case "searchPrice":
-			if(p1.equals("") || p1 == null) p1 = "0";
+			if( p1.length()==0 || p1.equals("") || p1 == null ) p1 = "0";
 			map.put("p1", p1);
 			map.put("p2", p2);
 			mv.addObject("p1", p1);
