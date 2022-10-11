@@ -22,6 +22,7 @@
 		<typeAlias type="com.deepblue.dab.common.SearchPaging" alias="SearchPaging" />
 		<typeAlias type="com.deepblue.dab.calendar.model.vo.DateData" alias="DateData" />
 		<typeAlias type="com.deepblue.dab.chart.model.vo.Chart" alias="Chart" />
+		<typeAlias type="com.deepblue.dab.board.vo.Board" alias="Board"/>
 	</typeAliases>
 
 	<mappers>
