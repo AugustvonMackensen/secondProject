@@ -10,22 +10,28 @@
 		<result column="sumPrice" property="sumPrice" />
 	</resultMap>
 
-
-	<select id="selectCurrentMonthList" parameterType="String"
+	
+	<select id="selectBarList" parameterType="Map"
 		resultMap="resultChartList">
 	select to_char(bill_timestamp, 'mm') as label , sum(bill_price) as sumPrice
 	from bill 
-	where userid = #{userid} and to_char(bill_timestamp, 'yyyy') = to_char(sysdate, 'yyyy')
+	where userid = #{userid} and to_char(bill_timestamp, 'yyyy') = #{year}
 	group by to_char(bill_timestamp, 'mm')
 	order by label
 	</select>
 
-	<select id="selectCategoryList" parameterType="String" resultMap="resultChartList">
-select bill_category label, sum(bill_price) sumPrice
-from bill
-where userid = #{userid}
-group by bill_category
-order by bill_category
+	<select id="selectCategoryList" parameterType="Map" resultMap="resultChartList">
+		select bill_category label, sum(bill_price) sumPrice
+		from bill
+		where userid = #{userid}
+				<if test="date!= null and date.length() == 7 ">
+					and to_char(bill_timestamp, 'yyyy-mm') = #{ date }
+				</if>
+				<if test="date!= null and date.length() == 4 ">
+					and to_char(bill_timestamp, 'yyyy') = #{ date }
+				</if>
+		group by bill_category
+		order by bill_category
 	</select>
 
 

@@ -1,6 +1,7 @@
 package com.deepblue.dab.chart.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +14,14 @@ public class ChartServiceImpl implements ChartService {
 	@Autowired
 	private ChartDao chartDao;
 
+
 	@Override
-	public List<Chart> selectCurrentMonthList(String userid) {
-		return chartDao.selectCurrentMonthList(userid);
+	public List<Chart> selectBarList(Map<String, Object> map) {
+		return chartDao.selectBarList(map);
 	}
 
 	@Override
-	public List<Chart> selectCategoryList(String userid) {
-		return chartDao.selectCategoryList(userid);
+	public List<Chart> selectCategoryList(Map<String, Object> map) {
+		return chartDao.selectCategoryList(map);
 	}
 }

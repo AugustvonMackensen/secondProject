@@ -91,4 +91,9 @@ public class BillDao {
 		List<Bill> list = session.selectList("billMapper.selectListSearch", map);
 		return (ArrayList<Bill>)list;
 	}
+
+	public ArrayList<Bill> lastMultiUploadList(Map<String, Object> map) {
+		List<Bill> list = session.selectList("billMapper.lastMultiUploadList", map);
+		return (ArrayList<Bill>)list;
+	}
 }

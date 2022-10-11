@@ -11,14 +11,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript">
 
-function getChart() {
+function getChart(year) {
 	let monthList = [];
 	let posList = [];
 	
 	$.ajax({
-		url:"currentYearChart.do",
+		url:"barChart.do",
 		type:"get",
-		data:{ userid: "${loginMember.userid}" },
+		data:{ userid: "${loginMember.userid}", year: year },
 		dataType:"json",
 		success: (data) => {
 			
@@ -60,7 +60,11 @@ function getChart() {
 }
 
 $(() => {
-	getChart();
+	var now = new Date();	// 현재 날짜 및 시간
+	var year = now.getFullYear();	// 연도
+	console.log("연도 : ", year);
+	
+	getChart(year);
 });
 
 </script>

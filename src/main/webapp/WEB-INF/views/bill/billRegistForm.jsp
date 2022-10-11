@@ -17,6 +17,7 @@ table#outer {
 </style>
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <script type="text/javascript">
 	//아이디 중복 체크 확인을 위한 ajax 실행처리용 함수
 	//ajax(Asynchronous Javascript And Xml) :
@@ -95,7 +96,7 @@ table#outer {
 				console.log("rtn: ", data)
 				//var jsonStr = JSON.stringify(data);
 				//var json = JSON.parse(data);
-				var message = data.tTotalPrice;
+				var message = '성공!';
 				console.log("message: ", message);
 				console.log("fcardnum: ", data.fCardnum);
 				
@@ -134,11 +135,23 @@ table#outer {
 						+ fTime.second + "초");
 				
 				//총가격
+				
 				if ( !isEmpty(data.fTotalPrice) ){
+					console.log("총가격 확인"+data.fTotalPrice)
 					$("input[name=bill_price]").attr('value', data.fTotalPrice)
+				} else if(!isEmpty(data.subResults_size)) {
+					console.log("sub개수(total없을경우 계산용) : " + data.subResults_size);
+					var sum=0;
+					for ( var i in data.subResults) {
+						var sub = data.subResults[i].subResults_subPrice ?? 'empty';
+						if( sub != 'empty' )
+							sum += parseInt(data.subResults[i].subResults_subPrice);
+					}
+					$("input[name=bill_price]").attr('value', sum)
 				}
 				//내용에 상품명 수량 가격 넣기
-				$("#resultUploadPath").text(message);
+				//$("#resultUploadPath").text(message);
+				$("textarea[name=bill_content]").text(""); // 먼저 비우기
 				if (data.subResults_size > 0) {
 					console.log("sub개수 : " + data.subResults_size);
 					var content = ""
@@ -165,24 +178,34 @@ table#outer {
 				} */
 				
 				//영수증 ocr 입력시 존재하면 보임
+				$("input[name=bill_storeinfo_name]").attr('value',
+							"");
 				if (!isEmpty(data.storeInfo_name.length)) {
 					$("input[name=bill_storeinfo_name]").attr('value',
 							data.storeInfo_name);
 					$('#store_name').show();
 				}
+				
+				$("input[name=bill_storeinfo_biznum]").attr('value',
+						"");
 				if (!isEmpty(data.storeInfo_bizNum.length)) {
 					$("input[name=bill_storeinfo_biznum]").attr('value',
 							data.storeInfo_bizNum);
 					$('#store_bizNum').show();
 				}
+				
 				console.log(fcardnum.value.length);
 				console.log(fCom.value.length);
+				$("input[name=bill_cardinfo]").attr('value',
+						"");
 				if (!isEmpty(fcardnum.value.length) && !isEmpty(fCom.value.length) ) {
 					$("input[name=bill_cardinfo]").attr('value',
 							fCom.value + " " + fcardnum.value);
 					$('#cardinfo').show();
 				}
 				
+				$("input[name=bill_storeinfo_tel]").attr('value',
+						"");
 				if (!isEmpty(data.storeInfo_tel)) {
 					// 매장 전화번호 전달 받았을 경우
 					$("input[name=bill_storeinfo_tel]").attr('value',
@@ -197,6 +220,8 @@ table#outer {
 						'checked', true);
 			},
 			err : function(err) {
+				var message = '실패!';
+				//$("#resultUploadPath").text(message);
 				console.log("err:", err)
 			}
 		})
@@ -204,18 +229,17 @@ table#outer {
 </script>
 </head>
 <body>
-	<p>이미지 업로드 테스트 창</p>
+	<p></p>
 	<div>
 		<form id="uploadForm" enctype="multipart/form-data">
 			<input type="file" id="imageInput" />
 		</form>
 		<hr />
-		<button onclick="upload()">업로드</button>
+		<button onclick="upload()">영수증 정보 가져오기</button>
 		<hr />
-		<p>업로드결과:</p>
-		<p id="resultUploadPath"></p>
+	<br>
 	</div>
-
+	<a class="btn btn-primary" href="./multiReg.do">여러 영수증 이미지로 지출 등록하기</a>
 	<h1 align="center">지출 등록 페이지</h1>
 	<br>
 	<form action="insertBill.do" method="post">
@@ -236,8 +260,7 @@ table#outer {
 			<tr>
 				<th width="120">* 결제 시간</th>
 				<td><input type="datetime-local" name="bill_timestamp2"
-					id="bill_timestamp" required> &nbsp; &nbsp; <input
-					type="button" value="중복체크" onclick="return dupCheckId();"></td>
+					id="bill_timestamp" required> &nbsp; &nbsp; </td>
 			</tr>
 			<tr>
 				<th width="120">내용</th>
@@ -245,7 +268,7 @@ table#outer {
 						id="bill_content"></textarea></td>
 			</tr>
 			<tr>
-				<th width="120">카테고리</th>
+				<th width="120">* 카테고리</th>
 				<td><input type="radio" name="bill_category" value="식비">식비
 					&nbsp; <input type="radio" name="bill_category" value="문화/여가">문화/여가
 					&nbsp; <input type="radio" name="bill_category" value="교통비">교통비
