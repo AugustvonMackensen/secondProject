@@ -98,11 +98,11 @@ public class QuestionController {
 		
 		//해당 게시글 조회
 		Question qna = qnaService.selectQuestion(q_no);
-		
 		ArrayList<Answer> replylist = answerService.replyList(q_no); 
 
 		
 		if(qna !=null) {
+
 			mv.addObject("question", qna);
 			mv.addObject("currentPage", currentPage);
 			mv.addObject("replylist", replylist);
