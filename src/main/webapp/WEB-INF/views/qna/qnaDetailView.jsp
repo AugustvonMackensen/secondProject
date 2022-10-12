@@ -60,7 +60,7 @@ table.type02 td {
     text-align: center;
     line-height: 60px;
    background : #0d6efd;
-   padding: 8px 25px;
+	padding: 10px 40px;
 }
 .containerr{
    display: static;

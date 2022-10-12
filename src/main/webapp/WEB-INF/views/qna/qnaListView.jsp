@@ -83,6 +83,7 @@ function showWriteForm(){
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 <br>
 <!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
+
 <h1 align="center">Q&A게시판</h1>
 <br>
 <!-- 
@@ -137,7 +138,6 @@ function showWriteForm(){
    <c:forEach items="${ requestScope.list }" var="b">
       <tr>
          <td>${ b.q_no }</td>
-         <!-- 공지제목 클릭시 해당 글의 상세보기로 넘어가게 처리 -->
          <c:url var="bdt" value="/qnadetail.do">
             <c:param name="q_no" value="${ b.q_no }" />
             <c:param name="page" value="${ b.q_no }" />

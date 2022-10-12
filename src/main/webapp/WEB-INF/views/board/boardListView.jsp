@@ -150,8 +150,11 @@ function showWriteForm() {
    <tbody>
    <c:forEach items="${ requestScope.list }" var="b">
       <tr>
-         <!-- 공지제목 클릭시 해당 글의 상세보기로 넘어가게 처리 -->
          <td>${ b.board_num }</td>
+         <c:url var="bdt" value="/bdetail.do">
+            <c:param name="board_num" value="${ b.board_num }" />
+            <c:param name ="page" value="${currentPage }" />
+         </c:url>
          <td><a href="${ bdt }" style="color:blue;">${ b.board_title }</a></td>
          <td>${ b.board_writer }</td>
           <td>
@@ -161,10 +164,7 @@ function showWriteForm() {
          <td><fmt:formatDate value="${ b.board_date }" pattern="yyyy-MM-dd" /></td>
          <td>${ b.board_readcount }</td>
          <td>
-         <c:url var="bdt" value="/bdetail.do">
-            <c:param name="board_num" value="${ b.board_num }" />
-            <c:param name ="page" value="${currentPage }" />
-         </c:url>
+    
          </td>
          
          <td align="left">

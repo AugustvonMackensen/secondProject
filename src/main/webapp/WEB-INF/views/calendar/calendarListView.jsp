@@ -202,6 +202,7 @@
 <style type="text/css" >
 html, body {
 		overflow: scroll;
+		overflow-x: hidden;
 	}	
 </style>
 <form name="calendarFrm" id="calendarFrm" action="" method="GET">
