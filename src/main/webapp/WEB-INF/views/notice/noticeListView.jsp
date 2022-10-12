@@ -7,26 +7,60 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+
+<style type="text/css">
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: blue; text-decoration: underline;}
+table.qa-table{
+	width: 1300px;
+	text-align:center;
+	border : 1px solid #ccc;
+	margin-left: auto; 
+	margin-right: auto;
+	border-collapse: collapse;
+	line-height: 1.5;
+}
+table.qa-table thead{
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	background: #4886FA;
+}
+table.qa-table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+}
+table.qa-table tbody tr{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #F0F8FF;
+	height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+	text-align : center;
+}
+
+</style>
+
 <script type="text/javascript" 
 src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	showDiv();
-	
-	$('input[name=item]').on("change", function(){
-		showDiv();
-	});
-});
 
-function showDiv(){
-	if($('input[name=item]').eq(0).is(":checked")){
-		$("#titleDiv").css("display", "block");
-		$("#dateDiv").css("display", "none");
-	}
-	if($('input[name=item]').eq(1).is(":checked")){
-		$("#titleDiv").css("display", "none");
-		$("#dateDiv").css("display", "block");
-	}
+<script language="JavaScript" type="text/javascript">
+function Change(){
+ var key = test.value;
+ if(key==1){
+ document.all["d1"].style.display="block";
+ document.all["d2"].style.display="none";
+ }
+ if(key==2){
+ document.all["d1"].style.display="none";
+ document.all["d2"].style.display="block";
+ }
 }
 </script>
 </head>
@@ -38,49 +72,42 @@ function showDiv(){
 <h1 align="center">공지사항</h1>
 <!-- 관리자만 공지글 등록할 수 있도록 처리함
   => 로그인한 회원이 관리자이면 공지글 등록 버튼이 보이게 함 -->
-<center>
-<br>
-<c:if test="${ sessionScope.loginMember.admin eq 'Y' }">
-	<button onclick="javascript:location.href='movewrite.do';">
-	새 공지글 등록</button>
-</c:if>
-</center>
-
-<hr>
 <!-- 검색 항목 영역 -->
-<center>
-<div>
-	<h3>검색할 항목을 선택하세요.</h3><br>
-	<input type="radio" name="item" value="title" checked> 제목 &nbsp; &nbsp;
-	<input type="radio" name="item" value="date"> 날짜 
-</div>
-<div id="titleDiv">
-	<form action="nsearchTitle.do" method="get">
-		<label>검색할 제목 키워드를 입력하세요 : 
-			<input type="search" name="keyword">
-		</label>
-		<input type="submit" value="검색">
-	</form>
-</div>
-<div id="dateDiv">
-	<form action="nsearchDate.do" method="get">
-		<label>검색할 등록날짜를 입력하세요 : 
-			<input type="date" name="begin"> ~ 
-			<input type="date" name="end">
-		</label>
-		<input type="submit" value="검색">
-	</form>
-</div>
-</center>
+ <div align="center"  >
+         <select id="test" onchange="Change()" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
+		<option value="1">제목</option>
+		<option value="2">날짜</option>
+         </select>
+
+      <div id="d1" style="display: block">
+         <form action="nsearchTitle.do" method="get" >
+            <input type="search" name="keyword"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"> &nbsp; &nbsp; &nbsp;
+            <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+         </form>
+      </div>
+      <div id="d2" style="display: none">
+         <form action="nsearchDate.do" method="get"  >
+            <input type="date" name="begin" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> <input type="date"
+               name="end"  style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> &nbsp; &nbsp; &nbsp;<input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+         </form>
+      </div>
+
+  </div>
 
 
 <!-- 목록 출력 영역 -->
 <br>
 <center>
-	<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/nlist.do';">전체 목록 보기</button>
+	<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/nlist.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">전체 목록 보기</button> &nbsp; &nbsp; &nbsp; &nbsp;
+
+	<c:if test="${ sessionScope.loginMember.admin eq 'Y' }">
+		<button onclick="javascript:location.href='movewrite.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">
+	새 공지글 등록</button>
+	</c:if>
 </center>
 <br>
-<table align="center" width="500" border="1" cellspacing="0" cellpadding="1">
+<table class="qa-table">
+	<thead>
 	<tr>
 		<th>번호</th>
 		<th>제목</th>
@@ -89,6 +116,8 @@ function showDiv(){
 		<th>날짜</th>
 		<th>조회수</th>
 	</tr>
+	</thead>
+	<tbody>
 	<c:forEach items="${ requestScope.list }" var="n">
 		<c:if test="${ n.importance eq 1 }">
 			<tr align="center">
@@ -101,7 +130,7 @@ function showDiv(){
 			<c:url var="ndt" value="/ndetail.do">
 				<c:param name="noticeno" value="${ n.noticeno }" />
 			</c:url>
-			<td><a href="${ ndt }">${ n.noticetitle }</a></td>
+			<td><a href="${ ndt }" style="color:blue;">${ n.noticetitle }</a></td>
 			<td>${ n.noticewriter }</td>
 			<td>
 				<c:if test="${ !empty n.original_filepath }">◎</c:if>
@@ -112,6 +141,7 @@ function showDiv(){
 		</tr>
 		
 	</c:forEach>
+	</tbody>
 </table>
 
 <c:if test="${ empty action }">
