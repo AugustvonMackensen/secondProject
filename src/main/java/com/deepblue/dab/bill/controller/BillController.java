@@ -37,8 +37,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.deepblue.dab.bill.model.service.BillService;
 import com.deepblue.dab.bill.model.vo.Bill;
-import com.deepblue.dab.bill.utils.FileReaderTest;
-import com.deepblue.dab.bill.utils.OCRGeneralAPIDemo2receipt2tofuc;
+import com.deepblue.dab.bill.utils.TextPreprocessing;
+import com.deepblue.dab.bill.utils.ReceiptOCR;
 import com.deepblue.dab.bill.utils.PagingBill;
 import com.deepblue.dab.common.Paging;
 import com.deepblue.dab.member.model.vo.Member;
@@ -52,16 +52,7 @@ public class BillController {
 	@Autowired
 	private BillService billService;
 	
-	public static String date2TimeStamp(String date_str,String format){  
-	    try {  
-	        SimpleDateFormat sdf = new SimpleDateFormat(format);  
-	        return String.valueOf(sdf.parse(date_str).getTime()/1000);  
-	    } catch (Exception e) {  
-	        e.printStackTrace();  
-	    }  
-	    return "";  
-	}
-	
+
 	// 지출등록 페이지 이동
 	@RequestMapping("bill.do")
 	public String moveWritePage() {
@@ -69,74 +60,52 @@ public class BillController {
 
 	}
 
-	// 다중 이미지 등록페이지 이동
+	// 여러 이미지 등록페이지 이동
 	@RequestMapping("multiReg.do")
 	public String moveMultiRegist() {
 		return "bill/multiuploadForm";
 	}
 	
-	@RequestMapping(value = "imageUpload.do", method = RequestMethod.POST)
-	public void uploadImageMethod(@RequestParam("image") MultipartFile mfile, HttpServletRequest request,
-			HttpServletResponse response, Model model) throws IOException {
-		String suc = "ㅁㄹ";
-		String savePath = request.getSession().getServletContext().getRealPath("resources/bill");
-		logger.info("mFile : " + mfile);
-		logger.info("savePath : " + savePath);
-
-		// 첨부파일이 있을 때만 업로드된 파일을 지정된 폴더로 옮기기
-		if (!mfile.isEmpty()) {
-			String fileName = mfile.getOriginalFilename();
-
-			// 다른 공지글의 첨부파일과
-			// 파일명이 중복되어서 오버라이팅되는 것을 막기 위해
-			// 파일명을 변경해서 폴더에 저장하는 방식을 사용할 수 있음
-			// 변경 파일명 : 년월일시분초.확장자
-			if (fileName != null && fileName.length() > 0) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				// 변경할 파일이름 만들기
-				String renameFileName = sdf.format(new Date(System.currentTimeMillis()));
-				// 원본 파일의 확장자를 추출해서, 변경 파일명에 붙여줌
-				String ext = "." + fileName.substring(fileName.lastIndexOf(".") + 1);
-				logger.info(ext);
-				renameFileName += ext;
-
-				// 파일업로드
-				// 파일 객체 만들기
-				File originFile = new File(savePath + "\\" + fileName);
-				File renameFile = new File(savePath + "\\" + renameFileName);
-				// if(!originFile.exists()) originFile.mkdir();
-				// 업로드된 파일 저장시키고, 바로 이름바꾸기 실행함
-				try {
-					logger.info(renameFileName);
-					logger.info("저장시작");
-					mfile.transferTo(renameFile);
-					logger.info("끝!!");
-				} catch (Exception e) {
-					e.printStackTrace();
-					model.addAttribute("message", "전송파일 저장 실패!");
-					// return "common/error";
-				}
-				suc = "성공!";
-			}
-		} // 첨부파일 있을때만
-			// ajax 전송
-		String returnValue = suc;
-
-		// response 를 이용해서 클라이언트로 출력스트림을 만들고 값 보내기
-		response.setContentType("text/html; charset=utf-8");
-		PrintWriter out;
-
-		out = response.getWriter();
-		out.append(returnValue);
-		out.flush();
-		out.close();
-	}
+	/*
+	 * @RequestMapping(value = "imageUpload.do", method = RequestMethod.POST) public
+	 * void uploadImageMethod(@RequestParam("image") MultipartFile mfile,
+	 * HttpServletRequest request, HttpServletResponse response, Model model) throws
+	 * IOException { String suc = "ㅁㄹ"; String savePath =
+	 * request.getSession().getServletContext().getRealPath("resources/bill");
+	 * logger.info("mFile : " + mfile); logger.info("savePath : " + savePath);
+	 * 
+	 * // 첨부파일이 있을 때만 업로드된 파일을 지정된 폴더로 옮기기 if (!mfile.isEmpty()) { String fileName =
+	 * mfile.getOriginalFilename();
+	 * 
+	 * // 다른 공지글의 첨부파일과 // 파일명이 중복되어서 오버라이팅되는 것을 막기 위해 // 파일명을 변경해서 폴더에 저장하는 방식을 사용할
+	 * 수 있음 // 변경 파일명 : 년월일시분초.확장자 if (fileName != null && fileName.length() > 0) {
+	 * SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss"); // 변경할 파일이름
+	 * 만들기 String renameFileName = sdf.format(new Date(System.currentTimeMillis()));
+	 * // 원본 파일의 확장자를 추출해서, 변경 파일명에 붙여줌 String ext = "." +
+	 * fileName.substring(fileName.lastIndexOf(".") + 1); logger.info(ext);
+	 * renameFileName += ext;
+	 * 
+	 * // 파일업로드 // 파일 객체 만들기 File originFile = new File(savePath + "\\" + fileName);
+	 * File renameFile = new File(savePath + "\\" + renameFileName); //
+	 * if(!originFile.exists()) originFile.mkdir(); // 업로드된 파일 저장시키고, 바로 이름바꾸기 실행함
+	 * try { logger.info(renameFileName); logger.info("저장시작");
+	 * mfile.transferTo(renameFile); logger.info("끝!!"); } catch (Exception e) {
+	 * e.printStackTrace(); model.addAttribute("message", "전송파일 저장 실패!"); // return
+	 * "common/error"; } suc = "성공!"; } } // 첨부파일 있을때만 // ajax 전송 String returnValue
+	 * = suc;
+	 * 
+	 * // response 를 이용해서 클라이언트로 출력스트림을 만들고 값 보내기
+	 * response.setContentType("text/html; charset=utf-8"); PrintWriter out;
+	 * 
+	 * out = response.getWriter(); out.append(returnValue); out.flush();
+	 * out.close(); }
+	 */
 
 	@RequestMapping(value = "imageToText.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String imageToTextMethod(@RequestParam("image") MultipartFile mfile, HttpServletRequest request,
 			HttpServletResponse response, Model model) throws IOException {
-		String suc = "ㅁㄹ";
+		//String suc = "ㅁㄹ";
 		String savePath = request.getSession().getServletContext().getRealPath("resources/bill");
 		logger.info("mFile : " + mfile);
 		logger.info("savePath : " + savePath);
@@ -173,10 +142,10 @@ public class BillController {
 					System.out.println("텍스트 변환 시작");
 					System.out.println("지금은 저장된파일 가져옴");
 					 //ocr 코드
-					 OCRGeneralAPIDemo2receipt2tofuc iTT = new OCRGeneralAPIDemo2receipt2tofuc();
+					 ReceiptOCR iTT = new ReceiptOCR();
 					 JSONObject jobj = iTT.mainMethod(file); // ocr 처리
 					 //-------
-					FileReaderTest fText2 = new FileReaderTest(); 
+					TextPreprocessing fText2 = new TextPreprocessing(); 
 					sendJson = fText2.printInfo(jobj); // 전달할 값들 가공
 //					try (BufferedReader reader = new BufferedReader(
 //							new FileReader("C:\\python_workspace\\testcv\\namecard\\rec\\receiptOCR_ajaxText.txt"));) {
@@ -433,15 +402,6 @@ public class BillController {
 		
 	}
 	
-	@RequestMapping(value="list2.do", method = RequestMethod.POST)
-	public void abc() {
-		
-	}
-	
-	@RequestMapping("list2.do")
-	public void abc1() {
-		
-	}
 	
 	//검색할 경우 포스트로 받음
 	@RequestMapping(value="billListView.do", method = RequestMethod.POST)
@@ -458,7 +418,8 @@ public class BillController {
 			@RequestParam(name="category",required=false) String category,
 			//
 			ModelAndView mv) {
-
+		
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		mv.addObject("date",date); //페이징 으로인해 다시 date값 전달
 		
@@ -489,7 +450,7 @@ public class BillController {
 		int listCount = 0;
 		switch (type) { // 검색 종류 판단
 		case "searchPrice":
-			if(p1.equals("") || p1 == null) p1 = "0";
+			if( p1.length()==0 || p1.equals("") || p1 == null ) p1 = "0";
 			map.put("p1", p1);
 			map.put("p2", p2);
 			mv.addObject("p1", p1);
@@ -578,8 +539,8 @@ public class BillController {
 		String userid = ((Member)session.getAttribute("loginMember")).getUserid();
 		logger.info("try진입전");
 		try {
-			OCRGeneralAPIDemo2receipt2tofuc iTT = new OCRGeneralAPIDemo2receipt2tofuc();
-			FileReaderTest fText2 = new FileReaderTest(); 
+			ReceiptOCR iTT = new ReceiptOCR();
+			TextPreprocessing fText2 = new TextPreprocessing(); 
 			// 파일이 있을때 탄다.
 			logger.info("번째 업로드 포문");
 			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {

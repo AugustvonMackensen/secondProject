@@ -18,6 +18,7 @@ table#outer {
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
 	//아이디 중복 체크 확인을 위한 ajax 실행처리용 함수
 	//ajax(Asynchronous Javascript And Xml) :
@@ -218,6 +219,11 @@ table#outer {
 				//식비 체크 
 				$("input:radio[name=bill_category]:radio[value='식비']").prop(
 						'checked', true);
+				
+				Swal.fire({
+	            	  icon: 'success',
+	            	  title:"영수증 정보를 성공적으로 가져왔습니다.", 
+	              })
 			},
 			err : function(err) {
 				var message = '실패!';

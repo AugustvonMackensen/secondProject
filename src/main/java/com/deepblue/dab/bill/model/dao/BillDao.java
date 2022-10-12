@@ -54,30 +54,7 @@ public class BillDao {
 			return i;
 		else return 0;
 	}
-
-	public int selectListCountSearchPrice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		Integer i = session.selectOne("billMapper.selectListCountSearchPrice", map);
-		if ( i != null)
-			return i;
-		else return 0;
-	}
-
-	public int selectListCountSearchCategory(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		Integer i = session.selectOne("billMapper.selectListCountSearchCategory", map);
-		if ( i != null)
-			return i;
-		else return 0;
-	}
-
-	public int selectListCountSearchDate(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		Integer i = session.selectOne("billMapper.selectListCountSearchDate", map);
-		if ( i != null)
-			return i;
-		else return 0;
-	}
+	
 
 	public int selectListCountSearch(Map<String, Object> map) {
 		// TODO Auto-generated method stub

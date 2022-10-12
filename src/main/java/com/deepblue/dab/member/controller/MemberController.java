@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -107,6 +106,10 @@ public class MemberController {
 		return "member/uploadCardImg";
 	}
 	
+	@RequestMapping("camCamera.do")
+	public String moveCamCard() {
+		return "member/camCard";
+	}
 	// -----------------------------------------------------------
 	
 	//로그인
@@ -225,7 +228,7 @@ public class MemberController {
 				
 				String detectorFile = ocrPath + "\\" + "namecard_detector.py";
 				ProcessBuilder builder = new ProcessBuilder("python", detectorFile, 
-						ocrPath + "/ocrproject-363303-86c62cdc4683.json", savePath + "/namecard.jpg");
+						ocrPath + "/ocrstudent-45a0a578de07.json", savePath + "/namecard.jpg");
 				builder.redirectErrorStream(true);
 				System.out.println(builder.command());
 				Process p = builder.start();

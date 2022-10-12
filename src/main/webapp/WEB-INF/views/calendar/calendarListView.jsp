@@ -13,9 +13,9 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	<script type="text/javascript">
 	
 	console.log("${dateList}")
@@ -46,6 +46,8 @@
 		A:visited { font-size:9pt; font-family:"돋움";color:#000000; text-decoration:none; }
 		A:active { font-size:9pt; font-family:"돋움";color:red; text-decoration:none; }
 		A:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}
+		
+		
 		.day{
 			width:100px; 
 			height:30px;
@@ -234,15 +236,19 @@ html, body {
 	<c:param name="userid" value="${ loginMember.userid }"/>
 	<c:param name="date" value="${today_info.search_year} ${today_info.search_month}" />
 </c:url>
+<c:url var="AllRecipt" value="/billListView.do">
+	<c:param name="userid" value="${ loginMember.userid }"/>
+	<c:param name="date" value="" />
+</c:url>
 <!-- 현재 날짜로 돌아가기 버튼 생성 완료 -->
-<p style="color: black;">${today_info.search_year}년 ${today_info.search_month}월 총 지출 : <a href="${monthRecipt}" style="color: red; font-weight: bold;">-<fmt:formatNumber type="number" maxFractionDigits="3" value="${monthTotalPrice}" /></a><br></p>
+<p style="color: black;">${today_info.search_year}년 ${today_info.search_month}월 총 지출 : <a href="${monthRecipt}" style="color: red; font-weight: bold;">-<fmt:formatNumber type="number" maxFractionDigits="3" value="${monthTotalPrice}" /></a></p>
 <div class="today_button_div">
 <button type="button" class="buttonstyle" onclick="location.href='calendarListView.do'" style="height: 30ps; width:80px;">Today</button>
 </div>
 
 
-<button type="button" class="buttonstyle" onclick="location.href='${monthRecipt}'" style="height: 30ps; width:220px;">${today_info.search_year}년 ${today_info.search_month}월 지출 내역 보기</button>
-
+<button type="button" class="buttonstyle" onclick="location.href='${monthRecipt}'" style="height: 30ps; width:220px;">${today_info.search_year}년 ${today_info.search_month}월 지출 목록 보기</button>
+<button type="button" class="buttonstyle" onclick="location.href='${AllRecipt}'" style="height: 30ps; width:220px;">전체 지출 목록 보기</button>
 <table class="calendar_body">
 
 <thead>
@@ -363,10 +369,11 @@ html, body {
 			</c:choose>
 		</c:forEach>
 </tbody>
-
 </table>
+
 </div>
 </form>
+
 
 <%-- 	<c:import url="/WEB-INF/views/common/footer.jsp" /> --%>
 </body>
