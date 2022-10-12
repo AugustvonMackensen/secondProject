@@ -377,7 +377,7 @@ function chkCode(){
 			<span id="chkPwdMessage"></span>
 	</div>
 	<div class="textForm2">
-			<input type="email" class="email" name="email" id="usermail" oninput="statusMail();" placeholder="*이메일을 입력해주세요." required>
+			<input type="email" class="email" name="email" id="usermail" oninput="statusMail();" placeholder="*이메일을 입력해주세요." value="${ usermail }"required>
 			<div class="emailchk">
 			<input type="button" class="bttn" value="인증" onclick="return validateMail();">
 			<span id ="emailStatus"></span>
