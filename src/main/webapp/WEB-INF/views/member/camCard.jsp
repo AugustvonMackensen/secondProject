@@ -37,9 +37,9 @@
  import os 
  os.system('./resources/python/main.exe')
 </py-script>
-<img src="http://localhost:5000/stream?src=0" width="650" height="480" id="cam">
+<img src="http://localhost:5000/stream?src=0" width="400" height="300" id="cam">
 <br>
-<canvas id="canvas" width="640" height="480"></canvas>
+<canvas id="canvas" width="400" height="300"></canvas>
 <button id="snap" type="submit" name="upfile">캡처하기</button>&nbsp;&nbsp;&nbsp;
 <button onclick="javascript:location.href='uploadImage.do'">명함 등록페이지로 이동</button>
 <script>
@@ -50,7 +50,7 @@ const snap = document.getElementById('snap');
 		var context = canvas.getContext('2d');
 		var image = canvas.toDataURL();
 		snap.addEventListener("click", function(){
-		   context.drawImage(video, 0, 0, 640, 480);
+		   context.drawImage(video, 0, 0, 400, 300);
 		   
 		});
 
