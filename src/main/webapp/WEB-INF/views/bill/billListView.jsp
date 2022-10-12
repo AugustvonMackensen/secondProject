@@ -57,6 +57,7 @@ table.qa-table tbody tr{;
 
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript" 
 src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -103,10 +104,17 @@ checkPrice = () => {
 	
 	
 	if( searchPFrom.p2.value == ""  ) {
-		alert("금액을 입력해주세요");
+		Swal.fire({
+      	  icon: 'warning',
+      	  title:"금액을 입력해주세요.", 
+        })
 		return false;
 	} else if( m1 > m2 ){
-		alert("가격을 확인해주십시오.\n시작가격은 마지막 가격보다 클 수 없습니다.");
+		Swal.fire({
+	      	  icon: 'warning',
+	      	  title:"가격을 확인해주십시오.",
+	      	  text: "시작가격은 마지막 가격보다 클 수 없습니다.",
+	        })
 		return false;
 	} else if( searchPFrom.p1.value=="" && searchPFrom.p2.value != ""){
 		searchPFrom.p1.value=0;
@@ -122,13 +130,20 @@ checkDate = () => {
 	
 	
 	if( searchDFrom.end.value == "" || searchDFrom.begin.value == ""  ) {
-		alert("날짜를 입력해주세요")
+		Swal.fire({
+      	  icon: 'warning',
+      	  title:"날짜를 입력해주세요.", 
+        })
 		return false;
 	} else if(!( searchDFrom.end.value == "" || searchDFrom.begin.value == ""  )){
 		var d1 = new Date(searchDFrom.begin.value);
 		var d2 = new Date(searchDFrom.end.value);
 		if( d1 >= d2 ){
-			alert("날짜를 확인해주십시오.\n시작날짜는 마지막 날짜보다 클 수 없습니다.")
+			Swal.fire({
+      	  icon: 'warning',
+      	  title:"날짜를 확인해주십시오.", 
+      	text: "시작날짜는 마지막 날짜보다 클 수 없습니다.",
+        })
 			return false;
 		} 
 	}
@@ -210,7 +225,12 @@ function Change(){
 
 <br>
 <!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
+<c:if test="${ date == ''}">
+<h1 align="center">전체 지출 목록</h1>
+</c:if>
+<c:if test="${ date != ''}">
 <h1 align="center">${ currentDate } 지출 목록</h1>
+</c:if>
 <h3 align="center">총 목록 수 : ${ listCount } 개</h3>
 <br>
 <!-- 
