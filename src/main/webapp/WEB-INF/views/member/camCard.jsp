@@ -51,7 +51,7 @@ const snap = document.getElementById('snap');
 		var image = canvas.toDataURL();
 		snap.addEventListener("click", function(){
 		   context.drawImage(video, 0, 0, 400, 300);
-		   
+		   alert("캡처 후 마우스 오른쪽 클릭해서 이미지를 저장하시고 등록페이지에서 파일 업로드를 해서 추출해주세요.");
 		});
 
 
