@@ -5,16 +5,20 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
@@ -22,18 +26,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.deepblue.dab.bill.model.service.BillService;
 import com.deepblue.dab.bill.model.vo.Bill;
-import com.deepblue.dab.bill.utils.FileReaderTest;
+import com.deepblue.dab.bill.utils.TextPreprocessing;
+import com.deepblue.dab.bill.utils.ReceiptOCR;
 import com.deepblue.dab.bill.utils.PagingBill;
 import com.deepblue.dab.common.Paging;
+import com.deepblue.dab.member.model.vo.Member;
 
 
 @Controller
@@ -43,6 +51,8 @@ public class BillController {
 	
 	@Autowired
 	private BillService billService;
+	
+
 	// 지출등록 페이지 이동
 	@RequestMapping("bill.do")
 	public String moveWritePage() {
@@ -50,68 +60,52 @@ public class BillController {
 
 	}
 
-	@RequestMapping(value = "imageUpload.do", method = RequestMethod.POST)
-	public void uploadImageMethod(@RequestParam("image") MultipartFile mfile, HttpServletRequest request,
-			HttpServletResponse response, Model model) throws IOException {
-		String suc = "ㅁㄹ";
-		String savePath = request.getSession().getServletContext().getRealPath("resources/bill");
-		logger.info("mFile : " + mfile);
-		logger.info("savePath : " + savePath);
-
-		// 첨부파일이 있을 때만 업로드된 파일을 지정된 폴더로 옮기기
-		if (!mfile.isEmpty()) {
-			String fileName = mfile.getOriginalFilename();
-
-			// 다른 공지글의 첨부파일과
-			// 파일명이 중복되어서 오버라이팅되는 것을 막기 위해
-			// 파일명을 변경해서 폴더에 저장하는 방식을 사용할 수 있음
-			// 변경 파일명 : 년월일시분초.확장자
-			if (fileName != null && fileName.length() > 0) {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				// 변경할 파일이름 만들기
-				String renameFileName = sdf.format(new Date(System.currentTimeMillis()));
-				// 원본 파일의 확장자를 추출해서, 변경 파일명에 붙여줌
-				String ext = "." + fileName.substring(fileName.lastIndexOf(".") + 1);
-				logger.info(ext);
-				renameFileName += ext;
-
-				// 파일업로드
-				// 파일 객체 만들기
-				File originFile = new File(savePath + "\\" + fileName);
-				File renameFile = new File(savePath + "\\" + renameFileName);
-				// if(!originFile.exists()) originFile.mkdir();
-				// 업로드된 파일 저장시키고, 바로 이름바꾸기 실행함
-				try {
-					logger.info(renameFileName);
-					logger.info("저장시작");
-					mfile.transferTo(renameFile);
-					logger.info("끝!!");
-				} catch (Exception e) {
-					e.printStackTrace();
-					model.addAttribute("message", "전송파일 저장 실패!");
-					// return "common/error";
-				}
-				suc = "성공!";
-			}
-		} // 첨부파일 있을때만
-			// ajax 전송
-		String returnValue = suc;
-
-		// response 를 이용해서 클라이언트로 출력스트림을 만들고 값 보내기
-		response.setContentType("text/html; charset=utf-8");
-		PrintWriter out;
-
-		out = response.getWriter();
-		out.append(returnValue);
-		out.flush();
-		out.close();
+	// 여러 이미지 등록페이지 이동
+	@RequestMapping("multiReg.do")
+	public String moveMultiRegist() {
+		return "bill/multiuploadForm";
 	}
+	
+	/*
+	 * @RequestMapping(value = "imageUpload.do", method = RequestMethod.POST) public
+	 * void uploadImageMethod(@RequestParam("image") MultipartFile mfile,
+	 * HttpServletRequest request, HttpServletResponse response, Model model) throws
+	 * IOException { String suc = "ㅁㄹ"; String savePath =
+	 * request.getSession().getServletContext().getRealPath("resources/bill");
+	 * logger.info("mFile : " + mfile); logger.info("savePath : " + savePath);
+	 * 
+	 * // 첨부파일이 있을 때만 업로드된 파일을 지정된 폴더로 옮기기 if (!mfile.isEmpty()) { String fileName =
+	 * mfile.getOriginalFilename();
+	 * 
+	 * // 다른 공지글의 첨부파일과 // 파일명이 중복되어서 오버라이팅되는 것을 막기 위해 // 파일명을 변경해서 폴더에 저장하는 방식을 사용할
+	 * 수 있음 // 변경 파일명 : 년월일시분초.확장자 if (fileName != null && fileName.length() > 0) {
+	 * SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss"); // 변경할 파일이름
+	 * 만들기 String renameFileName = sdf.format(new Date(System.currentTimeMillis()));
+	 * // 원본 파일의 확장자를 추출해서, 변경 파일명에 붙여줌 String ext = "." +
+	 * fileName.substring(fileName.lastIndexOf(".") + 1); logger.info(ext);
+	 * renameFileName += ext;
+	 * 
+	 * // 파일업로드 // 파일 객체 만들기 File originFile = new File(savePath + "\\" + fileName);
+	 * File renameFile = new File(savePath + "\\" + renameFileName); //
+	 * if(!originFile.exists()) originFile.mkdir(); // 업로드된 파일 저장시키고, 바로 이름바꾸기 실행함
+	 * try { logger.info(renameFileName); logger.info("저장시작");
+	 * mfile.transferTo(renameFile); logger.info("끝!!"); } catch (Exception e) {
+	 * e.printStackTrace(); model.addAttribute("message", "전송파일 저장 실패!"); // return
+	 * "common/error"; } suc = "성공!"; } } // 첨부파일 있을때만 // ajax 전송 String returnValue
+	 * = suc;
+	 * 
+	 * // response 를 이용해서 클라이언트로 출력스트림을 만들고 값 보내기
+	 * response.setContentType("text/html; charset=utf-8"); PrintWriter out;
+	 * 
+	 * out = response.getWriter(); out.append(returnValue); out.flush();
+	 * out.close(); }
+	 */
 
 	@RequestMapping(value = "imageToText.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String imageToTextMethod(@RequestParam("image") MultipartFile mfile, HttpServletRequest request,
 			HttpServletResponse response, Model model) throws IOException {
-		String suc = "ㅁㄹ";
+		//String suc = "ㅁㄹ";
 		String savePath = request.getSession().getServletContext().getRealPath("resources/bill");
 		logger.info("mFile : " + mfile);
 		logger.info("savePath : " + savePath);
@@ -147,32 +141,33 @@ public class BillController {
 
 					System.out.println("텍스트 변환 시작");
 					System.out.println("지금은 저장된파일 가져옴");
-					// ocr 코드
-					// OCRGeneralAPIDemo2receipt2tofuc iTT = new OCRGeneralAPIDemo2receipt2tofuc();
-					// JSONObject jobj = iTT.mainMethod(file);
-					// -------
-
-					try (BufferedReader reader = new BufferedReader(
-							new FileReader("C:\\python_workspace\\testcv\\namecard\\rec\\receiptOCR_ajaxText.txt"));) {
-						String bs = "";
-						String str;
-						ArrayList<String> keys = new
-
-						ArrayList<String>();
-
-						while ((str = reader.readLine()) != null) {
-							bs += str;
-						} //
-						System.out.println(bs);
-
-						JSONObject o = (JSONObject) jsonParser.parse(bs); // System.out.println(o);
-
-						System.out.println("JSONObject 가져오기 완료");
-
-						FileReaderTest fText = new FileReaderTest();
-						sendJson = fText.printInfo(o); // 전달할 값들 가공
-						model.addAttribute("test", "문자어캐꺼냄?");
-					}
+					 //ocr 코드
+					 ReceiptOCR iTT = new ReceiptOCR();
+					 JSONObject jobj = iTT.mainMethod(file); // ocr 처리
+					 //-------
+					TextPreprocessing fText2 = new TextPreprocessing(); 
+					sendJson = fText2.printInfo(jobj); // 전달할 값들 가공
+//					try (BufferedReader reader = new BufferedReader(
+//							new FileReader("C:\\python_workspace\\testcv\\namecard\\rec\\receiptOCR_ajaxText.txt"));) {
+//						String bs = "";
+//						String str;
+//						ArrayList<String> keys = new
+//
+//						ArrayList<String>();
+//
+//						while ((str = reader.readLine()) != null) {
+//							bs += str;
+//						} //
+//						System.out.println(bs);
+//
+//						JSONObject o = (JSONObject) jsonParser.parse(bs); // System.out.println(o);
+//
+//						System.out.println("JSONObject 가져오기 완료");
+//
+//						FileReaderTest fText = new FileReaderTest();
+//						sendJson = fText.printInfo(o); // 전달할 값들 가공
+//						model.addAttribute("message", "ocr완료");
+//					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					model.addAttribute("message", "전송파일 저장 실패!");
@@ -341,7 +336,7 @@ public class BillController {
 			@RequestParam("bill_id") int bill_id,
 			@RequestParam(value = "page", required = false) String page) {
 		int currentPage = 1;
-		if (page != null) {
+		if (page != null && page.length()>0) {
 			currentPage = Integer.parseInt(page);
 		}
 		
@@ -407,15 +402,6 @@ public class BillController {
 		
 	}
 	
-	@RequestMapping(value="list2.do", method = RequestMethod.POST)
-	public void abc() {
-		
-	}
-	
-	@RequestMapping("list2.do")
-	public void abc1() {
-		
-	}
 	
 	//검색할 경우 포스트로 받음
 	@RequestMapping(value="billListView.do", method = RequestMethod.POST)
@@ -432,7 +418,8 @@ public class BillController {
 			@RequestParam(name="category",required=false) String category,
 			//
 			ModelAndView mv) {
-
+		
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		mv.addObject("date",date); //페이징 으로인해 다시 date값 전달
 		
@@ -463,7 +450,7 @@ public class BillController {
 		int listCount = 0;
 		switch (type) { // 검색 종류 판단
 		case "searchPrice":
-			if(p1.equals("") || p1 == null) p1 = "0";
+			if( p1.length()==0 || p1.equals("") || p1 == null ) p1 = "0";
 			map.put("p1", p1);
 			map.put("p2", p2);
 			mv.addObject("p1", p1);
@@ -535,4 +522,175 @@ public class BillController {
 		
 		return mv;
 	}
+	
+	@RequestMapping(value="multiUpload.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String multiUploadMethod(
+			@RequestParam("article_file") List<MultipartFile> multipartFile, 
+			HttpServletRequest request,
+			MultipartHttpServletRequest mtfRequest,
+			HttpSession session) {
+		String strResult = "{ \"result\":\"FAIL\" }";
+		//List<MultipartFile> multipartFile = mtfRequest.getFiles("file"); // 업로드할 파일리스트
+		logger.info(multipartFile.size()+"개넣음");
+		//String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+		JSONObject sendJson = new JSONObject(); // 전달용
+		
+		String userid = ((Member)session.getAttribute("loginMember")).getUserid();
+		logger.info("try진입전");
+		try {
+			ReceiptOCR iTT = new ReceiptOCR();
+			TextPreprocessing fText2 = new TextPreprocessing(); 
+			// 파일이 있을때 탄다.
+			logger.info("번째 업로드 포문");
+			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
+				int c=0; // 개수 체크
+				for(MultipartFile mfile:multipartFile) {
+					try {
+						File file = new File(mfile.getOriginalFilename());
+						mfile.transferTo(file);
+						logger.info("getOriginalFilename"+mfile.getOriginalFilename());
+						JSONObject jobj = iTT.mainMethod(file); // ocr후 텍스트 가공처리
+						jobj =  fText2.printInfo(jobj);
+						logger.info(jobj+"");
+						Bill bill = new Bill();
+						bill.setUserid(userid); // 유저아이디 입력
+						if(jobj.containsKey("fTotalPrice")) {
+							bill.setBill_price( Integer.parseInt((String) jobj.get("fTotalPrice"))); // 총가격입력
+						}
+						
+						if(jobj.containsKey("tDate") && jobj.containsKey("tTime")) {
+							String date = (String) jobj.get("tDate");
+							String time = (String) jobj.get("tTime");
+							
+							//공백제거
+							date = date.trim();
+							time = time.trim().replace(" ", "");
+							
+							// '/' 문자 '-' 로바꾸기
+							date = date.replace("/", "-");
+							if(date.length() == 5)
+								date = "2022-"+date; // 월과 일만있을경우
+			
+							String timePattern = "(0[1-9]|1[0-9]|2[0-4]):(0[1-9]|[0-5][0-9]):(0[1-9]|[0-5][0-9])";
+							String stampPattern = "\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]) (0[1-9]|1[0-9]|2[0-4]):(0[1-9]|[0-5][0-9]):(0[1-9]|[0-5][0-9])";
+							String stime = "";
+							if( Pattern.matches(timePattern, time)) {
+								stime= date +" " + time;
+							}else {
+								stime= date +" " + "11:00:00";
+ 							}
+							
+								
+							if( Pattern.matches(stampPattern, stime) ) { //맞으면
+								Timestamp tsmp = Timestamp.valueOf(stime); 
+								bill.setBill_timestamp(tsmp); // 시간입력
+							} else { // 틀리면 현재시간넣음
+								Timestamp tsmp = new Timestamp(System.currentTimeMillis());
+								bill.setBill_timestamp(tsmp); // 시간입력
+							}
+								
+						}
+						
+						bill.setBill_category("식비"); // 기본 식비로 설정
+						//내용
+						if(jobj.containsKey("subResults") && ((JSONArray)jobj.get("subResults")).size() > 0 ) {
+							String content="";
+							int sum=0;
+							for(Object item: (JSONArray)jobj.get("subResults")  ) {
+								if(item instanceof JSONObject) {
+									JSONObject jitem = (JSONObject)item;
+									
+									if(jitem.containsKey("subResults_name")) {
+										content += jitem.get("subResults_name");
+									}
+									
+									if(jitem.containsKey("subResults_count")) {
+										content += " "+jitem.get("subResults_count") + "개";
+									}
+									
+									if(jitem.containsKey("subResults_subPrice")) {
+										content += " "+jitem.get("subResults_subPrice") + "원\n";
+										sum += Integer.parseInt((String)jitem.get("subResults_subPrice"));
+									}
+									
+								}
+								bill.setBill_content(content);
+							}//end for
+							if( bill.getBill_price() == 0 )
+								bill.setBill_price(sum); //위에서 가격을 설정하지 못했을경우 여기서라도
+							
+						}
+						
+						//카드 정보
+						if(jobj.containsKey("tCom") && jobj.containsKey("tCardnum")) {
+							String cardinfo = jobj.get("tCom") +" " + jobj.get("tCardnum");
+							bill.setBill_cardinfo(cardinfo);
+						}
+						
+						//상호명
+						if(jobj.containsKey("storeInfo_name")) {
+							String infoName = (String) jobj.get("storeInfo_name");
+							bill.setBill_storeinfo_name(infoName);
+						}
+						
+						//사업자 번호
+						if(jobj.containsKey("storeInfo_bizNum")) {
+							String biznum = (String) jobj.get("storeInfo_bizNum");
+							bill.setBill_storeinfo_biznum(biznum);
+						}
+						
+						//매장 전화번호
+						if(jobj.containsKey("storeInfo_tel")) {
+							String tel = (String) jobj.get("storeInfo_tel");
+							bill.setBill_storeinfo_tel(tel);
+						}
+						logger.info("insert전 확인!!!!!!!!!!!!!!!!");
+						logger.info(bill.toString());
+						if(billService.insertBill(bill) > 0) {
+							//등록성공할경우
+							c++;
+						}
+					}
+					catch(Exception e) { logger.info("이미지중 하나 실패!"); e.printStackTrace();  }
+				} // end for
+				logger.info(c+"개 이미지 지출등록 완료.");
+				sendJson.put("count", c); //지출등록한 개수
+				strResult = "{ \"result\":\"OK\" }";
+			}
+			// 파일 아무것도 첨부 안했을때 탄다.(게시판일때, 업로드 없이 글을 등록하는경우)
+			else
+				strResult = "{ \"result\":\"OK\" }";
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		sendJson.put("result", "OK");
+		sendJson.put("userid", userid);
+		return sendJson.toJSONString();
+	}
+	
+	@RequestMapping("multiUploadCompleteView.do")
+	public String multiUploadCompleteViewMethod(Model model,
+			@RequestParam("count") String count,
+			@RequestParam("userid") String userid) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("count", Integer.parseInt(count) );
+		map.put("userid", userid);
+		
+		ArrayList<Bill> list = billService.lastMultiUploadList(map);
+		
+		if(list != null && list.size() > 0) {
+			model.addAttribute("list", list);
+			model.addAttribute("count", count);
+			model.addAttribute("userid", userid);
+			return "bill/uploadCompleteView";
+			
+		} else {
+			model.addAttribute("message", "입력한 데이터가 없거나, 옮바른 접근이 아닙니다.");
+			return "common/error";
+		}
+		
+	}
+	
 }

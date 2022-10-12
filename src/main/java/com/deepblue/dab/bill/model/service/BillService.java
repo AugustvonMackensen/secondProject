@@ -23,4 +23,6 @@ public interface BillService {
 	
 	int selectListCountSearch(Map<String, Object> map);
 	ArrayList<Bill> selectListSearch(Map<String, Object> map);
+
+	ArrayList<Bill> lastMultiUploadList(Map<String, Object> map);
 }

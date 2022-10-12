@@ -41,10 +41,10 @@ CREATE TABLE BILL (
    BILL_PRICE   NUMBER      NOT NULL,
    BILL_CONTENT   VARCHAR2(1000)      NULL,
    BILL_CATEGORY   VARCHAR2(20)     NOT NULL,
-   BILL_CARDINFO  VARCHAR2(30)      NULL,
-   BILL_STOREINFO_NAME VARCHAR2(30) NULL,
+   BILL_CARDINFO  VARCHAR2(50)      NULL,
+   BILL_STOREINFO_NAME VARCHAR2(50) NULL,
    BILL_STOREINFO_BIZNUM VARCHAR2(30) NULL,
-   BILL_STOREINFO_TEL VARCHAR2(20) NULL
+   BILL_STOREINFO_TEL VARCHAR2(30) NULL
 );
 
 COMMENT ON COLUMN BILL.ID IS 'PK 생성 용도';
@@ -337,6 +337,54 @@ VALUES (13, 'user01', '설계방식3', '3번째 방식은 액션을 이용하는
 NULL, NULL, 13, null, DEFAULT, DEFAULT, DEFAULT, DEFAULT);
 
 SELECT * FROM BOARD;
+
+
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 01 10', 'yyyy mm dd') , 15573, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 02 10', 'yyyy mm dd') , 13722, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 03 10', 'yyyy mm dd') , 94135, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 04 10', 'yyyy mm dd') , 785541, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 05 10', 'yyyy mm dd') , 357721, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 06 10', 'yyyy mm dd') , 123770, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 07 10', 'yyyy mm dd') , 124220, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 08 10', 'yyyy mm dd') , 75818, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 09 10', 'yyyy mm dd') , 108757, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 11 10', 'yyyy mm dd') , 1207812, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 12 10', 'yyyy mm dd') , 7851254, '더미 데이터', '교통비',null,null,null,null);
+
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 1', 'yyyy mm dd') , 1553, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 2', 'yyyy mm dd') , 13722, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 3', 'yyyy mm dd') , 9435, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 4', 'yyyy mm dd') , 78541, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 5', 'yyyy mm dd') , 35721, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 6', 'yyyy mm dd') , 12370, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 7', 'yyyy mm dd') , 12420, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 8', 'yyyy mm dd') , 75818, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 9', 'yyyy mm dd') , 10877, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 10', 'yyyy mm dd') , 12072, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 11', 'yyyy mm dd') , 78514, '더미 데이터', '교통비',null,null,null,null);
+
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 11', 'yyyy mm dd') , 1553, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 12', 'yyyy mm dd') , 13722, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 13', 'yyyy mm dd') , 9435, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 14', 'yyyy mm dd') , 78541, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 15', 'yyyy mm dd') , 35721, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 16', 'yyyy mm dd') , 12370, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 17', 'yyyy mm dd') , 12420, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 18', 'yyyy mm dd') , 75818, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 19', 'yyyy mm dd') , 10877, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 20', 'yyyy mm dd') , 12072, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 21', 'yyyy mm dd') , 78514, '더미 데이터', '교통비',null,null,null,null);
+
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 21', 'yyyy mm dd') , 1553, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 22', 'yyyy mm dd') , 13722, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 23', 'yyyy mm dd') , 9435, '더미 데이터', '식비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 24', 'yyyy mm dd') , 78541, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 25', 'yyyy mm dd') , 35721, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 26', 'yyyy mm dd') , 12370, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 27', 'yyyy mm dd') , 12420, '더미 데이터', '교통비',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 28', 'yyyy mm dd') , 75818, '더미 데이터', '기타',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 29', 'yyyy mm dd') , 10877, '더미 데이터', '문화/여가',null,null,null,null);
+INSERT INTO BILL VALUES(default, 'user04', to_timestamp('2022 10 30', 'yyyy mm dd') , 12072, '더미 데이터', '식비',null,null,null,null);
 
 COMMIT;
 

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class FileReaderTest {
+public class TextPreprocessing {
 	private static JSONParser jsonParser = new JSONParser();
 
 	/*

@@ -12,6 +12,7 @@ public interface QuestionService {	// 번호로 상세보기
 	ArrayList<Question> selectList(Paging page);
 	Question selectQuestion(int q_no); // 번호로 상세보기
 	ArrayList<Question> selectAll();
+	ArrayList<Question> selectSearchWriter(String keyword);// 작성자 검색
 	ArrayList<Question> selectSearchTitle(String keyword); // 제목검색
 	ArrayList<Question> selectSearchDate(SearchDate date); // 날자 검색
 	int insertOriginqna(Question qna); // 게시글 등록

@@ -65,6 +65,12 @@ public class BillServiceImpl implements BillService{
 		return billDao.selectListSearch(map);
 	}
 
+	@Override
+	public ArrayList<Bill> lastMultiUploadList(Map<String, Object> map) {
+		
+		return billDao.lastMultiUploadList(map);
+	}
+
 
 	
 	

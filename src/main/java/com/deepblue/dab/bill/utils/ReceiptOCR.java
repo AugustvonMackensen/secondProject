@@ -19,7 +19,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class OCRGeneralAPIDemo2receipt2tofuc {
+public class ReceiptOCR {
 
 	private static JSONParser jsonParser = new JSONParser();
 
@@ -66,6 +66,13 @@ public class OCRGeneralAPIDemo2receipt2tofuc {
 		try {
 			URL url = new URL(apiURL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			File file = imgfile;
+			
+			//확장자 확인
+			String fileName = file.getName();
+			String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
+			//
+			
 			con.setUseCaches(false);
 			con.setDoInput(true);
 			con.setDoOutput(true);
@@ -80,7 +87,7 @@ public class OCRGeneralAPIDemo2receipt2tofuc {
 			json.put("requestId", UUID.randomUUID().toString());
 			json.put("timestamp", System.currentTimeMillis());
 			JSONObject image = new JSONObject();
-			image.put("format", "jpg");
+			image.put("format", ext);
 			image.put("name", "demo");
 			JSONArray images = new JSONArray();
 			images.add(image);
@@ -90,7 +97,7 @@ public class OCRGeneralAPIDemo2receipt2tofuc {
 			con.connect();
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			long start = System.currentTimeMillis();
-			File file = imgfile;
+			
 			writeMultiPart(wr, postParams, file, boundary);
 			wr.close();
 

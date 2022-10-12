@@ -63,5 +63,9 @@ public class QuestionServiceImpl implements QuestionService {
 	public int deletequestion(Question question) {
 		return qnaDao.deleteQuestion(question);
 	}
-
+	
+	   @Override
+	   public ArrayList<Question> selectSearchWriter(String keyword) {
+	      return qnaDao.selectSearchWriter(keyword);
+	   }
 }

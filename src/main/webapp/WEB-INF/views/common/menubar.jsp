@@ -28,7 +28,7 @@
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <a href="${ pageContext.servletContext.contextPath }/main.do" class="logo">
-              <span style="font-size :30px; color: #0d6efd;">DeepAccountBook</span>
+              <span style="font-size :30px; color: #0d6efd; margin-left: -50px;">DeepAccountBook</span>
             <a href="index.html" class="logo">
             </a>
             <ul class="nav">
@@ -49,7 +49,7 @@
 			 </c:if>
 			
               <c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
-	              <li><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록Test</a></li>
+	              <li><a class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;" href="${ pageContext.servletContext.contextPath }/bill.do">지출등록</a></li>
 	              <li>
 	              <div class="gradient-button" >
 	              	<c:url var="callMyinfo" value="/myinfo.do">
@@ -63,7 +63,7 @@
               </c:if>
               <!-- 관리자 -->
               <c:if test="${ !empty sessionScope.loginMember and loginMember.admin eq 'Y' }">
-	              <li><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록Test</a></li>
+	              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;" ><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록</a></li>
 	              <li>
 	              <div class="gradient-button" >
 	              	<c:url var="callMyinfo" value="/myinfo.do">
