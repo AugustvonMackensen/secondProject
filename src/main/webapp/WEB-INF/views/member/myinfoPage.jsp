@@ -7,6 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+
+<style>
+
+</style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
@@ -21,8 +25,9 @@
 	</script>
 
 
-<h1 align="center">내 정보 보기</h1>
+<h1>내 정보 보기</h1>
 <br>
+<div class="divcont">
 <table id="outer" align="center" width="500" cellspacing="5" cellpadding="0" border="1">
 	<tr>
 		<th width="120">이 름</th>
@@ -54,6 +59,7 @@
 		</th>
 	</tr>
 </table>
+</div>
 <hr>
 <br>
 <br>

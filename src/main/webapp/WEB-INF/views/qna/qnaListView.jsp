@@ -46,6 +46,9 @@ table.qa-table tbody tr{;
     width: 100%;
 	text-align : center;
 }
+.writebtn {
+
+}
 
 
 
@@ -88,7 +91,9 @@ function showWriteForm(){
 <!-- 
 	=> 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
 <c:if test="${ !empty sessionScope.loginMember }">
-	<button radu onclick="showWriteForm();" style="width: 7rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;position:relative; left :633px; top:97px;">글쓰기</button>
+	<button onclick="showWriteForm();" style="width: 7rem; align : center; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa; display: block;
+    text-align: center;
+    margin: auto;">글쓰기</button>
 </c:if>
  <div align="center"  >
          <select id="test" onchange="Change()" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
@@ -163,7 +168,6 @@ function showWriteForm(){
 				<c:if test="${ !empty b.q_original_filename }">◎</c:if>
 				<c:if test="${ empty b.q_original_filename }">&nbsp;</c:if>
 			</td>
-			
 		</tr>
 	</c:forEach>
 	</tbody>

@@ -15,6 +15,41 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<style>
+table.qa-table{
+	width: 1300px;
+	text-align:center;
+	border : 1px solid #ccc;
+	margin-left: auto; 
+	margin-right: auto;
+	border-collapse: collapse;
+	line-height: 1.5;
+}
+table.qa-table thead{
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	background: #4886FA;
+}
+table.qa-table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+}
+table.qa-table tbody tr{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #F0F8FF;
+	height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+	text-align : center;
+}
+
+</style>
 <script type="text/javascript"
    src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -59,11 +94,9 @@
    <!-- jstl의 절대 경로 표기 : /WEB-INF/views/common/menubar.jsp  -->
    <hr>
    <h1 align="center">게시글 목록</h1>
-   <h3 align="center">총 목록 수 : ${ listCount } 개</h3>
    <!--    로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함. -->
    <center>
          <c:if test="${ !empty sessionScope.loginMember }">   
-         
             <button onclick="showWriteForm();">글쓰기</button> 
        </c:if>
    </center>
@@ -107,40 +140,42 @@
    <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';">전체 목록 보기</button>
 </center>
 <br>
-<table align="center" width="500" border="1" cellspacing="0" cellpadding="1">
+<table class="qa-table">
+<thead>
    <tr>
-      <th>번호</th>
-      <th>제목</th>
-      <th>작성자</th>
-      <th>첨부파일</th>
-      <th>날짜</th>
-      <th>조회수</th>
+      <th scope="cols">번호</th>
+      <th scope="cols">제목</th>
+      <th scope="cols">작성자</th>
+      <th scope="cols">첨부파일</th>
+      <th scope="cols">날짜</th>
+      <th scope="cols">조회수</th>
    </tr>
+   </thead>
+   <tbody>
    <c:forEach items="${ requestScope.list }" var="b">
-         <!-- 공지제목 클릭시 해당 글의 상세보기로 넘어가게 처리 -->
+   <tr>
+         <td>${ b.board_num }</td>
          <c:url var="bdt" value="/bdetail.do">
             <c:param name="board_num" value="${ b.board_num }" />
             <c:param name ="page" value="${currentPage }" />
          </c:url>
-         
-         <td align="left">
-               <!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
-               들여쓰기 처리 : 원글과 구분지음 --> <c:if test="${ b.board_lev eq 2 }">&nbsp; &nbsp; ▶</c:if>
-               <c:if test="${ b.board_lev eq 3 }">&nbsp; &nbsp; &nbsp; &nbsp; ▶▶</c:if>
-         
-         
-         <td>${ b.board_num }</td>
+
          <td><a href="${ bdt }">${ b.board_title }</a></td>
-         <td>${ b.board_writer }</td>
-         <td>
+		 <td>${ b.board_writer }</td>
+		  <td>
             <c:if test="${ !empty b.board_original_filename }">◎</c:if>
             <c:if test="${ empty b.board_original_filename }">&nbsp;</c:if>
          </td>
          <td><fmt:formatDate value="${ b.board_date }" pattern="yyyy-MM-dd" /></td>
+         
          <td>${ b.board_readcount }</td>
+         <td>
+               <!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
+               들여쓰기 처리 : 원글과 구분지음 --> <c:if test="${ b.board_lev eq 2 }">&nbsp; &nbsp; ▶</c:if>
+               <c:if test="${ b.board_lev eq 3 }">&nbsp; &nbsp; &nbsp; &nbsp; ▶▶</c:if>
       </tr>
-      
    </c:forEach>
+   </tbody>
 </table>
 
 <!-- 전체 목록 페이징 처리 -->
