@@ -1,8 +1,11 @@
 package com.deepblue.dab;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +41,10 @@ public class HomeController {
 	
 	// @RequestMapping : 메소드 연결해주는 의미 ... 조심 : 404 에러 주요 원인 
 	@RequestMapping("main.do") //main.do 파일 요청이 오면 메소드가 진행되게끔 하라는 의미 
-	public String forwardMainView() {
+	public String forwardMainView(HttpServletRequest request) throws IOException {
+		String camPath = request.getSession().getServletContext().getRealPath("/resources/python/main.exe");
+		ProcessBuilder builder = new ProcessBuilder(camPath);
+		builder.start();
 		return "common/main"; // 내보낼 뷰파일명 리턴
 	}
 	

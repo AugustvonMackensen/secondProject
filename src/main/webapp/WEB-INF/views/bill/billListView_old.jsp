@@ -167,7 +167,12 @@ function showWriteForm(){
 
 <br>
 <!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
-<h1 align="center">${ currentDate } 지출 목록</h1>
+<c:if test="${ date eq ''} ">
+<h1 align="center">전체 지출 목록123123</h1>
+</c:if>
+<c:if test="${ empty date } ">
+<h1 align="center">${ currentDate } 지2 목록머임21312</h1>
+</c:if>
 <h3 align="center">총 목록 수 : ${ listCount } 개</h3>
 <br>
 <!-- 

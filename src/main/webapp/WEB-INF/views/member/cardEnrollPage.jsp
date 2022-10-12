@@ -1,21 +1,178 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title></title>
-<style type="text/css">
-table th { background-color: #99ffff; }
-table#outer { border:2px solid navy; }
-input#validchkMessage {
-	box-shadow: none;
-  	border-bottom: none;
-  	outline: none;
-    border: none;
+<style type="text/css">	
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
 }
+
+body {
+  background-image:#919191;
+}
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+  
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(172, 140, 140, 0.1);
+}
+.login {
+  width: 30%;
+  height: 698px;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom : 100px; 
+}
+
+.joinForm h2 {
+  text-align: center;
+  margin: 30px;
+}
+
+.textForm {
+  border-radius: 30px;
+  border: 1px solid lightgray;
+  width: 400px;
+  margin: 10px;
+  padding: 10px 10px;
+}
+
+
+.id {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.name {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.email {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.cellphoneNo {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+  .submit2 {
+    width: 200px;
+    height: 30px;
+    border: 0;
+    outline: none;
+    border-radius: 40px;
+   background : #0d6efd;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    color:white;
+  }
+.loginmenu {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+#mainmove{
+   border : 0;
+   background : #0d6efd;
+   color : white;
+   width: 200px;
+   height : 50px;
+   outline : none;
+   border-radius : 40px;
+   text-align : center;
+   fon-size: 1.2em;
+   line-height:48px;
+   letter-spacing : 2px;
+   padding: 5px 50px;
+}
+
+.textForm2{
+	position: relative;
+	width : 280px;
+	height : 50px;
+	vertical-align: center;
+ 	border-radius: 30px;
+ 	border: 1px solid lightgray;
+ 	margin-right : 120px;
+ 	  padding: 10px 10px;
+}
+.emailchk .bttn{
+	position : absolute;
+	right : -120px;
+	top :5px;
+	width : 100px;
+	height: 40px;
+	border-radius : 40px;
+	color : white;
+	background : #0d6efd;
+	border : 0;	
+}
+.mailcheck-input{
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+
+.btn:hover {
+  background-position: right;
+}
+
 </style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -119,7 +276,7 @@ function validate(){
 		return false;
 	}
 	
-	if(document.getElementById("emailStatus").innerHTML === '이메일을 입력하셨거나 변경하셨네요. 이메일 인증을 하세요.'){
+	if(document.getElementById("emailStatus").innerHTML === '이메일 인증을 하세요.'){
 		 alert("이메일이 인증되지 않았습니다. 인증해 주세요.");
 		 document.getElementById("usermail").select();
 		 return false;
@@ -136,7 +293,7 @@ function validate(){
 //이메일 값 변경여부 확인
 function statusMail(){
 	const mailStatusMsg = $('#emailStatus');
-	mailStatusMsg.html('이메일을 입력하셨거나 변경하셨네요. 이메일 인증을 하세요.');
+	mailStatusMsg.html('이메일 인증을 하세요.');
 	mailStatusMsg.css('color', 'blue');
 }
 
@@ -192,63 +349,50 @@ function chkCode(){
 </script>
 </head>
 <body>
-<h1 align="center">회원 가입 페이지</h1>
-<br>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
 <form action="enroll.do" method="post" id="signUp" name="signUp" onsubmit="return validate();">
-<table id="outer" align="center" width="500" cellspacing="5" cellpadding="0">
-	<tr>
-		<th colspan="2">회원 정보를 입력해 주세요.
+<div class="wrap">
+	<div class="login">
+	<h1 align="center" style="color : #0d6efd;">회원 가입 페이지</h1>
+	<br>
+		회원 정보를 입력해 주세요.
 		(* 표시는 필수입력 항목입니다.)
-	</th></tr>
-	<tr>
-		<th width="120">* 이 름</th>
-		<td><input type="text" name="username" maxlength="6" required></td>
-	</tr>
-	<tr>
-		<th width="120">* 아이디</th>
-		<td><input type="text" name="userid" id="userid" maxlength="10" oninput="dupCheckId();" required><br>
-			<span id="idDupCheckMsg"></span>
-		</td>
-	</tr>
-	<tr>
-		<th width="120">* 암 호</th>
-		<td>
-			<input type="password" name="userpwd" id="upwd1" minlength="8" maxlength="16" oninput="chkPwd();" required><br>
-			<span id="pwRuleChk"></span>
-		</td>
-	</tr>
-	<tr>
-		<th width="120">* 암호확인</th>
-		<td>
-			<input type="password" minlength="8" maxlength="16" id="upwd2" oninput="validPW();"><br>
-			<span id="chkPwdMessage"></span>
-		</td>
-	</tr>
-	<tr>
-		<th width="120">* 이메일</th>
-		<td>
-			<input type="email" name="email" id="usermail" oninput="statusMail();" value="${ usermail }" required> &nbsp;&nbsp;
-			<input type="button" id="mailChkbtn" value="인증" onclick="return validateMail();"><br>
-			<span id ="emailStatus"></span>
-		</td>
-	</tr>
-	<tr>
-		<th width="120">* 인증번호</th>
-		<td class="mailcheck">
-			<input type="text" id="validnum" name="validnum" class="mailcheck-input" placeholder="인증번호" disabled="disabled" maxlength="6" oninput="chkCode();" required><br>
-			<span id="validchkMessage"></span>
-		</td>
-	</tr>
-	<tr>
-		<th colspan="2">
-			<input type="submit" value="가입하기"> &nbsp;
-			<a href="main.do">시작페이지로 이동</a>
-		</th>
-	</tr>
-</table>
-</form>
+	<br><br><br>
+	<div class="textForm">
+		<input type="text" name="username" maxlength="6" class="name" placeholder="*이름을 입력해주세요." required></input>
+	</div>
+	<div class="textForm">
 
-<hr style="clear:both;">
-<c:import url="/WEB-INF/views/common/footer.jsp" />
+		<input type="text" class="id" name="userid" id="userid" maxlength="10" oninput="dupCheckId();" placeholder="*아이디를 입력해주세요." required><br>
+		<span id="idDupCheckMsg"></span>
+	</div>
+	<div class="textForm">
+
+			<input type="password" class="pw" name="userpwd" id="upwd1" minlength="8" maxlength="16" oninput="chkPwd();" placeholder="*비밀번호를 입력해주세요." required><br>
+			<span id="pwRuleChk"></span>
+	</div>
+	<div class="textForm">
+	
+			<input type="password" class="pw" minlength="8" maxlength="16" id="upwd2" placeholder="*비밀번호 확인" oninput="validPW();"><br>
+			<span id="chkPwdMessage"></span>
+	</div>
+	<div class="textForm2">
+			<input type="email" class="email" name="email" id="usermail" oninput="statusMail();" placeholder="*이메일을 입력해주세요." required>
+			<div class="emailchk">
+			<input type="button" class="bttn" value="인증" onclick="return validateMail();">
+			<span id ="emailStatus"></span>
+			</div>
+	</div>
+	<div class="textForm">
+		<div class="mailcheck">
+			<input  type="text" id="validnum" name="validnum" class="mailcheck-input" placeholder="인증번호" disabled="disabled" maxlength="6"  oninput="chkCode();" required>
+			<span id="validchkMessage"></span>
+		</div>
+	</div>
+  </form>
+  <div>
+	<input class="submit2" type="submit" value="가입하기"> &nbsp;
+   <a id="mainmove" href="main.do">시작페이지</a>
+</div>
 </body>
 </html>

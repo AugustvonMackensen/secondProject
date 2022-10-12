@@ -45,25 +45,26 @@
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/loginPage.do"> Login</a></div></li>
               </c:if>
               <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y' }">
-				<li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;"><a href="${ pageContext.servletContext.contextPath }/mlist.do">회원관리</a></li>
-			 </c:if>
-			
+				<li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif; "><a href="${ pageContext.servletContext.contextPath }/mlist.do">회원관리</a></li>
+			  </c:if>
               <c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
-	              <li><a class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;" href="${ pageContext.servletContext.contextPath }/bill.do">지출등록</a></li>
+	             <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif; padding: 0px 20px"><a  href="${ pageContext.servletContext.contextPath }/bill.do">지출등록</a></li>
+	           </c:if>
+	           	<c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
 	              <li>
 	              <div class="gradient-button" >
 	              	<c:url var="callMyinfo" value="/myinfo.do">
 						<c:param name="userid" value="${ loginMember.userid }" />
 					</c:url>
-					<a href="${ callMyinfo }">My Page</a>
+					<a href="${ callMyinfo }">My Page</a> 
 	              </div>
-	              </li> 
+	              </li>
 	              
 	              <li><div class="gradient-button" ><a href="${ pageContext.servletContext.contextPath }/logout.do"> Logout</a></div></li>
               </c:if>
               <!-- 관리자 -->
               <c:if test="${ !empty sessionScope.loginMember and loginMember.admin eq 'Y' }">
-	              <li class="scroll-to-section" style=" font-family: 'Noto Sans KR', sans-serif;" ><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록</a></li>
+	              <li class="scroll-to-section" style="font-family: 'Noto Sans KR', sans-serif;" ><a href="${ pageContext.servletContext.contextPath }/bill.do">지출등록</a></li>
 	              <li>
 	              <div class="gradient-button" >
 	              	<c:url var="callMyinfo" value="/myinfo.do">

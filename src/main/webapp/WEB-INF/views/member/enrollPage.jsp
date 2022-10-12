@@ -33,13 +33,14 @@ h2 {
 }
 .login {
   width: 30%;
-  height: 850px;
+  height: 698px;
   background: rgb(255, 255, 255);
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
+  margin-bottom : 100px; 
 }
 
 .joinForm h2 {
@@ -111,9 +112,10 @@ h2 {
     border: 0;
     outline: none;
     border-radius: 40px;
-    background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+   background : #0d6efd;
     font-size: 1.2em;
     letter-spacing: 2px;
+    color:white;
   }
 .loginmenu {
     display: flex;
@@ -348,15 +350,14 @@ function chkCode(){
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-
-<br>
 <form action="enroll.do" method="post" id="signUp" name="signUp" onsubmit="return validate();">
 <div class="wrap">
 	<div class="login">
-	<h1 align="center">회원 가입 페이지</h1>
+	<h1 align="center" style="color : #0d6efd;">회원 가입 페이지</h1>
+	<br>
 		회원 정보를 입력해 주세요.
 		(* 표시는 필수입력 항목입니다.)
-
+	<br><br><br>
 	<div class="textForm">
 		<input type="text" name="username" maxlength="6" class="name" placeholder="*이름을 입력해주세요." required></input>
 	</div>
