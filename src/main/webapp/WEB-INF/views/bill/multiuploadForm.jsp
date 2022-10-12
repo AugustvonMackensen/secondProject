@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <html lang="en">
 <head>
-  <title>파일업로드예제</title>
+  <title>지출 등록</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -13,10 +13,10 @@
 </head>
 <body>
 
-<div class="container">
-  <h2>파일업로드</h2>
+<div class="container" style="border: 1px solid #CCC;">
+  <h2>영수증 이미지 업로드</h2>
   <form name="dataForm" id="dataForm" enctype="multipart/form-data" onsubmit="return registerAction()">
-  	<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
+  	<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">이미지 추가</button>
   	<input id="input_file" multiple="multiple" type="file" style="display:none;">
   	<span style="font-size:10px; color: gray;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span>
   	<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
@@ -65,7 +65,11 @@ function fileCheck(e) {
     
     // 파일 개수 확인 및 제한
     if (fileCount + filesArr.length > totalCount) {
-      $.alert('파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
+      /* $.alert('파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.'); */
+      Swal.fire({
+       	  icon: 'warning',
+       	  title: "파일은 최대 " +totalCount+'개까지 업로드 할 수 있습니다.', 
+         })
       return;
     } else {
     	 fileCount = fileCount + filesArr.length;

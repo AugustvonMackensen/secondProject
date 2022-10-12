@@ -184,7 +184,11 @@ public class BillController {
 	@RequestMapping(value = "insertBill.do", method = RequestMethod.POST)
 	public String billInsertMethod(Bill bill, Model model,@RequestParam("bill_timestamp2") String ts) {
 		
+		logger.info(ts+"타임스스탬프");
 		ts = ts.replace("T", " ");
+		if(ts.length() == 16)
+			ts = ts + ":00";
+		
 		Timestamp t = Timestamp.valueOf(ts);
 		logger.info(t.toString());
 		bill.setBill_timestamp(t);
@@ -389,12 +393,12 @@ public class BillController {
 		
 		Bill bill = billService.selectBill(id);
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");
-		logger.info("date : " + formatter.format(bill.getBill_timestamp()));
+		//SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");
+		//logger.info("date : " + formatter.format(bill.getBill_timestamp()));
 		if(billService.deleteBill(bill.getId()) > 0) {
 			//삭제 성공
 			
-			return "redirect:billListView.do?page=1&userid="+bill.getUserid()+"&date="+formatter.format(bill.getBill_timestamp());
+			return "redirect:billListView.do?page=1&userid="+bill.getUserid()+"&date=";
 		} else {
 			model.addAttribute("message", "삭제실패ㅋ");
 			return "common/error";
