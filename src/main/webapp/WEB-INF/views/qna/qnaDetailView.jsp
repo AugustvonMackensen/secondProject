@@ -320,7 +320,6 @@ html, body {
 </div>
          <hr>
    </c:forEach>
-   <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
 

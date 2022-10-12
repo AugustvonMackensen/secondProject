@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
 <style>
 *{
 font-family: 'Noto Sans KR', sans-serif;
@@ -21,11 +23,12 @@ font-family: 'Noto Sans KR', sans-serif;
  }
  #snap{
   width: 300px;
-  height: 200px;
+  height: 100px;
   font-size: 15px;
   border: 0;
   outline: none;
-  background-color: rgb(233, 233, 233);
+  border-radius : 40px;
+  background: linear-gradient(105deg, rgba(91,104,235,1) 0%, rgba(40,225,253,1) 100%);
   background : #0d6efd;
   color : white;
  }
@@ -55,7 +58,7 @@ font-family: 'Noto Sans KR', sans-serif;
     </py-config>
 
 </head>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+ 
 <body>
 
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
