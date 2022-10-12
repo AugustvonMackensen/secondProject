@@ -88,8 +88,9 @@ function showWriteForm(){
 <!-- 
 	=> 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
 <c:if test="${ !empty sessionScope.loginMember }">
-	<button radu onclick="showWriteForm();" style="width: 7rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;position:relative; left :633px; top:97px;">글쓰기</button>
+	<button radu onclick="showWriteForm();" style="width: 7rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;display: block; text-align: center; margin: auto;">글쓰기</button>
 </c:if>
+<!-- 검색 드롭 다운 영역 -->
  <div align="center"  >
          <select id="test" onchange="Change()" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
 		<option value="1">제목</option>
@@ -99,20 +100,20 @@ function showWriteForm(){
 
       <div id="d1" style="display: block">
          <form action="qnasearchTitle.do" method="post" >
-            <input type="search" name="keyword"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;">
+            <input type="search" name="keyword"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"> &nbsp; &nbsp; &nbsp;
             <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
          </form>
       </div>
       <div id="d2" style="display: none">
 		<form action="qnasearchWriter.do" method="post">	
-           <input type="search" name="keyword"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"> 
+           <input type="search" name="keyword"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;">  &nbsp; &nbsp; &nbsp;
            <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
          </form>
       </div>
       <div id="d3" style="display: none">
          <form action="qnasearchDate.do" method="post"  >
             <input type="date" name="begin" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> <input type="date"
-               name="end"  style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+               name="end"  style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> &nbsp; &nbsp; &nbsp; <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
          </form>
       </div>
 
@@ -150,7 +151,7 @@ function showWriteForm(){
 
 		
 			<c:if test="${ !empty sessionScope.loginMember }">
-					<a href="${ bdt }">${ b.q_title }</a>
+					<a href="${ bdt }" style="color:blue;">${ b.q_title }</a>
 			</c:if> 
 			<c:if test="${ empty sessionScope.loginMember }">
 					${ b.q_title }

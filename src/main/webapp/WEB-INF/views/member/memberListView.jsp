@@ -64,6 +64,31 @@ form.sform {
 }
 
 </style>
+
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+function Change(){
+ var key = test.value;
+ if(key==1){
+ document.all["d1"].style.display="block";
+ document.all["d2"].style.display="none";
+ document.all["d3"].style.display="none"; 
+ }
+ if(key==2){
+ document.all["d1"].style.display="none";
+ document.all["d2"].style.display="block";
+ document.all["d3"].style.display="none";
+ }
+ if(key==3){
+ document.all["d1"].style.display="none";
+ document.all["d2"].style.display="none";
+ document.all["d3"].style.display="block";
+ }
+}
+
+</script>
+
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
 
@@ -100,55 +125,56 @@ function changeLogin(element){
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-
-<h1 align="center">회원 관리 페이지</h1>
+<br>
+<h1 align="center">회원 관리</h1>
 <br>
 <h4 align="center">현재 회원 수 : ${listCount} 명</h4>
 <br>
 <center>
-	<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/mlist.do';">전체 보기</button>
-<br><br>
+	<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/mlist.do';" style="width: 7rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;position:relative;">전체 보기</button>
+
 
 <!-- 검색 항목 영역 -->
-<center>
-<fieldset id="ss">
-		<legend>검색할 항목을 선택하세요.</legend>	
-		<input type="radio" name="item" id="userid">회원 아이디 &nbsp;
-		<input type="radio" name="item" id="edate">가입날짜 &nbsp;
-		<input type="radio" name="item" id="loginok">로그인 제한
-</fieldset>
-	
-<!-- 아이디로 검색 폼 -->	
-<form action="${ pageContext.servletContext.contextPath }/msearchId.do" method="get" id="idform" class="sform">
-		<input type="hidden" name="action" value="id">
-		<input type="search" name="keyword"> &nbsp;
-		<input type="submit" value="검색">
-</form>
+ <div align="center"  >
+         <select id="test" onchange="Change()" style="width: 8rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
+		<option value="1">회원 아이디</option>
+		<option value="2">로그인 제한</option>
+		<option value="3">가입날짜</option>
+         </select>
 
-<!-- 가입날짜로 검색 폼 -->
-<form action="${ pageContext.servletContext.contextPath }/msearchDate.do" method="get" id="enrollform" class="sform">
-	<input type="hidden" name="action" value="edate">
-	<input type="date" name="begin"> ~ <input type="date" name="end"> &nbsp;
-	<input type="submit" value="검색">
-</form>
-	
-<!-- 로그인제한/가능 여부로 검색 폼 -->
-<form action="${ pageContext.servletContext.contextPath }/msearchLogin.do" method="get" id="lokform" class="sform">
-	<input type="hidden" name="action" value="login">
-	<input type="radio" name="keyword" value="Y"> 로그인 가능 회원 &nbsp;
-	<input type="radio" name="keyword" value="N"> 로그인 제한 회원 &nbsp;
-	<input type="submit" value="검색">
-</form>
-</center>
+      <div id="d1" style="display: block">
+         <form action="msearchId.do" method="get" >
+            <input type="search" name="keyword"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;">
+            <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+         </form>
+      </div>
+      <div id="d2" style="display: none">
+		<form action="msearchLogin.do" method="get">	
+           <input type="radio" name="keyword" value="Y"  border:3px solid #f8f9fa;">회원 활성 &nbsp; &nbsp;
+           <input type="radio" name="keyword" value="N"  border:3px solid #f8f9fa;">회원 비활성 &nbsp; &nbsp; &nbsp; &nbsp;
+           <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+         </form>
+      </div>
+      <div id="d3" style="display: none">
+         <form action="msearchDate.do" method="get"  >
+            <input type="date" name="begin" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate" value="edate"> <input type="date"
+               name="end"  style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate" value="edate"> <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+         </form>
+      </div>
+ </div>
+ <br>
 
 	
 <!-- 조회해 온 회원 리스트 정보 출력 처리 -->
-<table align="center" border="1" cellspacing="0" cellpadding="3" class="qa-table" class="user">
+<table class="qa-table">
+	<thead>
 	<tr>
-		<th>아이디</th>
-		<th>이메일</th>
-		<th>로그인 활성/비활성</th>
+		<th scope="cols">아이디</th>
+		<th scope="cols">이메일</th>
+		<th scope="cols">로그인 활성/비활성</th>
+		<th scope="cols">정보 수정</th>
 	</tr>
+	</thead>
 	
 	<c:forEach items="${ requestScope.list }" var="m">
 		<tr>
@@ -168,7 +194,7 @@ function changeLogin(element){
 		   <c:url var="amoveup" value="/amoveup.do">
 				<c:param name="userid" value="${ m.userid }"/>
 			</c:url>
-			<a href="${ amoveup }">수정</a> &nbsp; 
+			<a href="${ amoveup }" style="color:blue;">수정</a> &nbsp; 
 		</th>
 		</tr>
 	</c:forEach>

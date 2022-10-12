@@ -17,7 +17,7 @@
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 <br><br><br>
 <hr>
-<h2 align="center">${ requestScope.board.board_num } 번 공지글 상세보기</h2>
+<h2 align="center">${ requestScope.board.board_num } 번 자유게시글 상세보기</h2>
 <br>
 <table align="center" width="500" border="1" cellspacing="0" 
 cellpadding="5">

@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
-table th { background-color: #99ffff; }
 table#outer { border:2px solid navy; }
 </style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
@@ -35,13 +34,61 @@ function validate(){
 	return true;
 }
 </script>
+
+<style type="text/css">
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: blue; text-decoration: underline;}
+table.qa-table{
+	width: 500px;
+	text-align:center;
+	border : 1px solid #ccc;
+	margin-left: auto; 
+	margin-right: auto;
+	border-collapse: collapse;
+	line-height: 1.5;
+}
+table.qa-table thead{
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	background: #4886FA;
+}
+table.qa-table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+}
+table.qa-table tbody tr{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #fff; 
+	height : 38px;
+}
+table.qa-table tbody tr th{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #F0F8FF;
+	height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+	text-align : center;
+}
+</style>
+
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
+<br>
 <h1 align="center">회원 정보 수정 페이지</h1>
 <br>
 <form action="mupdate.do" method="post">
 	<input type="hidden" name="origin_userpwd" value="${ member.userpwd }">
-<table id="outer" align="center" width="500" cellspacing="5" cellpadding="0">
+<table class="qa-table">
+	<tbody>
 	<tr>
 		<th width="120">이 름</th>
 		<td><input type="text" name="username" value="${ member.username }" readonly></td>
@@ -70,6 +117,7 @@ function validate(){
 			<a href="main.do">시작페이지로 이동</a>
 		</th>
 	</tr>
+	</tbody>
 </table>
 </form>
 

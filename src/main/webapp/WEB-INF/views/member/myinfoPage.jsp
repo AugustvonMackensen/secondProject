@@ -18,12 +18,60 @@
 	{
 		swal("Deep Account Book 을 사용해주셔서 감사합니다.","탈퇴가 완료됐습니다.");
 	};
-	</script>
+</script>
+<style type="text/css">
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: blue; text-decoration: underline;}
 
+table.qa-table{
+	width: 500px;
+	text-align:center;
+	border : 1px solid #ccc;
+	margin-left: auto; 
+	margin-right: auto;
+	border-collapse: collapse;
+	line-height: 1.5;
+}
+table.qa-table thead{
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	background: #4886FA;
+}
+table.qa-table thead th {
+	padding: 10px;
+	font-weight: solid;
+	vertical-align: top;
+	color: #fff;
+}
+table.qa-table tbody tr{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #fff;
+	height : 38px;
+}
+table.qa-table tbody tr th{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #F0F8FF; 
+	height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+	text-align : center;
+}
+.a{
+	color: #4886FA;
+}
+</style>
 
+<br>
+<div align="center">
 <h1 align="center">내 정보 보기</h1>
 <br>
-<table id="outer" align="center" width="500" cellspacing="5" cellpadding="0" border="1">
+<table class="qa-table">
 	<tr>
 		<th width="120">이 름</th>
 		<td>${ member.username }</td>
@@ -41,19 +89,20 @@
 		<c:url var="moveup" value="/moveup.do">
 				<c:param name="userid" value="${ member.userid }"/>
 			</c:url>
-			<a href="${ moveup }">수정하기</a> &nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="${ moveup }" style="color:blue;">수정하기</a> &nbsp;&nbsp;&nbsp;&nbsp;
 			<c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
 
 			<c:url var="mdel" value="/mdel.do">
 				<c:param name="userid" value="${ member.userid }"/>
 			</c:url>
-			<a onClick="alert('탈퇴가 완료되었습니다.')" href="${ mdel }" >탈퇴하기</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a onClick="alert('탈퇴가 완료되었습니다.')" href="${ mdel }" style="color:blue;">탈퇴하기</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			
 			</c:if>
-			<a href="main.do">시작페이지로 이동</a>
+			<a href="main.do" style="color:gray;">시작페이지로 이동</a>
 		</th>
 	</tr>
 </table>
+</div>
 <hr>
 <br>
 <br>

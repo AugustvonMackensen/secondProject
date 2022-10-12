@@ -15,40 +15,73 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<style type="text/css">
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: blue; text-decoration: underline;}
+table.qa-table{
+	width: 1300px;
+	text-align:center;
+	border : 1px solid #ccc;
+	margin-left: auto; 
+	margin-right: auto;
+	border-collapse: collapse;
+	line-height: 1.5;
+}
+table.qa-table thead{
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	background: #4886FA;
+}
+table.qa-table thead th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+}
+table.qa-table tbody tr{;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	background: #F0F8FF;
+	height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+	text-align : center;
+}
+</style>
+
 <script type="text/javascript"
    src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.6.1.min.js"></script>
-<script type="text/javascript">
-   $(function() {
-      showDiv();
+   
+<script language="JavaScript" type="text/javascript">
+function Change(){
+ var key = test.value;
+ if(key==1){
+ document.all["d1"].style.display="block";
+ document.all["d2"].style.display="none";
+ document.all["d3"].style.display="none"; 
+ }
+ if(key==2){
+ document.all["d1"].style.display="none";
+ document.all["d2"].style.display="block";
+ document.all["d3"].style.display="none";
+ }
+ if(key==3){
+ document.all["d1"].style.display="none";
+ document.all["d2"].style.display="none";
+ document.all["d3"].style.display="block";
+ }
+}
 
-      $('input[name=item]').on("change", function() {
-         showDiv();
-      });
-   });
+// 글쓰기 버튼 클릭시 실행되는 함수 
+function showWriteForm() {
+	//게시원글 쓰기 페이지로 이동 처리 
+    location.href = "${pageContext.servletContext.contextPath}/bwform.do";
+}
 
-   function showDiv() {
-      if ($('input[name=item]').eq(0).is(":checked")) {
-         $("#titleDiv").css("display", "block");
-         $("#writerDiv").css("display", "none");
-         $("#dateDiv").css("display", "none");
-      }
-      if ($('input[name=item]').eq(1).is(":checked")) {
-         $("#titleDiv").css("display", "none");
-         $("#writerDiv").css("display", "block");
-         $("#dateDiv").css("display", "none");
-      }
-      if ($('input[name=item]').eq(2).is(":checked")) {
-         $("#titleDiv").css("display", "none");
-         $("#writerDiv").css("display", "none");
-         $("#dateDiv").css("display", "block");
-      }
-   }
-
-   // 글쓰기 버튼 클릭시 실행되는 함수 
-   function showWriteForm() {
-      //게시원글 쓰기 페이지로 이동 처리 
-      location.href = "${pageContext.servletContext.contextPath}/bwform.do";
-   }
 </script>
 
 
@@ -57,90 +90,92 @@
    <!--상대경로로 대상 파일의 위치를 지정한 경우  -->
    <c:import url="../common/menubar.jsp" />
    <!-- jstl의 절대 경로 표기 : /WEB-INF/views/common/menubar.jsp  -->
-   <hr>
-   <h1 align="center">게시글 목록</h1>
-   <h3 align="center">총 목록 수 : ${ listCount } 개</h3>
+	<br>
+   <h1 align="center">자유 게시글 목록</h1><br>
+   <h5 align="center">총 게시글 개수 : ${ listCount } 개</h5><br>
    <!--    로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함. -->
    <center>
-         <c:if test="${ !empty sessionScope.loginMember }">   
-         
-            <button onclick="showWriteForm();">글쓰기</button> 
-       </c:if>
+
    </center>
-   
    <!-- 검색 항목 영역  -->
-   <center>
-      <div>
-         <h2>검색할 항목을 선택하세요.</h2>
-         <input type="radio" name="item" value="title" checked>제목
-         &nbsp; &nbsp; <input type="radio" name="item" value="writer">작성자
-         &nbsp; &nbsp; <input type="radio" name="item" value="date">날짜
-      </div>
-      <div id="titleDiv">
-         <form action="searchTitle.do" method="get">
-            <label>검색할 제목 키워드를 입력하세요 : <input type="search"
-               name="keyword">
-            </label> <input type="submit" value="검색">
-         </form>
-      </div>
-      <div id="writerDiv">
-         <form action="searchWriter.do" method="get">
-            <label>검색할 작성자 아이디를 입력하세요 : <input type="search"
-               name="keyword" >
-            </label> <input type="submit" value="검색">
-         </form>
-      </div>
-      <div id="dateDiv">
-         <form action="searchDate.do" method="get">
-            <label>검색할 등록날짜를 입력하세요 : <input type="date" name="begin">
-               ~ <input type="date" name="end" >
-            </label> <input type="submit" value="검색">
-         </form>
-      </div>
-   </center>
+   
+ <div align="center" >
+         <select id="test" onchange="Change()" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
+		<option value="1">제목</option>
+		<option value="2">작성자</option>
+		<option value="3">날짜</option>
+         </select>
 
-
+      <div id="d1" style="display: block">
+         <form action="searchTitle.do" method="get" >
+            <input type="search" name="keyword"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"> &nbsp; &nbsp; &nbsp;
+            <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+         </form>
+      </div>
+      <div id="d2" style="display: none">
+		<form action="searchWriter.do" method="get">	
+           <input type="search" name="keyword"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"> &nbsp; &nbsp; &nbsp;
+           <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+         </form>
+      </div>
+      <div id="d3" style="display: none">
+         <form action="searchDate.do" method="get"  >
+            <input type="date" name="begin" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> <input type="date"
+               name="end"  style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> &nbsp; &nbsp; &nbsp; <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+         </form>
+      </div>
+   </div>
 
    <!-- 목록 출력 영역 -->
    <br>
 <center>
-   <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';">전체 목록 보기</button>
+   <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">전체 목록 보기</button> &nbsp; &nbsp; &nbsp; &nbsp;
+
+   <c:if test="${ !empty sessionScope.loginMember }">         
+      <button onclick="showWriteForm();" style="width: 6rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">글쓰기</button> 
+   </c:if>
 </center>
 <br>
-<table align="center" width="500" border="1" cellspacing="0" cellpadding="1">
-   <tr>
-      <th>번호</th>
-      <th>제목</th>
-      <th>작성자</th>
-      <th>첨부파일</th>
-      <th>날짜</th>
-      <th>조회수</th>
-   </tr>
+<table class="qa-table">
+	<thead>
+   	<tr>
+      <th scope="cols">번호</th>
+      <th scope="cols">제목</th>
+      <th scope="cols">작성자</th>
+      <th scope="cols">첨부파일</th>
+      <th scope="cols">날짜</th>
+      <th scope="cols">조회수</th>
+      </tr>
+   </thead>
+   <tbody>
    <c:forEach items="${ requestScope.list }" var="b">
+   	<tr>
          <!-- 공지제목 클릭시 해당 글의 상세보기로 넘어가게 처리 -->
-         <c:url var="bdt" value="/bdetail.do">
-            <c:param name="board_num" value="${ b.board_num }" />
-            <c:param name ="page" value="${currentPage }" />
-         </c:url>
-         
-         <td align="left">
-               <!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
-               들여쓰기 처리 : 원글과 구분지음 --> <c:if test="${ b.board_lev eq 2 }">&nbsp; &nbsp; ▶</c:if>
-               <c:if test="${ b.board_lev eq 3 }">&nbsp; &nbsp; &nbsp; &nbsp; ▶▶</c:if>
-         
-         
          <td>${ b.board_num }</td>
-         <td><a href="${ bdt }">${ b.board_title }</a></td>
+         <td><a href="${ bdt }" style="color:blue;">${ b.board_title }</a></td>
          <td>${ b.board_writer }</td>
-         <td>
+          <td>
             <c:if test="${ !empty b.board_original_filename }">◎</c:if>
             <c:if test="${ empty b.board_original_filename }">&nbsp;</c:if>
          </td>
          <td><fmt:formatDate value="${ b.board_date }" pattern="yyyy-MM-dd" /></td>
          <td>${ b.board_readcount }</td>
-      </tr>
-      
+         <td>
+         <c:url var="bdt" value="/bdetail.do">
+            <c:param name="board_num" value="${ b.board_num }" />
+            <c:param name ="page" value="${currentPage }" />
+         </c:url>
+         </td>
+         
+         <td align="left">
+               <!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
+               들여쓰기 처리 : 원글과 구분지음 --> <c:if test="${ b.board_lev eq 2 }">&nbsp; &nbsp; ▶</c:if>
+               <c:if test="${ b.board_lev eq 3 }">&nbsp; &nbsp; &nbsp; &nbsp; ▶▶</c:if>
+         </td>
+
+    </tr>
    </c:forEach>
+   </tbody>
 </table>
 
 <!-- 전체 목록 페이징 처리 -->
@@ -358,6 +393,7 @@
    </c:if>
 </div>
 </c:if> <!-- 검색 목록 페이징 처리 -->
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
 
