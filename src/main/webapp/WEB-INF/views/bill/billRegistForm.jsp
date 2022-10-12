@@ -17,7 +17,6 @@ table#outer {
 </style>
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script type="text/javascript">
 	//아이디 중복 체크 확인을 위한 ajax 실행처리용 함수
@@ -235,21 +234,29 @@ table#outer {
 </script>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
 	<p></p>
-	<div>
+	
+	
 		<form id="uploadForm" enctype="multipart/form-data">
-			<input type="file" id="imageInput" />
+			<table>
+			<tr>
+			<td><input type="file" id="imageInput" /></td>
+			</tr>
+			<tr>
+			<td><input type="button" onclick="upload()" value="영수증 정보 가져오기"/></td>
+			</tr>
+		</table>
 		</form>
-		<hr />
-		<button onclick="upload()">영수증 정보 가져오기</button>
-		<hr />
+	
 	<br>
-	</div>
-	<a class="btn btn-primary" href="./multiReg.do">여러 영수증 이미지로 지출 등록하기</a>
+	
+	
+	<div align="right"><a class="btn btn-primary" href="./multiReg.do">여러 영수증 이미지로 지출 등록하기</a></div>
 	<h1 align="center">지출 등록 페이지</h1>
 	<br>
 	<form action="insertBill.do" method="post">
-		<table id="outer" align="center" width="500" cellspacing="5"
+		<table id="outer" align="center" width="550" cellspacing="5"
 			cellpadding="0">
 			<tr>
 				<th colspan="2">지출 정보를 입력해주세요. (* 표시는 필수입력 항목입니다.)</th>
@@ -257,7 +264,7 @@ table#outer {
 			<tr>
 				<th width="120">아이디</th>
 				<td><input type="text" name="userid"
-					value="${ loginMember.userid }" readonly></td>
+					value="${ loginMember.userid }" readonly style="background-color:  #d3d3d3;"></td>
 			</tr>
 			<tr>
 				<th width="120">* 지출 금액</th>

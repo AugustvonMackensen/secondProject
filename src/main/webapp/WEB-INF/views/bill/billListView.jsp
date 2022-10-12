@@ -172,19 +172,29 @@ function showDiv(){
 $(function(){
 	
 	if(${type == "searchPrice"}) {
+		$("select[id=test]").val("");
+		$("option[name=title]").attr("selected", "true");
+		
 		$("input[name=p1]").val(comma(${p1}))
 		$("input[name=p2]").val(comma(${p2}))
 	}else if(${type == "searchCategory" }) {
+		$("select[id=test]").val("");
+
+		$("option[name=category]").attr("selected", "true");
+		
 		$("input:radio[name=category]:input[value=${category}]").attr("checked", true)
 		$("input:radio[name=item]:input[value=category]").attr("checked", true)
 	}else if(${type == "searchDate" } ) {
+		$("select[id=test]").val("");
+		$("option[name=date]").attr("selected", "true");
+		
 		$("input[name=begin]").val("${begin}")
 		$("input[name=end]").val("${end}")
 		$("input:radio[name=item]:input[value=date]").attr("checked", true)
 	}
 	
 	
-
+	Change();
 	
 	
 });
@@ -203,15 +213,17 @@ function Change(){
 	 document.all["searchCategoryDiv"].style.display="none";
 	 document.all["searchDateDiv"].style.display="none"; 
 	 }
-	 if(key=="date"){
+	 if(key=="category"){
 	 document.all["searchPriceDiv"].style.display="none";
 	 document.all["searchCategoryDiv"].style.display="block";
 	 document.all["searchDateDiv"].style.display="none";
+	 
 	 }
-	 if(key=="category"){
+	 if(key=="date"){
 	 document.all["searchPriceDiv"].style.display="none";
 	 document.all["searchCategoryDiv"].style.display="none";
 	 document.all["searchDateDiv"].style.display="block";
+	 
 	 }
 	}
 
@@ -239,9 +251,9 @@ function Change(){
 <center>
 
 <select id="test" onchange="Change()" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
-		<option value="title">금액</option>
-		<option value="category">날짜</option>
-		<option value="date">카테고리</option>
+		<option name="title" value="title">금액</option>
+		<option name="date" value="date">날짜</option>
+		<option name="category" value="category">카테고리</option>
          </select>
 
 <div id="searchPriceDiv" style="display: block">
