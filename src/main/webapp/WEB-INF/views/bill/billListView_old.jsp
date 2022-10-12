@@ -18,41 +18,9 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
- a:link { color: black; text-decoration: none;}
- a:visited { color: black; text-decoration: none;}
- a:hover { color: blue; text-decoration: underline;}
-table.qa-table{
-	width: 1300px;
-	text-align:center;
-	border : 1px solid #ccc;
-	margin-left: auto; 
-	margin-right: auto;
-	border-collapse: collapse;
-	line-height: 1.5;
-}
-table.qa-table thead{
-	border-right: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	background: #4886FA;
-}
-table.qa-table thead th {
-	padding: 10px;
-	font-weight: bold;
-	vertical-align: top;
-	color: #fff;
-}
-table.qa-table tbody tr{;
-	font-weight: bold;
-	border-bottom: 1px solid #ccc;
-	background: #F0F8FF;
-	height : 38px;
-}
-.paging {
-    position: fixed;
-    bottom: 100px;
-    width: 100%;
-	text-align : center;
-}
+table th { background-color: #99ffff; border-bottom: 1px solid #444444;}
+table td {border-bottom: 1px solid #444444;}
+table#outer { border: 2px solid navy; }
 
 
 
@@ -168,7 +136,13 @@ $(function(){
 		$("input:radio[name=item]:input[value=date]").attr("checked", true)
 	}
 	
+	showDiv();
 	
+	
+	
+	$('input[name=item]').on("change", function(){
+		showDiv();
+	});
 
 	
 	
@@ -181,24 +155,7 @@ function showWriteForm(){
 	location.href = "${pageContext.servletContext.contextPath}/bwform.do";
 }
 
-function Change(){
-	 var key = test.value;
-	 if(key=="title"){
-	 document.all["searchPriceDiv"].style.display="block";
-	 document.all["searchCategoryDiv"].style.display="none";
-	 document.all["searchDateDiv"].style.display="none"; 
-	 }
-	 if(key=="date"){
-	 document.all["searchPriceDiv"].style.display="none";
-	 document.all["searchCategoryDiv"].style.display="block";
-	 document.all["searchDateDiv"].style.display="none";
-	 }
-	 if(key=="category"){
-	 document.all["searchPriceDiv"].style.display="none";
-	 document.all["searchCategoryDiv"].style.display="none";
-	 document.all["searchDateDiv"].style.display="block";
-	 }
-	}
+
 
 
 </script>
@@ -217,63 +174,60 @@ function Change(){
 	=> 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
 <!-- 검색 항목 영역 -->
 <center>
-
-<select id="test" onchange="Change()" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
-		<option value="title">금액</option>
-		<option value="category">날짜</option>
-		<option value="date">카테고리</option>
-         </select>
-
-<div id="searchPriceDiv" style="display: block">
+<div>
+	<h2>검색할 항목을 선택하세요.</h2>
+	<input type="radio" name="item" value="title" checked> 금액 &nbsp; &nbsp;
+	<input type="radio" name="item" value="date"> 날짜 &nbsp; &nbsp;
+	<input type="radio" name="item" value="category"> 카테고리 &nbsp; &nbsp;
+</div>
+<div id="searchPriceDiv">
 	<form name="searchPFrom" action="billListView.do" method="post" onSubmit="return checkPrice()">
 		<input type="hidden" name="type" value="searchPrice">
 		<input type="hidden" name="date" value="${ date }">
 		<input type="hidden" name="userid" value="${ loginMember.userid }">
-		<input type="text" style="width: 12rem;height:3rem; border:3px solid #f8f9fa;" name="p1" class="input--text-item start_price" placeholder="0" min="0" value="0" onkeyup="removeChar(event);inputNumberFormat(this);">
+		<input type="text" name="p1" class="input--text-item start_price" placeholder="0" onkeyup="removeChar(event);inputNumberFormat(this);">
 		 ~ 
-		<input type="text" style="width: 12rem;height:3rem; border:3px solid #f8f9fa;" name="p2" class="input--text-item end_price" placeholder="999,999,999" onkeyup="removeChar(event);inputNumberFormat(this);">
-		<input type="submit" value="검색" style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+		<input type="text" name="p2" class="input--text-item end_price" placeholder="999,999,999" onkeyup="removeChar(event);inputNumberFormat(this);">
+		<input type="submit" value="검색">
 	</form>
 </div>
-<div id="searchCategoryDiv" style="display: none">
+<div id="searchCategoryDiv">
 	<form name="searchCFrom" action="billListView.do" method="post">
 	<input type="hidden" name="type" value="searchCategory" onSubmit="return checkCategory()">
 	<input type="hidden" name="date" value="${ date }">
 	<input type="hidden" name="userid" value="${ loginMember.userid }">
-		<label>카테고리 :
+		<label>검색할 카테고리를 입력하세요 :
 			<input type="radio" name="category" value="식비">식비
 	&nbsp; <input type="radio" name="category" value="문화/여가">문화/여가
 	&nbsp; <input type="radio" name="category" value="교통비">교통비
 	&nbsp; <input type="radio" name="category" value="기타">기타
 		</label>
-		<input type="submit" value="검색" style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+		<input type="submit" value="검색">
 	</form>
 </div>
-<div id="searchDateDiv" style="display: none">
+<div id="searchDateDiv">
 	<form name="searchDFrom" action="billListView.do" method="post" onSubmit="return checkDate()">
 	<input type="hidden" name="type" value="searchDate">
 	<input type="hidden" name="date" value="${ date }">
 	<input type="hidden" name="userid" value="${ loginMember.userid }">
-		<label>
-			<input type="date" name="begin" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate"> ~
-			<input type="date" name="end" style="width: 12rem;height:2.5rem; border:3px solid #f8f9fa;" class="datedate">
+		<label>검색할 결제날짜를 입력하세요 :
+			<input type="date" name="begin"> ~
+			<input type="date" name="end">
 		</label>
-		<input type="submit" value="검색" style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
+		<input type="submit" value="검색">
 	</form>
 </div>
 </center>
 
 <!-- 목록 출력 영역 -->
 <br>
-<table class="qa-table" align="center" width="700" border="1" cellspacing="0" cellpadding="1">
-	<thead>
+<table align="center" width="700" border="1" cellspacing="0" cellpadding="1">
 	<tr align="center">
-		<th scope="cols">번호</th>
-		<th scope="cols">지출 금액</th>
-		<th scope="cols">결제 시간</th>
-		<th scope="cols">카테고리</th>
+		<th>번호</th>
+		<th>지출 금액</th>
+		<th>결제 시간</th>
+		<th>카테고리</th>
 	</tr>
-	</thead>
 	<br>
 	<c:forEach items="${ requestScope.list }" var="b" varStatus="status">
 		<tr align="center">
@@ -285,7 +239,7 @@ function Change(){
 			</c:url>
 			<!-- 지출 클릭시 해당 글의 상세보기로 넘어가게 처리함 -->
 			<td>
-			<a style="font-weight: bolder; color: red;  " href="${ bdt }">${ b.bill_price }</a>
+			<a href="${ bdt }">${ b.bill_price }</a>
 			</td>
 			<td><fmt:formatDate value="${ b.bill_timestamp }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 			<td>${ b.bill_category }</td>

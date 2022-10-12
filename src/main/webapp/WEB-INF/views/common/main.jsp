@@ -11,14 +11,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript">
 
-function getChart() {
+function getChart(year) {
 	let monthList = [];
 	let posList = [];
 	
 	$.ajax({
-		url:"currentYearCart.do",
+		url:"barChart.do",
 		type:"get",
-		data:{ userid: "${loginMember.userid}" },
+		data:{ userid: "${loginMember.userid}", year: year },
 		dataType:"json",
 		success: (data) => {
 			
@@ -60,7 +60,11 @@ function getChart() {
 }
 
 $(() => {
-	getChart();
+	var now = new Date();	// 현재 날짜 및 시간
+	var year = now.getFullYear();	// 연도
+	console.log("연도 : ", year);
+	
+	getChart(year);
 });
 
 </script>
@@ -109,9 +113,9 @@ $(() => {
                   <div class="col-lg-12">
                     <div class="white-button first-button scroll-to-section">
                       <a href="${ pageContext.servletContext.contextPath }/calendarListView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">가계부로가기</a>
-                &nbsp;  &nbsp;  &nbsp;
-                    <a href="${ pageContext.servletContext.contextPath }/chartView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">차트보러가기</a>
-                        </div>
+                    &nbsp;  &nbsp;  &nbsp;
+                    <a href="${ pageContext.servletContext.contextPath }/chartView.do" style=" font-family: 'Noto Sans KR', sans-serif; font-size: 20px">차트 보러가기</a>
+                  		</div>
                   </div>
                 </div>
               </div>

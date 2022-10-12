@@ -6,18 +6,76 @@
 <html lang="ko">
 
 <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-function getPieChart() {
+
+checkPie = () => {
+	 // 라디오버튼 클릭시 이벤트 발생 막대차트
+    $("input:radio[name=radio2]").click(function(){
+ 
+        if($("input[name=radio2]:checked").val() == "1"){
+            //$("input:text[name=text]").attr("disabled",false);
+            $("input[name=pieChartMonth]").css("display", 'none');
+            $("select[name=pieChartYear]").css("display", 'block');
+ 			//radio 버튼의 value 값이 1이라면 년도 보이게
+ 
+        } else if($("input[name=radio2]:checked").val() == "0"){
+            $("input[name=pieChartMonth]").css("display", 'block');
+            $("select[name=pieChartYear]").css("display", 'none');
+        } 
+    });
+}
+
+checkBar = () => {
+	 // 라디오버튼 클릭시 이벤트 발생 파이차트
+    $("input:radio[name=radio]").click(function(){
+ 
+        if($("input[name=radio]:checked").val() == "1"){
+            //$("input:text[name=text]").attr("disabled",false);
+            $("input[name=barChartMonth]").css("display", 'none');
+            $("select[name=barChartYear]").css("display", 'block');
+ 			//radio 버튼의 value 값이 1이라면 년도 보이게
+ 
+        } else if($("input[name=radio]:checked").val() == "0"){
+            $("input[name=barChartMonth]").css("display", 'block');
+            $("select[name=barChartYear]").css("display", 'none');
+        } 
+    });
+}
+
+function getPieChart(date) {
 	let monthList = [];
 	let posList = [];
+	var title;
+	if(date.length == 4) {
+		// 년도받음
+		title={
+				display: true,
+	        	text: date+'년 카테고리 차트'
+	    }
+		console.log(title);
+		
+	} else if(date.length == 7) {
+		//년도랑 월받음
+		token = date.split('-');
+		console.log(token[0] + '년')
+		console.log(token[1] + '월')
+		title={
+				display: true,
+	        	text: token[0] + '년'+ token[1] + ' 월' + ' 카테고리 차트'
+	    }
+	}
+	
+	
 	$.ajax({
 		url:"CategoryChart.do",
 		type:"get",
-		data:{ userid: "${loginMember.userid}" },
+		data:{ userid: "${loginMember.userid}", date: date },
 		dataType:"json",
 		success: (data) => {
 			
@@ -52,7 +110,8 @@ function getPieChart() {
 	    	            labels: {
 	    	                fontColor: 'rgb(0, 0, 0)'
 	    	            }
-	    	        }
+	    	        },
+	    	        title: title
 	    	  }
 	    	  
 		}); //그래프
@@ -63,16 +122,16 @@ function getPieChart() {
 			}
 	})
 }
-function getChart() {
+function getChart( year ) {
 	let monthList = [];
 	let posList = [];
 	
 	
 	
 	$.ajax({
-		url:"currentYearChart.do",
+		url:"barChart.do",
 		type:"get",
-		data:{ userid: "${loginMember.userid}" },
+		data:{ userid: "${loginMember.userid}", year: year },
 		dataType:"json",
 		success: (data) => {
 			
@@ -100,7 +159,7 @@ function getChart() {
 	    	  options: {
 	    	    title: {
 	    	      display: true,
-	    	      text: '2022년 월별 지출 차트'
+	    	      text: year+'년 월별 지출 차트'
 	    	    }
 	    	  }
 	    	}); //그래프
@@ -114,8 +173,36 @@ function getChart() {
 }
 
 $(() => {
-	getChart();
-	getPieChart();
+	getChart(2022);
+	getPieChart('2022');
+	checkBar();
+	checkPie();
+	$("select[name=barChartYear]").change(function(){
+		  console.log($(this).val()); //value값 가져오기
+		  console.log($("select[name=barChartYear] option:selected").text()); //text값 가져오기
+		  getChart($(this).val());
+		  
+		});
+	
+	$("select[name=pieChartYear]").change(function(){
+		  console.log($(this).val()); //value값 가져오기
+		  console.log($("select[name=barChartYear] option:selected").text()); //text값 가져오기
+		  getPieChart($(this).val());
+		  /* console.log($("#linechart2").css("z-index")); */
+		});
+	
+	$("input[name=pieChartMonth]").change(function(){
+		  console.log($(this).val()); //value값 가져오기
+		  token = $(this).val().split('-');
+		  console.log(token[0] + '년')
+		  console.log(token[1] + '월')
+		  getPieChart($(this).val());
+		  /* var a = parseInt($("canvas[name=pie]").css("z-index"))+1;
+		  console.log($("canvas[name=pie]").css("z-index"));
+		  console.log(a);
+		  $("canvas[name=pie]").css("z-index", String(a));
+		  console.log($("canvas[name=pie]").css("z-index")); */
+		});
 });
 
 </script>
@@ -154,9 +241,20 @@ $(() => {
                 <div class="row">
                   <div class="col-lg-12">
                    <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                
+                	
+                	<div align="left">
+                	<div style="width:200px;">
+					  <input  type="radio" name="radio" id="r1" value="1"><label for="r1">년도</label>
+					</div>
+                	<input style="display: none;" name="barChartMonth" type="month" min="2020-01" max="2022-12">
+                    <select style="display: none;" name="barChartYear"id="resv_program_type" class="form-control">
+        				<option value="2020">2020년</option>
+       			 		<option value="2021">2021년</option>
+				    	<option value="2022">2022년</option>
+				    </select>
+				    </div>
 				<c:if test="${ loginMember != null }">
-				<canvas id="line-chart" width="300" height="250"></canvas>
+				<canvas id="line-chart" width="250" height="200"></canvas>
 				</c:if>
 				
               </div>
@@ -169,11 +267,24 @@ $(() => {
               </div>
             </div>
             
-            <div class="col-lg-6">
+            <div class="col-lg-6" style="z-index: 10;">
+            		<div align="center">
+                	<div style="width:200px;">
+					  <input type="radio" name="radio2" id="r1" value="1"><label for="r1">년도</label>
+					  <input type="radio" name="radio2" id="r2" value="0"><label for="r2"> 월</label>
+					</div>
+                	<input style="display: none;" name="pieChartMonth" type="month" min="2020-01" max="2022-12">
+                    <select style="display: none; width: 100px;" name="pieChartYear"id="resv_program_type" class="form-control">
+        				<option value="2020">2020년</option>
+       			 		<option value="2021">2021년</option>
+				    	<option value="2022">2022년</option>
+				    </select>
+				    </div>
               <div class="right-image wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
                 
+                
 				<c:if test="${ loginMember != null }">
-				<canvas id="line-chart2" width="300" height="250"></canvas>
+				<canvas name="pie" style="z-index: 10;" id="line-chart2" width="400" height="350"></canvas>
 				</c:if>
 				
               </div>

@@ -189,4 +189,14 @@
 		where id =
 		#{id}
 	</delete>
+	
+	<select id="lastMultiUploadList" parameterType="Map" resultMap="resultBill">
+	<![CDATA[
+		select * from ( select *
+                from bill
+                where userid=#{ userid }
+                order by id desc)
+                where rownum <= #{count}
+                ]]>
+	</select>
 </mapper>
