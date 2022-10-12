@@ -30,7 +30,6 @@
 </head>
 <body>
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
-<c:import url="/WEB-INF/views/common/menubar.jsp" /> 
 <hr>
 <h1></h1>
 <br>
