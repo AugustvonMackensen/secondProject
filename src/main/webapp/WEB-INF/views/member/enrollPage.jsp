@@ -108,7 +108,7 @@ h2 {
 }
   .submit2 {
     width: 200px;
-    height: 30px;
+    height: 40px;
     border: 0;
     outline: none;
     border-radius: 40px;
@@ -134,7 +134,7 @@ h2 {
    fon-size: 1.2em;
    line-height:48px;
    letter-spacing : 2px;
-   padding: 5px 50px;
+   padding: 8.5px 50px;
 }
 
 .textForm2{
@@ -148,15 +148,15 @@ h2 {
  	  padding: 10px 10px;
 }
 .emailchk .bttn{
-	position : absolute;
-	right : -120px;
-	top :5px;
-	width : 100px;
-	height: 40px;
-	border-radius : 40px;
-	color : white;
-	background : #0d6efd;
-	border : 0;	
+position: absolute;
+    right: -120px;
+    top: -2px;
+    width: 110px;
+    height: 45px;
+    border-radius: 40px;
+    color: white;
+    background: #0d6efd;
+    border: 0;
 }
 .mailcheck-input{
   width: 100%;

@@ -25,7 +25,6 @@ table.type02 th {
   width: 150px;
   padding: 10px;
   font-weight: bold;
-  vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #fff;
@@ -35,14 +34,11 @@ table.type02 th {
 table.type02 td {
   width: 350px;
   padding: 10px;
-  vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
 .containerr2{
-display: static;
-align: left;
-margin-left : 530px;
+	text-align : center;
 }
 .replybtn{
    border : 0;
@@ -78,7 +74,8 @@ margin-left : 530px;
 <body>
 <!-- 절대경로로 대상 파일의 위치를 지정한 경우 -->
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-<h2 align="center">게시글 등록 페이지</h2>
+<br>
+<h2 align="center">게시글 등록 페이지</h2><br>
 <!-- form 태그에서 입력된 값들(문자열)과 첨부파일을 같이 전송하려면,
    반드시 enctype 속성을 form 태그에 추가해야 됨
    enctype="multipart/form-data" 값을 지정해야 함

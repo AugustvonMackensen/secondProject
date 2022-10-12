@@ -24,7 +24,6 @@ table.type02 th {
   width: 150px;
   padding: 10px;
   font-weight: bold;
-  vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #fff;
@@ -34,14 +33,11 @@ table.type02 th {
 table.type02 td {
   width: 350px;
   padding: 10px;
-  vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
 .containerr2{
-display: static;
-align: left;
-margin-left : 530px;
+	text-align : center;
 }
 .replybtn{
    border : 0;
@@ -94,9 +90,9 @@ margin-left : 530px;
 	</table>
 	<div class="containerr2">
 	   <tr><th colspan="2">
-      <input class="replybtn" type="submit" value="등록하기"> &nbsp; 
+	  <button class="replybtn" onclick="javascript:history.go(-1); return false;">목록</button>
       <input class="replybtn" type="reset" value="작성취소"> &nbsp; 
-      <button class="replybtn" onclick="javascript:history.go(-1); return false;">목록</button>
+      <input class="replybtn" type="submit" value="등록하기"> &nbsp; 
       </th></tr>
 </div>
 </form>

@@ -28,7 +28,6 @@ table.type02 th {
   width: 150px;
   padding: 10px;
   font-weight: bold;
-  vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #fff;
@@ -38,7 +37,6 @@ table.type02 th {
 table.type02 td {
   width: 350px;
   padding: 10px;
-  vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
@@ -63,9 +61,7 @@ table.type02 td {
 	padding: 10px 40px;
 }
 .containerr{
-   display: static;
-   align: center;
-   margin-left : 515px;
+ text-align : center; 
 
 }
 .containerr button.list{
@@ -96,9 +92,7 @@ table.type02 td {
   background-color: rgb(233, 233, 233);
 }
 .containerr2{
-display: static;
-align: left;
-margin-left : 515px;
+	text-align : center;
 }
 
 .replybtn{
@@ -132,14 +126,14 @@ table.type03 {
   line-height: 1.5;
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
-  margin-left : 515px;
+
 
 }
 table.type03 th {
   width: 150px;
   padding: 10px;
   font-weight: bold;
-  vertical-align: top;
+
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #fff;
@@ -149,7 +143,6 @@ table.type03 th {
 table.type03 td {
   width: 350px;
   padding: 10px;
-  vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
@@ -176,7 +169,7 @@ table.type03 td {
   color : white;
 }
 .rereply{
-   margin-left : 515px;
+  text-align : center;
 }
 
 
@@ -253,7 +246,7 @@ html, body {
             <c:param name="q_no" value="${ question.q_no }" />
             <c:param name="q_rename_filename" value="${ question.q_rename_filename}" />
          </c:url>
-         <a  class="updel" href="${ bdl }">&nbsp;&nbsp;글삭제&nbsp;&nbsp;</a> &nbsp;
+         <a  class="updel" href="${ bdl }">&nbsp;&nbsp;글삭제&nbsp;&nbsp;</a> &nbsp;&nbsp;
       </c:if>
       <c:if test="${ !empty sessionScope.loginMember and sessionScope.loginMember.admin eq 'Y'}">
          <button class="reply2" onclick="showreplydiv();" id="replybtn">댓글달기</button> &nbsp;
@@ -275,17 +268,16 @@ html, body {
 </table>
 <div class="containerr2">
    <tr><th colspan="2">
-      <input class="replybtn" type="submit" value="댓글등록하기">
+      <input class="replybtn" type="submit" value="댓글등록하기"> &nbsp;
       <input class="replybtn" type="reset" value="작성취소">
-      <button class="replybtn" onclick="javascript:history.go(-1); return false;">이전페이지</button>
    </th></tr>
    </div>
 </form> 
 </div>
  <hr>
- <div class="replycon">
+
  <c:forEach items="${ requestScope.replylist }" var="r">
- <table class="type03">
+ <table class="type03" align="center">
       <tr><br>
          <th scope="row">제목 : </th>
          <td>${r.a_title }</td>
@@ -308,16 +300,15 @@ html, body {
                <c:param name="page" value="${ currentPage }" />
             </c:url>
             <div>
-            <a class="replybtn2"  href="${ aup }">글수정</a> &nbsp;
+            <a class="replybtn2"  href="${ aup }">댓글수정</a> &nbsp;
             <c:url var="bdl" value="/adel.do">
                <c:param name="a_ref" value="${ r.a_ref }" />
                <c:param name="page" value="${ currentPage }" />
             </c:url>
-            <a class="replybtn2"  href="${ bdl }">글삭제</a> &nbsp;
+            <a class="replybtn2"  href="${ bdl }">댓글삭제</a> &nbsp;
          </c:if>
 
          </div>
-</div>
          <hr>
    </c:forEach>
 </body>
