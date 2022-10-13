@@ -7,12 +7,88 @@
 <meta charset="UTF-8">
 <title></title>
 <style type="text/css">
-table th {
-	background-color: #99ffff;
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: blue; text-decoration: underline;}
+
+table.qa-table{
+   width: 600px;
+   text-align:center;
+   border : 1px solid #ccc;
+   margin-left: auto; 
+   margin-right: auto;
+   border-collapse: collapse;
+   line-height: 1.5;
+}
+table.file-table{
+   width: 300px;
+   text-align:left;
+   border : 1px solid #ccc;
+   margin-left: auto; 
+   margin-right: auto;
+   border-collapse: collapse;
+   line-height: 1.5;
 }
 
-table#outer {
-	border: 2px solid navy;
+
+
+table.file-table thead{
+   border-right: 1px solid #ccc;
+   border-left: 1px solid #ccc;
+   background: #4886FA;
+}
+table.file-table thead th {
+   padding: 10px;
+   font-weight: solid;
+   vertical-align: top;
+   color: #fff;
+}
+table.file-table tbody tr{;
+   font-weight: bold;
+   border-bottom: 1px solid #ccc;
+   background: #fff;
+   height : 38px;
+}
+table.file-table tbody tr th{;
+   font-weight: bold;
+   border-bottom: 1px solid #ccc;
+   background: #F0F8FF; 
+   height : 38px;
+}
+
+
+
+table.qa-table thead{
+   border-right: 1px solid #ccc;
+   border-left: 1px solid #ccc;
+   background: #4886FA;
+}
+table.qa-table thead th {
+   padding: 10px;
+   font-weight: solid;
+   vertical-align: top;
+   color: #fff;
+}
+table.qa-table tbody tr{;
+   font-weight: bold;
+   border-bottom: 1px solid #ccc;
+   background: #fff;
+   height : 38px;
+}
+table.qa-table tbody tr th{;
+   font-weight: bold;
+   border-bottom: 1px solid #ccc;
+   background: #F0F8FF; 
+   height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+   text-align : center;
+}
+.a{
+   color: #4886FA;
 }
 </style>
 <script type="text/javascript"
@@ -127,12 +203,17 @@ table#outer {
 					var fTime = JSON.parse(data.fTime);
 					fmtTime = fTime.hour + ":" + fTime.minute + ":"
 							+ fTime.second;
+					$("input[name=bill_timestamp2]").attr('value',
+							fmtDate + "T" + fmtTime);
+				} else {
+					$("input[name=bill_timestamp2]").attr('value',
+							fmtDate + "T08:00:00");
 				}
-				$("input[name=bill_timestamp2]").attr('value',
-						fmtDate + "T" + fmtTime);
+				
+				
 
-				console.log(fTime.hour + "시" + fTime.minute + "분"
-						+ fTime.second + "초");
+				/* console.log(fTime.hour + "시" + fTime.minute + "분"
+						+ fTime.second + "초"); */
 				
 				//총가격
 				
@@ -235,11 +316,14 @@ table#outer {
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-	<p></p>
+	<p >
 	
 	
+	<div align="right" style="margin-right: 3em; margin-top: 3em;"><a class="btn btn-primary" href="./multiReg.do">여러 영수증 이미지로 지출 등록 하러가기</a></div>
+	<h1 align="center">지출 등록 페이지</h1></p>
+	<br>
 		<form id="uploadForm" enctype="multipart/form-data">
-			<table>
+			<table class="file-table" style="clear: both;">
 			<tr>
 			<td><input type="file" id="imageInput" /></td>
 			</tr>
@@ -251,12 +335,8 @@ table#outer {
 	
 	<br>
 	
-	
-	<div align="right"><a class="btn btn-primary" href="./multiReg.do">여러 영수증 이미지로 지출 등록하기</a></div>
-	<h1 align="center">지출 등록 페이지</h1>
-	<br>
 	<form action="insertBill.do" method="post">
-		<table id="outer" align="center" width="550" cellspacing="5"
+		<table class="qa-table" id="outer" align="center" cellspacing="5"
 			cellpadding="0">
 			<tr>
 				<th colspan="2">지출 정보를 입력해주세요. (* 표시는 필수입력 항목입니다.)</th>

@@ -183,7 +183,7 @@ $(function(){
 		$("option[name=category]").attr("selected", "true");
 		
 		$("input:radio[name=category]:input[value=${category}]").attr("checked", true)
-		$("input:radio[name=item]:input[value=category]").attr("checked", true)
+		//$("input:radio[name=item]:input[value=category]").attr("checked", true)
 	}else if(${type == "searchDate" } ) {
 		$("select[id=test]").val("");
 		$("option[name=date]").attr("selected", "true");
@@ -313,6 +313,7 @@ function Change(){
 			<!-- 지출 금액 클릭시 해당 지출의 상세보기로 넘어가게 처리 -->
 			<c:url var="bdt" value="/billdetail.do">
 				<c:param name="bill_id" value="${ b.id }" />
+				<c:param name="date" value="${ date }" />
 				<c:param name="page" value="${ currentPage }" />
 			</c:url>
 			<!-- 지출 클릭시 해당 글의 상세보기로 넘어가게 처리함 -->

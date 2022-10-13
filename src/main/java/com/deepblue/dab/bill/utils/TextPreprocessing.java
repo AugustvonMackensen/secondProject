@@ -208,15 +208,56 @@ public class TextPreprocessing {
 			}
 		}
 		JSONArray sAr = new JSONArray(); // subResults항목 전송용 json배열
-		if (rjs.containsKey("subResults")) { // subResults 키가 있다면
+//		if (rjs.containsKey("subResults")) { // subResults 키가 있다면
+//			JSONArray jarr = (JSONArray) rjs.get("subResults"); // 애만 JSONArray임
+//			System.out.println("상품목록 갯수 : " + jarr.size());
+//			sendJson.put("subResults_size", jarr.size());
+//			for (int i = 0; i < jarr.size(); i++) {
+//				JSONObject jo = (JSONObject) jarr.get(i);
+//				JSONObject jo2 = (JSONObject) ((JSONArray) jo.get("items")).get(0); // 하나씩
+//				// System.out.println(jo2); // 상품 정보 확인
+//				JSONObject jo3 = (JSONObject) jo2.get("price");
+//				// System.out.println(jo3);
+//				// 한개당가격 없을수도 있음 삭제해야할듯
+//				// String onePrice=
+//				// ((JSONObject)((JSONObject)jo3.get("unitPrice")).get("formatted")).get("value").toString();
+//
+//				// 각 subReuslt 저장할객체 생성
+//				JSONObject subjobj = new JSONObject();
+//
+//				// 합계가격
+//				String subPrice = ((JSONObject) ((JSONObject) jo3.get("price")).get("formatted")).get("value")
+//						.toString();
+//				// sendJson.put("subResults_subPrice", subPrice);
+//				subjobj.put("subResults_subPrice", subPrice);
+//				// 상품이름
+//				String name = ((JSONObject) ((JSONObject) jo2.get("name")).get("formatted")).get("value").toString();
+//				// sendJson.put("subResults_name", name);
+//				subjobj.put("subResults_name", name);
+//				// 개수
+//				String count = ((JSONObject) ((JSONObject) jo2.get("count")).get("formatted")).get("value").toString();
+//				// sendJson.put("subResults_count", count);
+//				subjobj.put("subResults_count", count);
+//				// System.out.println(name+" 은 한개당 " + onePrice + "원 입니다.");
+//				System.out.println("상품명 : " + name);
+//				System.out.println("개수 : " + count);
+//				// System.out.println("개당 가격 : " + onePrice);
+//				System.out.println("총 가격 : " + subPrice);
+//				sAr.add(subjobj);
+//			}
+//			sendJson.put("subResults", sAr);
+//		}
+		if (rjs.containsKey("subResults") && ((JSONArray) rjs.get("subResults")).size()>0) { // subResults 키가 있다면
 			JSONArray jarr = (JSONArray) rjs.get("subResults"); // 애만 JSONArray임
-			System.out.println("상품목록 갯수 : " + jarr.size());
-			sendJson.put("subResults_size", jarr.size());
-			for (int i = 0; i < jarr.size(); i++) {
-				JSONObject jo = (JSONObject) jarr.get(i);
-				JSONObject jo2 = (JSONObject) ((JSONArray) jo.get("items")).get(0); // 하나씩
+			JSONObject items =  (JSONObject) jarr.get(0);
+			JSONArray itemsar = (JSONArray)items.get("items");
+			System.out.println("상품목록 갯수 : " + itemsar.size());
+			sendJson.put("subResults_size", itemsar.size());
+			for (int i = 0; i < itemsar.size(); i++) {
+				JSONObject jo = (JSONObject) itemsar.get(i); // 하나씩
+				//JSONObject jo2 = (JSONObject) ((JSONArray) jo.get("items")).get(0);
 				// System.out.println(jo2); // 상품 정보 확인
-				JSONObject jo3 = (JSONObject) jo2.get("price");
+				JSONObject jo3 = (JSONObject) jo.get("price");
 				// System.out.println(jo3);
 				// 한개당가격 없을수도 있음 삭제해야할듯
 				// String onePrice=
@@ -231,11 +272,11 @@ public class TextPreprocessing {
 				// sendJson.put("subResults_subPrice", subPrice);
 				subjobj.put("subResults_subPrice", subPrice);
 				// 상품이름
-				String name = ((JSONObject) ((JSONObject) jo2.get("name")).get("formatted")).get("value").toString();
+				String name = ((JSONObject) ((JSONObject) jo.get("name")).get("formatted")).get("value").toString();
 				// sendJson.put("subResults_name", name);
 				subjobj.put("subResults_name", name);
 				// 개수
-				String count = ((JSONObject) ((JSONObject) jo2.get("count")).get("formatted")).get("value").toString();
+				String count = ((JSONObject) ((JSONObject) jo.get("count")).get("formatted")).get("value").toString();
 				// sendJson.put("subResults_count", count);
 				subjobj.put("subResults_count", count);
 				// System.out.println(name+" 은 한개당 " + onePrice + "원 입니다.");
@@ -247,6 +288,9 @@ public class TextPreprocessing {
 			}
 			sendJson.put("subResults", sAr);
 		}
+		
+		
+		
 		// paymentInfo 에서 날짜, 시간, 카드정보, 승인번호 추출
 		if (rjs.containsKey("paymentInfo")) { // paymentInfo 키가 있다면
 			Set<Map.Entry<String, Object>> element = ((JSONObject) rjs.get("paymentInfo")).entrySet();

@@ -1718,7 +1718,7 @@ PopUp
 
 .btn {
   padding: 10px 20px;
-  background: #4b8ef1;
+  /*  background: #4b8ef1;*/
   color: #fff;
   transition: all .3s;
 }

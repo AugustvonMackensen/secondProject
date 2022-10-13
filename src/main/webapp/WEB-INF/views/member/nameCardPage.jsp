@@ -37,15 +37,6 @@
 }
 
 </style>
-<script text="text/javascript">
-function mvNameCardPage(){
-	location.href = "namecardPage.do";
-}
-
-function mvEnrollPage(){
-	location.href = "enrollPage.do";
-}
-</style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script text="text/javascript">
 function capCamera(){

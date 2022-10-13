@@ -49,6 +49,7 @@ table.qa-table tbody tr{;
 
 
 
+
 </style>
 <script type="text/javascript" 
 src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
@@ -123,12 +124,14 @@ function showWriteForm(){
 <!-- 목록 출력 영역 -->
 <br>
 <table class="qa-table" align="center" width="700" border="1" cellspacing="0" cellpadding="1">
+	<thead>
 	<tr align="center">
 		<th>번호</th>
 		<th>지출 금액</th>
 		<th>결제 시간</th>
 		<th>카테고리</th>
 	</tr>
+	</thead>
 	<br>
 	<c:forEach items="${ requestScope.list }" var="b" varStatus="status">
 		<tr align="center">
@@ -137,10 +140,11 @@ function showWriteForm(){
 			<c:url var="bdt" value="/billdetail.do">
 				<c:param name="bill_id" value="${ b.id }" />
 				<c:param name="page" value="${ currentPage }" />
+				<c:param name="count" value="${ count }"/>
 			</c:url>
 			<!-- 지출 클릭시 해당 글의 상세보기로 넘어가게 처리함 -->
 			<td>
-			<a href="${ bdt }">${ b.bill_price }</a>
+			<a style="font-weight: bolder; color: red;  " href="${ bdt }">${ b.bill_price }</a>
 			</td>
 			<td><fmt:formatDate value="${ b.bill_timestamp }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 			<td>${ b.bill_category }</td>
