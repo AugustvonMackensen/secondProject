@@ -312,27 +312,38 @@ table.qa-table tbody tr th{;
 			}
 		})
 	}
+	
+	function guide() {
+		Swal.fire({
+			  title: '최대한 바르게 펴진 문서를 기울임 없이, 사각 형태의 가득 찬 이미지로 인식해 주세요.',
+			  text: '접히거나 구겨짐, 빛 반사나 그늘로 인해 글자가 잘 안 보이는 경우 정확한 Key-Value 추출이 어려울 수 있습니다.',
+			  imageUrl: './resources/images/specific_03.png',
+			  imageWidth: 400,
+			  imageHeight: 200,
+			  imageAlt: 'Custom image',
+			});
+	}
 </script>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-	<p >
 	
-	
-	<div align="right" style="margin-right: 3em; margin-top: 3em;"><a class="btn btn-primary" href="./multiReg.do">여러 영수증 이미지로 지출 등록 하러가기</a></div>
-	<h1 align="center">지출 등록 페이지</h1></p>
+	<div style="margin-right: 3em; margin-top: 3em; "><a style="float: left;" class="btn btn-primary" href="./multiReg.do">여러 영수증 이미지로 지출 등록 하러가기</a></div>
+	<p align="center">
+	지출 등록 페이지</p>
 	<br>
 		<form id="uploadForm" enctype="multipart/form-data">
-			<table class="file-table" style="clear: both;">
+			<table class="file-table" style="">
 			<tr>
-			<td><input type="file" id="imageInput" /></td>
+			<td><input type="file" id="imageInput" /></td><td><input type="button" value="영수증 도움말" onclick="guide();"></td>
 			</tr>
 			<tr>
 			<td><input type="button" onclick="upload()" value="영수증 정보 가져오기"/></td>
 			</tr>
+			 
 		</table>
 		</form>
-	
+		
 	<br>
 	
 	<form action="insertBill.do" method="post">
