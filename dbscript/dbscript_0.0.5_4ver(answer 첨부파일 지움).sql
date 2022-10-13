@@ -125,33 +125,83 @@ ALTER TABLE BILL ADD CONSTRAINT FK_LOGIN_TO_BILL_1 FOREIGN KEY (
 )
 REFERENCES MEMBER (
    USERID
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE QUESTION ADD CONSTRAINT FK_LOGIN_TO_QUESTION_1 FOREIGN KEY (
    Q_WRITER
 )
 REFERENCES MEMBER (
    USERID
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE ANSWER ADD CONSTRAINT FK_QUESTION_TO_ANSWER_1 FOREIGN KEY (
    A_REF
 )
 REFERENCES QUESTION (
    Q_NO
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE ANSWER ADD CONSTRAINT FK_LOGIN_TO_ANSWER_1 FOREIGN KEY (
    A_WRITER
 )
 REFERENCES MEMBER (
    USERID
-);
+)
+ON DELETE CASCADE;
 
 INSERT INTO MEMBER VALUES('admin', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '관리자', 'admin@deepaccount.com', 'Y', 'Y', sysdate);
-INSERT INTO MEMBER VALUES('user02', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자2', 'user02@deepaccount.com', 'Y', 'N', sysdate);
-INSERT INTO MEMBER VALUES('user03', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자3', 'user03@deepaccount.com', 'Y', 'N', sysdate);
-INSERT INTO MEMBER VALUES('user04', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자4', 'user04@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user01', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자01', 'user01@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user02', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자02', 'user02@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user03', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자03', 'user03@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user04', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자04', 'user04@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user05', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자05', 'user05@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user06', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자06', 'user06@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user07', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자07', 'user07@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user08', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자08', 'user08@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user09', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자09', 'user09@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user10', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자10', 'user10@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user11', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자11', 'user11@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user12', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자12', 'user12@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user13', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자13', 'user13@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user14', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자14', 'user14@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user15', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자15', 'user15@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user16', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자16', 'user16@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user17', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자17', 'user17@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user18', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자18', 'user18@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user19', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자19', 'user19@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user20', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자20', 'user20@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user21', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자21', 'user21@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user22', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자22', 'user22@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user23', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자23', 'user23@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user24', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자24', 'user24@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user25', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자25', 'user25@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user26', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자26', 'user26@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user27', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자27', 'user27@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user28', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자28', 'user28@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user29', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자29', 'user29@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user30', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자30', 'user30@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user31', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자31', 'user31@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user32', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자32', 'user32@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user33', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자33', 'user33@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user34', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자34', 'user34@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user35', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자35', 'user35@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user36', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자36', 'user36@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user37', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자37', 'user37@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user38', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자38', 'user38@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user39', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자39', 'user39@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user40', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자40', 'user40@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user41', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자41', 'user41@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user42', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자42', 'user42@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user43', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자43', 'user43@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user44', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자44', 'user44@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user45', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자45', 'user45@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user46', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자46', 'user46@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user47', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자47', 'user47@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user48', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자48', 'user48@deepaccount.com', 'Y', 'N', sysdate);
+INSERT INTO MEMBER VALUES('user49', '$2a$10$eMMSX0zYIgkpGCVmmRP0lOMan8lXTlU5vY1mJbICBKNKsJYdNMSsS', '사용자49', 'user49@deepaccount.com', 'Y', 'N', sysdate);
 
 INSERT INTO QUESTION VALUES(default, 'user02', '2질문 사항이 있습니다.', sysdate, '이 사이트는 어떻게 사용하나요?', null, null, default);
 INSERT INTO QUESTION VALUES(default, 'user03', '3질문 사항이 있습니다.', sysdate, '이 사이트는 어떻게 탈퇴하나요?', null, null,  default);
@@ -231,13 +281,6 @@ TO_DATE('2016-07-20', 'RRRR-MM-DD'), 'user02',
 
 SELECT * FROM NOTICE;
  
-commit;
-
--- 관리자인 'admin' 인 아이디의 컬럼값 변경
-UPDATE MEMBER
-SET ADMIN = 'Y'
-WHERE USERID = 'user11';
-
 commit;
 
 -- notice 의 공지글 등록은 관리자만 등록/수정할 수 있게 처리함
