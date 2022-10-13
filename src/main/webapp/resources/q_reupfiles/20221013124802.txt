@@ -1,0 +1,20 @@
+멘토님 추천
+캐글에서 영수증 ocr 인식
+
+https://www.kaggle.com/search?q=receipt+ocr
+
+https://paperswithcode.com/search?q_meta=&q_type=&q=ocr
+
+정규 표현식 전처리 최적화도 깔끔하죠 
+
+웹서블릿에서 애플리케이션 구동한다는게 context 
+request.getSession() 톰캣 의미 !? 
+
+클래스 등록은 beans 에서 servlet-context 어쩌구 xml
+
+첨부파일 다운은 db에 셋팅할 필요가 없어 !
+프로젝트에서 폴더에서 파일 찾아가지고 그대로 내보내는게 파일다운로드야 . 모델하고 연결 안되는거임
+서블릿컨텍스트.xml 에서 파일 다운이 되는 설정을 했기 때문에 별도의 클래스를 만들어서 구현되면 된다.
+
+db 에선 첨부파일이 바뀌면 그냥 덮어쓰면되는데
+프로젝ㅇ트 파일에선 원래 첨부파일, 이름바뀌었던 첨부파일 정보가 hidden 으로 던져주고 필요해서 버려야함!
