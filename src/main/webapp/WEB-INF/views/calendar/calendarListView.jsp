@@ -202,6 +202,7 @@
 <style type="text/css" >
 html, body {
 		overflow: scroll;
+		overflow-x: hidden;
 	}	
 </style>
 <form name="calendarFrm" id="calendarFrm" action="" method="GET">
@@ -245,7 +246,6 @@ html, body {
 <div class="today_button_div">
 <button type="button" class="buttonstyle" onclick="location.href='calendarListView.do'" style="height: 30ps; width:80px;">Today</button>
 </div>
-
 
 <button type="button" class="buttonstyle" onclick="location.href='${monthRecipt}'" style="height: 30ps; width:220px;">${today_info.search_year}년 ${today_info.search_month}월 지출 목록 보기</button>
 <button type="button" class="buttonstyle" onclick="location.href='${AllRecipt}'" style="height: 30ps; width:220px;">전체 지출 목록 보기</button>

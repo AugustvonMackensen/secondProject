@@ -33,13 +33,179 @@ h2 {
 }
 .login {
   width: 30%;
-  height: 850px;
+  height: 698px;
   background: rgb(255, 255, 255);
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
+  margin-bottom : 100px; 
+}
+
+.joinForm h2 {
+  text-align: center;
+  margin: 30px;
+}
+
+.textForm {
+  border-radius: 30px;
+  border: 1px solid lightgray;
+  width: 400px;
+  margin: 10px;
+  padding: 10px 10px;
+}
+
+
+.id {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.name {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.email {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.cellphoneNo {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+  .submit2 {
+    width: 200px;
+    height: 40px;
+    border: 0;
+    outline: none;
+    border-radius: 40px;
+   background : #0d6efd;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    color:white;
+  }
+.loginmenu {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+#mainmove{
+   border : 0;
+   background : #0d6efd;
+   color : white;
+   width: 200px;
+   height : 50px;
+   outline : none;
+   border-radius : 40px;
+   text-align : center;
+   fon-size: 1.2em;
+   line-height:48px;
+   letter-spacing : 2px;
+   padding: 8.5px 50px;
+}
+
+.textForm2{
+   position: relative;
+   width : 280px;
+   height : 50px;
+   vertical-align: center;
+    border-radius: 30px;
+    border: 1px solid lightgray;
+    margin-right : 120px;
+      padding: 10px 10px;
+}
+.emailchk .bttn{
+position: absolute;
+    right: -120px;
+    top: -2px;
+    width: 110px;
+    height: 45px;
+    border-radius: 40px;
+    color: white;
+    background: #0d6efd;
+    border: 0;
+}
+.mailcheck-input{
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+
+.btn:hover {
+  background-position: right;
+<style type="text/css">	
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  background-image:#919191;
+}
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+  
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(172, 140, 140, 0.1);
+}
+.login {
+  width: 30%;
+  height: 698px;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom : 100px; 
 }
 
 .joinForm h2 {
@@ -111,9 +277,10 @@ h2 {
     border: 0;
     outline: none;
     border-radius: 40px;
-    background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+   background : #0d6efd;
     font-size: 1.2em;
     letter-spacing: 2px;
+    color:white;
   }
 .loginmenu {
     display: flex;
@@ -136,25 +303,1015 @@ h2 {
 }
 
 .textForm2{
-   position: relative;
-   width : 280px;
-   height : 50px;
-   vertical-align: center;
-    border-radius: 30px;
-    border: 1px solid lightgray;
-    margin-right : 120px;
-      padding: 10px 10px;
+	position: relative;
+	width : 280px;
+	height : 50px;
+	vertical-align: center;
+ 	border-radius: 30px;
+ 	border: 1px solid lightgray;
+ 	margin-right : 120px;
+ 	  padding: 10px 10px;
 }
 .emailchk .bttn{
-   position : absolute;
-   right : -120px;
-   top :5px;
-   width : 100px;
-   height: 40px;
-   border-radius : 40px;
-   color : white;
+	position : absolute;
+	right : -120px;
+	top :5px;
+	width : 100px;
+	height: 40px;
+	border-radius : 40px;
+	color : white;
+	background : #0d6efd;
+	border : 0;	
+}
+.mailcheck-input{
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+
+.btn:hover {
+  background-position: right;
+<style type="text/css">	
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  background-image:#919191;
+}
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+  
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(172, 140, 140, 0.1);
+}
+.login {
+  width: 30%;
+  height: 698px;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom : 100px; 
+}
+
+.joinForm h2 {
+  text-align: center;
+  margin: 30px;
+}
+
+.textForm {
+  border-radius: 30px;
+  border: 1px solid lightgray;
+  width: 400px;
+  margin: 10px;
+  padding: 10px 10px;
+}
+
+
+.id {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.name {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.email {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.cellphoneNo {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+  .submit2 {
+    width: 200px;
+    height: 30px;
+    border: 0;
+    outline: none;
+    border-radius: 40px;
    background : #0d6efd;
-   border : 0;   
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    color:white;
+  }
+.loginmenu {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+#mainmove{
+   border : 0;
+   background : #0d6efd;
+   color : white;
+   width: 200px;
+   height : 50px;
+   outline : none;
+   border-radius : 40px;
+   text-align : center;
+   fon-size: 1.2em;
+   line-height:48px;
+   letter-spacing : 2px;
+   padding: 5px 50px;
+}
+
+.textForm2{
+	position: relative;
+	width : 280px;
+	height : 50px;
+	vertical-align: center;
+ 	border-radius: 30px;
+ 	border: 1px solid lightgray;
+ 	margin-right : 120px;
+ 	  padding: 10px 10px;
+}
+.emailchk .bttn{
+	position : absolute;
+	right : -120px;
+	top :5px;
+	width : 100px;
+	height: 40px;
+	border-radius : 40px;
+	color : white;
+	background : #0d6efd;
+	border : 0;	
+}
+.mailcheck-input{
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+
+.btn:hover {
+  background-position: right;
+<style type="text/css">	
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  background-image:#919191;
+}
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+  
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(172, 140, 140, 0.1);
+}
+.login {
+  width: 30%;
+  height: 698px;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom : 100px; 
+}
+
+.joinForm h2 {
+  text-align: center;
+  margin: 30px;
+}
+
+.textForm {
+  border-radius: 30px;
+  border: 1px solid lightgray;
+  width: 400px;
+  margin: 10px;
+  padding: 10px 10px;
+}
+
+
+.id {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.name {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.email {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.cellphoneNo {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+  .submit2 {
+    width: 200px;
+    height: 30px;
+    border: 0;
+    outline: none;
+    border-radius: 40px;
+   background : #0d6efd;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    color:white;
+  }
+.loginmenu {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+#mainmove{
+   border : 0;
+   background : #0d6efd;
+   color : white;
+   width: 200px;
+   height : 50px;
+   outline : none;
+   border-radius : 40px;
+   text-align : center;
+   fon-size: 1.2em;
+   line-height:48px;
+   letter-spacing : 2px;
+   padding: 5px 50px;
+}
+
+.textForm2{
+	position: relative;
+	width : 280px;
+	height : 50px;
+	vertical-align: center;
+ 	border-radius: 30px;
+ 	border: 1px solid lightgray;
+ 	margin-right : 120px;
+ 	  padding: 10px 10px;
+}
+.emailchk .bttn{
+	position : absolute;
+	right : -120px;
+	top :5px;
+	width : 100px;
+	height: 40px;
+	border-radius : 40px;
+	color : white;
+	background : #0d6efd;
+	border : 0;	
+}
+.mailcheck-input{
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+
+.btn:hover {
+  background-position: right;
+<style type="text/css">	
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  background-image:#919191;
+}
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+  
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(172, 140, 140, 0.1);
+}
+.login {
+  width: 30%;
+  height: 698px;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom : 100px; 
+}
+
+.joinForm h2 {
+  text-align: center;
+  margin: 30px;
+}
+
+.textForm {
+  border-radius: 30px;
+  border: 1px solid lightgray;
+  width: 400px;
+  margin: 10px;
+  padding: 10px 10px;
+}
+
+
+.id {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.name {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.email {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.cellphoneNo {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+  .submit2 {
+    width: 200px;
+    height: 30px;
+    border: 0;
+    outline: none;
+    border-radius: 40px;
+   background : #0d6efd;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    color:white;
+  }
+.loginmenu {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+#mainmove{
+   border : 0;
+   background : #0d6efd;
+   color : white;
+   width: 200px;
+   height : 50px;
+   outline : none;
+   border-radius : 40px;
+   text-align : center;
+   fon-size: 1.2em;
+   line-height:48px;
+   letter-spacing : 2px;
+   padding: 5px 50px;
+}
+
+.textForm2{
+	position: relative;
+	width : 280px;
+	height : 50px;
+	vertical-align: center;
+ 	border-radius: 30px;
+ 	border: 1px solid lightgray;
+ 	margin-right : 120px;
+ 	  padding: 10px 10px;
+}
+.emailchk .bttn{
+	position : absolute;
+	right : -120px;
+	top :5px;
+	width : 100px;
+	height: 40px;
+	border-radius : 40px;
+	color : white;
+	background : #0d6efd;
+	border : 0;	
+}
+.mailcheck-input{
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+
+.btn:hover {
+  background-position: right;
+<style type="text/css">	
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  background-image:#919191;
+}
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+  
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(172, 140, 140, 0.1);
+}
+.login {
+  width: 30%;
+  height: 698px;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom : 100px; 
+}
+
+.joinForm h2 {
+  text-align: center;
+  margin: 30px;
+}
+
+.textForm {
+  border-radius: 30px;
+  border: 1px solid lightgray;
+  width: 400px;
+  margin: 10px;
+  padding: 10px 10px;
+}
+
+
+.id {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.name {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.email {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.cellphoneNo {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+  .submit2 {
+    width: 200px;
+    height: 30px;
+    border: 0;
+    outline: none;
+    border-radius: 40px;
+   background : #0d6efd;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    color:white;
+  }
+.loginmenu {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+#mainmove{
+   border : 0;
+   background : #0d6efd;
+   color : white;
+   width: 200px;
+   height : 50px;
+   outline : none;
+   border-radius : 40px;
+   text-align : center;
+   fon-size: 1.2em;
+   line-height:48px;
+   letter-spacing : 2px;
+   padding: 5px 50px;
+}
+
+.textForm2{
+	position: relative;
+	width : 280px;
+	height : 50px;
+	vertical-align: center;
+ 	border-radius: 30px;
+ 	border: 1px solid lightgray;
+ 	margin-right : 120px;
+ 	  padding: 10px 10px;
+}
+.emailchk .bttn{
+	position : absolute;
+	right : -120px;
+	top :5px;
+	width : 100px;
+	height: 40px;
+	border-radius : 40px;
+	color : white;
+	background : #0d6efd;
+	border : 0;	
+}
+.mailcheck-input{
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+
+.btn:hover {
+  background-position: right;
+<style type="text/css">	
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  background-image:#919191;
+}
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+  
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(172, 140, 140, 0.1);
+}
+.login {
+  width: 30%;
+  height: 698px;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom : 100px; 
+}
+
+.joinForm h2 {
+  text-align: center;
+  margin: 30px;
+}
+
+.textForm {
+  border-radius: 30px;
+  border: 1px solid lightgray;
+  width: 400px;
+  margin: 10px;
+  padding: 10px 10px;
+}
+
+
+.id {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.name {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.email {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.cellphoneNo {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+  .submit2 {
+    width: 200px;
+    height: 30px;
+    border: 0;
+    outline: none;
+    border-radius: 40px;
+   background : #0d6efd;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    color:white;
+  }
+.loginmenu {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+#mainmove{
+   border : 0;
+   background : #0d6efd;
+   color : white;
+   width: 200px;
+   height : 50px;
+   outline : none;
+   border-radius : 40px;
+   text-align : center;
+   fon-size: 1.2em;
+   line-height:48px;
+   letter-spacing : 2px;
+   padding: 5px 50px;
+}
+
+.textForm2{
+	position: relative;
+	width : 280px;
+	height : 50px;
+	vertical-align: center;
+ 	border-radius: 30px;
+ 	border: 1px solid lightgray;
+ 	margin-right : 120px;
+ 	  padding: 10px 10px;
+}
+.emailchk .bttn{
+	position : absolute;
+	right : -120px;
+	top :5px;
+	width : 100px;
+	height: 40px;
+	border-radius : 40px;
+	color : white;
+	background : #0d6efd;
+	border : 0;	
+}
+.mailcheck-input{
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+
+.btn:hover {
+  background-position: right;
+<style type="text/css">	
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+body {
+  background-image:#919191;
+}
+
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+  
+.wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(172, 140, 140, 0.1);
+}
+.login {
+  width: 30%;
+  height: 698px;
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom : 100px; 
+}
+
+.joinForm h2 {
+  text-align: center;
+  margin: 30px;
+}
+
+.textForm {
+  border-radius: 30px;
+  border: 1px solid lightgray;
+  width: 400px;
+  margin: 10px;
+  padding: 10px 10px;
+}
+
+
+.id {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.pw {
+  width: 60%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.name {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.email {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+
+.cellphoneNo {
+  width: 100%;
+  border:none;
+  outline:none;
+  color: #636e72;
+  font-size:16px;
+  height:25px;
+  background: none;
+}
+  .submit2 {
+    width: 200px;
+    height: 30px;
+    border: 0;
+    outline: none;
+    border-radius: 40px;
+   background : #0d6efd;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    color:white;
+  }
+.loginmenu {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+#mainmove{
+   border : 0;
+   background : #0d6efd;
+   color : white;
+   width: 200px;
+   height : 50px;
+   outline : none;
+   border-radius : 40px;
+   text-align : center;
+   fon-size: 1.2em;
+   line-height:48px;
+   letter-spacing : 2px;
+   padding: 5px 50px;
+}
+
+.textForm2{
+	position: relative;
+	width : 280px;
+	height : 50px;
+	vertical-align: center;
+ 	border-radius: 30px;
+ 	border: 1px solid lightgray;
+ 	margin-right : 120px;
+ 	  padding: 10px 10px;
+}
+.emailchk .bttn{
+	position : absolute;
+	right : -120px;
+	top :5px;
+	width : 100px;
+	height: 40px;
+	border-radius : 40px;
+	color : white;
+	background : #0d6efd;
+	border : 0;	
 }
 .mailcheck-input{
   width: 100%;
@@ -348,15 +1505,14 @@ function chkCode(){
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-
-<br>
 <form action="enroll.do" method="post" id="signUp" name="signUp" onsubmit="return validate();">
 <div class="wrap">
    <div class="login">
-   <h1 align="center">회원 가입 페이지</h1>
+   <h1 align="center" style="color : #0d6efd;">회원 가입 페이지</h1>
+   <br>
       회원 정보를 입력해 주세요.
       (* 표시는 필수입력 항목입니다.)
-
+   <br><br><br>
    <div class="textForm">
       <input type="text" name="username" maxlength="6" class="name" placeholder="*이름을 입력해주세요." required></input>
    </div>

@@ -102,11 +102,11 @@ $(() => {
               <div class="left-content show-up header-text wow fadeInLeft" data-wow-duration="1s" data-wow-delay="1s">
                 <div class="row">
                   <div class="col-lg-12">
-                    <span style="color: #3BF766; font-size: 80px;">D</span>
+                    <span style="color: #0d6efd;; font-size: 80px;">D</span>
                     <span style="color: #7353D4; font-size: 70px;">eep</span>
-                    <span style="color: #3BF766; font-size: 80px;">A</span>
+                    <span style="color: #0d6efd;; font-size: 80px;">A</span>
                     <span style="color: #7353D4; font-size: 70px;">ccount</span></h1>
-                    <span style="color: #3BF766; font-size: 80px;">B</span>
+                    <span style="color: #0d6efd;; font-size: 80px;">B</span>
                     <span style="color: #7353D4; font-size: 70px;">ook</span></h1>
                     
                   </div>

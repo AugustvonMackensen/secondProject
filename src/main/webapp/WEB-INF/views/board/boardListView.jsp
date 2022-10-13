@@ -20,36 +20,36 @@
  a:visited { color: black; text-decoration: none;}
  a:hover { color: blue; text-decoration: underline;}
 table.qa-table{
-	width: 1300px;
-	text-align:center;
-	border : 1px solid #ccc;
-	margin-left: auto; 
-	margin-right: auto;
-	border-collapse: collapse;
-	line-height: 1.5;
+   width: 1300px;
+   text-align:center;
+   border : 1px solid #ccc;
+   margin-left: auto; 
+   margin-right: auto;
+   border-collapse: collapse;
+   line-height: 1.5;
 }
 table.qa-table thead{
-	border-right: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	background: #4886FA;
+   border-right: 1px solid #ccc;
+   border-left: 1px solid #ccc;
+   background: #4886FA;
 }
 table.qa-table thead th {
-	padding: 10px;
-	font-weight: bold;
-	vertical-align: top;
-	color: #fff;
+   padding: 10px;
+   font-weight: bold;
+   vertical-align: top;
+   color: #fff;
 }
 table.qa-table tbody tr{;
-	font-weight: bold;
-	border-bottom: 1px solid #ccc;
-	background: #F0F8FF;
-	height : 38px;
+   font-weight: bold;
+   border-bottom: 1px solid #ccc;
+   background: #F0F8FF;
+   height : 38px;
 }
 .paging {
     position: fixed;
     bottom: 100px;
     width: 100%;
-	text-align : center;
+   text-align : center;
 }
 </style>
 
@@ -78,7 +78,7 @@ function Change(){
 
 // 글쓰기 버튼 클릭시 실행되는 함수 
 function showWriteForm() {
-	//게시원글 쓰기 페이지로 이동 처리 
+   //게시원글 쓰기 페이지로 이동 처리 
     location.href = "${pageContext.servletContext.contextPath}/bwform.do";
 }
 
@@ -90,7 +90,7 @@ function showWriteForm() {
    <!--상대경로로 대상 파일의 위치를 지정한 경우  -->
    <c:import url="../common/menubar.jsp" />
    <!-- jstl의 절대 경로 표기 : /WEB-INF/views/common/menubar.jsp  -->
-	<br>
+   <br>
    <h1 align="center">자유 게시글 목록</h1><br>
    <h5 align="center">총 게시글 개수 : ${ listCount } 개</h5><br>
    <!--    로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함. -->
@@ -101,9 +101,9 @@ function showWriteForm() {
    
  <div align="center" >
          <select id="test" onchange="Change()" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
-		<option value="1">제목</option>
-		<option value="2">작성자</option>
-		<option value="3">날짜</option>
+      <option value="1">제목</option>
+      <option value="2">작성자</option>
+      <option value="3">날짜</option>
          </select>
 
       <div id="d1" style="display: block">
@@ -113,7 +113,7 @@ function showWriteForm() {
          </form>
       </div>
       <div id="d2" style="display: none">
-		<form action="searchWriter.do" method="get">	
+      <form action="searchWriter.do" method="get">   
            <input type="search" name="keyword"  style="width: 25rem;height:3rem; border:3px solid #f8f9fa;"> &nbsp; &nbsp; &nbsp;
            <input type="submit" value="검색"  style="width: 6rem;height:3rem;border:none; background-color:#4b8ef1; cursor:pointer;" class="btn">
          </form>
@@ -137,8 +137,8 @@ function showWriteForm() {
 </center>
 <br>
 <table class="qa-table">
-	<thead>
-   	<tr>
+   <thead>
+      <tr>
       <th scope="cols">번호</th>
       <th scope="cols">제목</th>
       <th scope="cols">작성자</th>
@@ -149,9 +149,12 @@ function showWriteForm() {
    </thead>
    <tbody>
    <c:forEach items="${ requestScope.list }" var="b">
-   	<tr>
-         <!-- 공지제목 클릭시 해당 글의 상세보기로 넘어가게 처리 -->
+      <tr>
          <td>${ b.board_num }</td>
+         <c:url var="bdt" value="/bdetail.do">
+            <c:param name="board_num" value="${ b.board_num }" />
+            <c:param name ="page" value="${currentPage }" />
+         </c:url>
          <td><a href="${ bdt }" style="color:blue;">${ b.board_title }</a></td>
          <td>${ b.board_writer }</td>
           <td>
@@ -161,10 +164,7 @@ function showWriteForm() {
          <td><fmt:formatDate value="${ b.board_date }" pattern="yyyy-MM-dd" /></td>
          <td>${ b.board_readcount }</td>
          <td>
-         <c:url var="bdt" value="/bdetail.do">
-            <c:param name="board_num" value="${ b.board_num }" />
-            <c:param name ="page" value="${currentPage }" />
-         </c:url>
+    
          </td>
          
          <td align="left">
@@ -396,7 +396,6 @@ function showWriteForm() {
 <c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
-
 
 
 
