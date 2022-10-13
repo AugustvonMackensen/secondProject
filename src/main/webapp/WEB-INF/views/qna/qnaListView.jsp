@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,14 +81,15 @@ function showWriteForm(){
 <body >
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 <br>
-<!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
-<h1 align="center">Q&A게시판</h1>
-<br>
-<!-- 
-   => 로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함 -->
+<h1 align="center">Q&A게시판</h1><br> 
+
+<center>
 <c:if test="${ !empty sessionScope.loginMember }">
-   <button radu onclick="showWriteForm();" style="width: 7rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;display: block; text-align: center; margin: auto;">글쓰기</button>
+   <button onclick="showWriteForm();" style="width: 6rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;"">글쓰기</button>
+   <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/qnaListView.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">전체 목록 보기</button> &nbsp; &nbsp; &nbsp; &nbsp;
 </c:if>
+</center>
+
 <!-- 검색 드롭 다운 영역 -->
  <div align="center"  >
          <select id="test" onchange="Change()" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
@@ -119,8 +119,6 @@ function showWriteForm(){
 
    </div>
 
-<!-- 목록 출력 영역 -->
-<br>
 <table class="qa-table" >
    <thead>
    <tr>
@@ -137,19 +135,11 @@ function showWriteForm(){
    <c:forEach items="${ requestScope.list }" var="b">
       <tr>
          <td>${ b.q_no }</td>
-         <!-- 공지제목 클릭시 해당 글의 상세보기로 넘어가게 처리 -->
          <c:url var="bdt" value="/qnadetail.do">
             <c:param name="q_no" value="${ b.q_no }" />
             <c:param name="page" value="${ b.q_no }" />
          </c:url>
-         <!-- 게시글제목 클릭시 해당 글의 상세보기로 넘어가게 처리함 -->
          <td>
-
-         <!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
-            들여쓰기 처리 : 원글과 구분지음
-          -->
-
-      
          <c:if test="${ !empty sessionScope.loginMember }">
                <a href="${ bdt }" style="color:blue;">${ b.q_title }</a>
          </c:if> 

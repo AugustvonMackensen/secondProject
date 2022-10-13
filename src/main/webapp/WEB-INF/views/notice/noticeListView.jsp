@@ -35,7 +35,6 @@ table.qa-table thead th {
 table.qa-table tbody tr{;
 	font-weight: bold;
 	border-bottom: 1px solid #ccc;
-	background: #F0F8FF;
 	height : 38px;
 }
 .paging {
@@ -70,10 +69,21 @@ function Change(){
 <!-- jstl 에서 절대경로 표기 : /WEB-INF/views/common/menubar.jsp -->
 <br>
 <h1 align="center">공지사항</h1>
+<br>
+
+<center>
+	<c:if test="${ sessionScope.loginMember.admin eq 'Y' }">
+	<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/nlist.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">전체 목록 보기</button> &nbsp; &nbsp; &nbsp; &nbsp;
+
+	<button onclick="javascript:location.href='movewrite.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">
+	새 공지글 등록</button>
+	</c:if>
+</center>
+
 <!-- 관리자만 공지글 등록할 수 있도록 처리함
   => 로그인한 회원이 관리자이면 공지글 등록 버튼이 보이게 함 -->
 <!-- 검색 항목 영역 -->
- <div align="center"  >
+ <div align="center" >
          <select id="test" onchange="Change()" style="width: 6rem; height:3rem; border:3px solid  #f8f9fa;position:relative; top:48px;text-align:center; right:308px;">
 		<option value="1">제목</option>
 		<option value="2">날짜</option>
@@ -93,19 +103,9 @@ function Change(){
       </div>
 
   </div>
-
+<br>
 
 <!-- 목록 출력 영역 -->
-<br>
-<center>
-	<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/nlist.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">전체 목록 보기</button> &nbsp; &nbsp; &nbsp; &nbsp;
-
-	<c:if test="${ sessionScope.loginMember.admin eq 'Y' }">
-		<button onclick="javascript:location.href='movewrite.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">
-	새 공지글 등록</button>
-	</c:if>
-</center>
-<br>
 <table class="qa-table">
 	<thead>
 	<tr>
@@ -123,7 +123,7 @@ function Change(){
 			<tr align="center">
 		</c:if>
 		<c:if test="${ n.importance eq 2 }">
-			<tr align="center" bgcolor="gray">
+			<tr align="center" bgcolor="#ffffb9">
 		</c:if>
 			<td>${ n.noticeno }</td>
 			<!-- 공지제목 클릭시 해당 글의 상세보기로 넘어가게 처리 -->
