@@ -329,8 +329,8 @@ table.qa-table tbody tr th{;
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 	
 	<div style="margin-right: 3em; margin-top: 3em; "><a style="float: left;" class="btn btn-primary" href="./multiReg.do">여러 영수증 이미지로 지출 등록 하러가기</a></div>
-	<p align="center">
-	지출 등록 페이지</p>
+	<p style="float: none; margin-left: 8em" >
+	<h1 align="center" style="margin-right: 8em">지출 등록 페이지</h1></p>
 	<br>
 		<form id="uploadForm" enctype="multipart/form-data">
 			<table class="file-table" style="">
