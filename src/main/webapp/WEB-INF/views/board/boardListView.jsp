@@ -89,13 +89,14 @@ function showWriteForm() {
 <body>
    <!--상대경로로 대상 파일의 위치를 지정한 경우  -->
    <c:import url="../common/menubar.jsp" />
-   <!-- jstl의 절대 경로 표기 : /WEB-INF/views/common/menubar.jsp  -->
    <br>
    <h1 align="center">자유 게시글 목록</h1><br>
-   <h5 align="center">총 게시글 개수 : ${ listCount } 개</h5><br>
-   <!--    로그인한 회원만 게시글 등록(쓰기) 버튼이 보이게 함. -->
-   <center>
 
+   <center>
+   <c:if test="${ !empty sessionScope.loginMember }">         
+   <button onclick="showWriteForm();" style="width: 6rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">글쓰기</button> 
+   <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">전체 목록 보기</button> &nbsp; &nbsp; &nbsp; &nbsp;
+   </c:if>
    </center>
    <!-- 검색 항목 영역  -->
    
@@ -128,13 +129,6 @@ function showWriteForm() {
 
    <!-- 목록 출력 영역 -->
    <br>
-<center>
-   <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/blist.do';" style="width: 10rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">전체 목록 보기</button> &nbsp; &nbsp; &nbsp; &nbsp;
-
-   <c:if test="${ !empty sessionScope.loginMember }">         
-      <button onclick="showWriteForm();" style="width: 6rem; border-radius: 10px;  height:3rem; background-color:#4b8ef1; color:white; border:3px solid; #f8f9fa;">글쓰기</button> 
-   </c:if>
-</center>
 <br>
 <table class="qa-table">
    <thead>
@@ -142,9 +136,9 @@ function showWriteForm() {
       <th scope="cols">번호</th>
       <th scope="cols">제목</th>
       <th scope="cols">작성자</th>
-      <th scope="cols">첨부파일</th>
       <th scope="cols">날짜</th>
       <th scope="cols">조회수</th>
+      <th scope="cols">첨부파일</th>
       </tr>
    </thead>
    <tbody>
@@ -157,21 +151,15 @@ function showWriteForm() {
          </c:url>
          <td><a href="${ bdt }" style="color:blue;">${ b.board_title }</a></td>
          <td>${ b.board_writer }</td>
-          <td>
-            <c:if test="${ !empty b.board_original_filename }">◎</c:if>
-            <c:if test="${ empty b.board_original_filename }">&nbsp;</c:if>
-         </td>
+
          <td><fmt:formatDate value="${ b.board_date }" pattern="yyyy-MM-dd" /></td>
          <td>${ b.board_readcount }</td>
          <td>
-    
+            <c:if test="${ !empty b.board_original_filename }">◎</c:if>
+            <c:if test="${ empty b.board_original_filename }">&nbsp;</c:if>
          </td>
          
-         <td align="left">
-               <!-- 제목 글자 앞에 댓글과 대댓글 표시 기호 붙임
-               들여쓰기 처리 : 원글과 구분지음 --> <c:if test="${ b.board_lev eq 2 }">&nbsp; &nbsp; ▶</c:if>
-               <c:if test="${ b.board_lev eq 3 }">&nbsp; &nbsp; &nbsp; &nbsp; ▶▶</c:if>
-         </td>
+
 
     </tr>
    </c:forEach>

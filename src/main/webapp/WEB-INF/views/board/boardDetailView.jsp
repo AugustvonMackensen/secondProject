@@ -27,7 +27,6 @@ table.type02 th {
   width: 150px;
   padding: 10px;
   font-weight: bold;
-  vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-top: 1px solid #fff;
@@ -42,9 +41,7 @@ table.type02 td {
   border-bottom: 1px solid #ccc;
 }
 .containerr{
-   display: static;
-   align: center;
-   margin-left : 530px;
+	 text-align : center;
 
 }
 .containerr button.list{
@@ -90,7 +87,6 @@ table.type03 {
   line-height: 10;
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
-  margin-left : 515px;
 
 }
 table.type03 th {
@@ -201,23 +197,22 @@ html, body {
 
 
 <!-- 댓글 출력  -->
-<table class="type03">
-   <tr>
+ <c:forEach items="${ requestScope.list }" var="b">
+<div style="text-align : center;">
+<table class="type03" align="center">
+   <tr><br>
       <th scope="row">작성자</th>
-      <th scope="row">날짜</th>
-      <th scope="row">내용</th>
-   </tr>
-   <c:forEach items="${ requestScope.list }" var="b">
-         
-         <tr>
-         <td>${ b.board_writer }</td>
-         <td><fmt:formatDate value="${ b.board_date }" pattern="yyyy-MM-dd" /></td>
-         <td>${ b.board_content }</td>
+     <td>${ b.board_writer }</td>
       </tr>
-      
+    <tr>  <th scope="row">날짜</th>
+      <td><fmt:formatDate value="${ b.board_date }" pattern="yyyy-MM-dd" /></td>
+    </tr>
+      <tr><th scope="row">내용</th>
+      <td>${ b.board_content }</td>
+   </tr>
    </c:forEach>
 </table>
-
+</div>
 </body>
 </html>
 

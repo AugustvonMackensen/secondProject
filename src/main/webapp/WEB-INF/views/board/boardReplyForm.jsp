@@ -88,15 +88,14 @@ html, body {
 </style>  
 <br><br>
 <h2 align="center">${ board_num }번 게시글 의 댓글 등록  페이지</h2>
-
 <form action="breply.do" method="post" >
    <!-- 원글 번호도 함께 숨겨서 전송  -->
    <input type="hidden" name="board_ref" value="${ board_num }">
    <input type="hidden" name="page" value="${currentPage }">
 <table class="type02" align="center" width="500" border="1" cellspacing="0" 
 cellpadding="5">
-   <tr><th scope="row">제 목</th><td><input class="inputdss" type="text" name="board_title"></td></tr>
-   <tr><th scope="row">작성자</th><td><input class="inputdss" type="text" name="board_writer" readonly value="${ loginMember.userid }"></td></tr>
+   <tr><th scope="row">제 목</th><td><input class="inputds" type="text" name="board_title"></td></tr>
+   <tr><th scope="row">작성자</th><td><input class="inputds" type="text" name="board_writer" readonly value="${ loginMember.userid }"></td></tr>
    <tr><th scope="row">내 용</th><td><textarea class="inputdss" rows="5" cols="50" name="board_content"></textarea></td></tr>
    <div class="containerr2">
    <tr><th colspan="2">
