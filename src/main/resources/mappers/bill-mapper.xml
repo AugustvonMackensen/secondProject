@@ -110,19 +110,14 @@
 			SELECT *  
 			FROM (SELECT ROWNUM RNUM, b.*
 			       FROM (SELECT * FROM bill ]]>
+			       where userid = #{userid}
 		<if test="date!= null and date.length() == 10 ">
-			where to_char(bill_timestamp, 'yyyy mm dd') = #{ date }
-			and userid =
-			#{userid}
+			and to_char(bill_timestamp, 'yyyy mm dd') = #{ date }
 		</if>
 		<if test="date!= null and date.length() == 7 ">
-			where to_char(bill_timestamp, 'yyyy mm') = #{ date } and
-			userid =
-			#{userid}
+			and to_char(bill_timestamp, 'yyyy mm') = #{ date }
 		</if>
-		<if test="date == null">
-			where userid = #{userid}
-		</if>
+
 		<![CDATA[	       ORDER BY BILL_TIMESTAMP ASC) b )  
 			where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>

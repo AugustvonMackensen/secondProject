@@ -338,10 +338,16 @@ public class BillController {
 	public ModelAndView billDetailMethod(
 			ModelAndView mv, 
 			@RequestParam("bill_id") int bill_id,
-			@RequestParam(value = "page", required = false) String page) {
+			@RequestParam(value = "page", required = false) String page,
+			@RequestParam(value = "count", required = false) String count,
+			@RequestParam(value = "date", required = false) String date) {
 		int currentPage = 1;
 		if (page != null && page.length()>0) {
 			currentPage = Integer.parseInt(page);
+		}
+		
+		if (count != null && count.length()>0) {
+			mv.addObject("count", Integer.parseInt(count));
 		}
 		
 		Bill bill = billService.selectBill(bill_id);
@@ -349,6 +355,7 @@ public class BillController {
 		if(bill != null) {
 			mv.addObject("bill", bill);
 			mv.addObject("currentPage", currentPage);
+			mv.addObject("date", date);
 			mv.setViewName("bill/billDetailView");
 		} else {
 			mv.addObject("message", bill_id + "번 지출 조회 실패!");
@@ -366,10 +373,20 @@ public class BillController {
 			@RequestParam("page") int page,
 			@RequestParam("bill_timestamp2") String ts,
 			@RequestParam("bill_id") int bill_id,
+			@RequestParam(value = "count", required = false) String count,
+			@RequestParam(name="date") String date,
 			HttpServletRequest request, Model model) {
+		logger.info(ts+"타임스스탬프");
+		ts = ts.replace("T", " ");
+		if(ts.length() == 16)
+			ts = ts + ":00";
+		
+		if (count != null && count.length()>0) {
+			model.addAttribute("count", Integer.parseInt(count));
+		}
+		
 		logger.info("지출 확인 : " + bill);
 		logger.info("bill_timestamp2 확인 : " + ts);
-		ts = ts.replace("T", " ");
 		Timestamp t = Timestamp.valueOf(ts);
 		logger.info(t.toString());
 		bill.setBill_timestamp(t);
@@ -378,6 +395,7 @@ public class BillController {
 			//수정 성공시
 			model.addAttribute("page", page);
 			model.addAttribute("bill_id", bill_id);
+			model.addAttribute("date", date);
 			return "redirect:billdetail.do";
 		} else {
 			model.addAttribute("message", bill_id+"번 글 수정 실패!");
@@ -582,18 +600,28 @@ public class BillController {
 							if( Pattern.matches(timePattern, time)) {
 								stime= date +" " + time;
 							}else {
-								stime= date +" " + "11:00:00";
+								stime= date +" " + "11:15:15";
  							}
 							
 								
 							if( Pattern.matches(stampPattern, stime) ) { //맞으면
 								Timestamp tsmp = Timestamp.valueOf(stime); 
 								bill.setBill_timestamp(tsmp); // 시간입력
+								logger.info(tsmp+"시간확인시간확인");
 							} else { // 틀리면 현재시간넣음
 								Timestamp tsmp = new Timestamp(System.currentTimeMillis());
 								bill.setBill_timestamp(tsmp); // 시간입력
+								logger.info(tsmp+"시간확인시간확인");
 							}
 								
+						} else if(jobj.containsKey("tDate")) {
+							String date = (String) jobj.get("tDate");
+							date = date.replace("/", "-");
+							if(date.length() == 5)
+								date = "2022-"+date;
+							date = date + " 12:00:00";
+							Timestamp tsmp = Timestamp.valueOf(date); 
+							bill.setBill_timestamp(tsmp); // 시간입력
 						}
 						
 						bill.setBill_category("식비"); // 기본 식비로 설정
@@ -649,6 +677,13 @@ public class BillController {
 							String tel = (String) jobj.get("storeInfo_tel");
 							bill.setBill_storeinfo_tel(tel);
 						}
+						
+						if(bill.getBill_timestamp() == null) {
+							Timestamp tsmp = new Timestamp(System.currentTimeMillis());
+							bill.setBill_timestamp(tsmp); // 시간입력
+							logger.info(tsmp+"시간확인시간확인");
+						}
+						
 						logger.info("insert전 확인!!!!!!!!!!!!!!!!");
 						logger.info(bill.toString());
 						if(billService.insertBill(bill) > 0) {

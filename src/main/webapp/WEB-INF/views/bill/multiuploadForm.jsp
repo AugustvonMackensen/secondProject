@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
   <title>지출 등록</title>
@@ -8,11 +9,14 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
 
+<br><br>
+<br><br>
+<br><br>
 <div class="container" style="border: 1px solid #CCC;">
   <h2>영수증 이미지 업로드</h2>
   <form name="dataForm" id="dataForm" enctype="multipart/form-data" onsubmit="return registerAction()">
@@ -153,5 +157,7 @@ function fileDelete(fileNum){
    	    return false; 
 	}
 </script>
+
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

@@ -4,15 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:set var="currentPage" value="${ requestScope.currentPage }"></c:set>
-<c:set var="date"><fmt:formatDate type="date" pattern="yyyy MM dd" value="${ bill.bill_timestamp }"/></c:set>
+<c:set var="date3"><fmt:formatDate type="date" pattern="yyyy MM dd" value="${ bill.bill_timestamp }"/></c:set>
 <c:set var="date2"><fmt:formatDate type="date" pattern="yyyy-MM-dd'T'HH:mm:ss" value="${ bill.bill_timestamp }"/></c:set>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title></title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <style type="text/css">
 	.editable{
@@ -20,7 +19,54 @@
 		background-color: #d3d3d3;
 	}
 	
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: blue; text-decoration: underline;}
+
+table.qa-table{
+   width: 500px;
+   text-align:center;
+   border : 1px solid #ccc;
+   margin-left: auto; 
+   margin-right: auto;
+   border-collapse: collapse;
+   line-height: 1.5;
+}
+table.qa-table thead{
+   border-right: 1px solid #ccc;
+   border-left: 1px solid #ccc;
+   background: #4886FA;
+}
+table.qa-table thead th {
+   padding: 10px;
+   font-weight: solid;
+   vertical-align: top;
+   color: #fff;
+}
+table.qa-table tbody tr{;
+   font-weight: bold;
+   border-bottom: 1px solid #ccc;
+   background: #fff;
+   height : 38px;
+}
+table.qa-table tbody tr th{;
+   font-weight: bold;
+   border-bottom: 1px solid #ccc;
+   background: #F0F8FF; 
+   height : 38px;
+}
+.paging {
+    position: fixed;
+    bottom: 100px;
+    width: 100%;
+   text-align : center;
+}
+.a{
+   color: #4886FA;
+}
 </style>
+
+
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
@@ -114,7 +160,8 @@ $(() => {
 		<input type="hidden" name="id" value="${ bill.id }">
 		<input type="hidden" name="bill_id" value="${ bill.id }">
 		<input type="hidden" name="page" value="${ currentPage }">
-		<table align="center" width="410" border="1" cellspacing="0"
+		<input type="hidden" name="date" value="${ date }" >
+		<table class="qa-table" align="center" width="410" border="1" cellspacing="0"
 			cellpadding="5">
 			
 			
@@ -170,12 +217,18 @@ $(() => {
 			
 			<tr>
 				<th colspan="2">
-					
+					<c:if test="${ empty count }">
 					<button class="btn btn-primary" type="button"
 						onclick="javascript:location.href='billListView.do?page=${ currentPage }&userid=${ loginMember.userid }&date=${date}'">목록</button>
+					</c:if>
+					<c:if test="${ !empty count }">
+					<button class="btn btn-primary" type="button"
+						onclick="javascript:location.href='multiUploadCompleteView.do?count=${ count }&userid=${ loginMember.userid }'">목록</button>
+						<input type="hidden" value="${ count }" name="count">
+					</c:if>
 					&nbsp;
 						<input class="btn btn-primary" type="button" name="update" value="수정">
-						<input class="btn btn-success" style="display: none" type="submit" name="apply" value="적용"> &nbsp;
+						<input class="btn-success btn" style="display: none;  " type="submit" name="apply" value="적용"> &nbsp;
 						<input class="btn btn-warning" type="reset" name="rollback" value="취소">
 						<c:url var="bdl" value="/deleteBill.do">
 							<c:param name="bill_id" value="${ bill.id }" />
