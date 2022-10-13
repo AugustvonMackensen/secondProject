@@ -200,6 +200,9 @@ html, body {
  <c:forEach items="${ requestScope.list }" var="b">
 <div style="text-align : center;">
 <table class="type03" align="center">
+  <tr><th scope="row">제목</th>
+      <td>${ b.board_title }</td>
+   </tr>
    <tr><br>
       <th scope="row">작성자</th>
      <td>${ b.board_writer }</td>
