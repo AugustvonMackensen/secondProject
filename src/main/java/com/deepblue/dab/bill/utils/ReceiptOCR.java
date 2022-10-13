@@ -58,8 +58,8 @@ public class ReceiptOCR {
 	}
 
 	public JSONObject mainMethod(File imgfile) {
-		String apiURL = "https://evf6weqvcx.apigw.ntruss.com/custom/v1/18345/20cdbec9bb98ca069f612b81d9088acbeadb89cab2024c0a6f3936b2d9b893b8/document/receipt";
-		String secretKey = "V0xJSWVaZmR2VEJrZ0lSSUxTVWRESE1XZWhMTG92Z0k=";
+		String apiURL = "https://evf6weqvcx.apigw.ntruss.com/custom/v1/18646/f1bb76282d37d47d242b95d3d21ae9b7baa07652c15bd2518c3f0b655f5b5971/document/receipt";
+		String secretKey = "YXB5Y3dYSHhuT2pEUW5ZZUlPVmZOTHp3RkFKdWxTQlA=";
 //		String imageFile = "C:\\python_workspace\\testcv\\namecard\\rec\\고피.jpg";
 		Map<String, Object> response = new HashMap<>();
 
