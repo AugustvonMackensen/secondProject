@@ -189,12 +189,12 @@ table.type03 td {
  -->
 <form action="ninsert.do" method="post" enctype="multipart/form-data">
 <table class="type02" align="center">
-	<tr><th scope="row">제 목</th><td><input type="text" name="noticetitle"></td></tr>
+	<tr><th scope="row">제 목</th><td><input class="inputds" type="text" name="noticetitle"></td></tr>
 	<tr><th scope="row">작성자</th>
-	<td><input type="text" name="noticewriter" readonly value="${ sessionScope.loginMember.userid }">
+	<td><input class="inputds" type="text" name="noticewriter" readonly value="${ sessionScope.loginMember.userid }">
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="importance" value="2"> 중요도</td></tr>
-	<tr><th scope="row">첨부파일</th><td><input type="file" name="upfile"></td></tr>
-	<tr><th scope="row">내 용</th><td><textarea rows="5" cols="50" name="noticecontent"></textarea></td></tr>
+	<tr><th scope="row">첨부파일</th><td><input class="inputds" type="file" name="upfile"></td></tr>
+	<tr><th scope="row">내 용</th><td><textarea class="inputdss"rows="5" cols="50" name="noticecontent"></textarea></td></tr>
 	<tr><th colspan="2">
 		<input type="submit" value="등록하기"> &nbsp; 
 		<input type="reset" value="작성취소"> &nbsp; 
