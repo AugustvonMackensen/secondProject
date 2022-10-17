@@ -142,7 +142,9 @@ public class TextPreprocessing {
 		JSONArray imgfiled = (JSONArray) o.get("images");
 		JSONObject js = (JSONObject) imgfiled.get(0);
 		JSONObject rjs = (JSONObject) ((JSONObject) js.get("receipt")).get("result");
-
+		
+		
+		
 		System.out.println(rjs);
 		Iterator iter = rjs.keySet().iterator();
 		while (iter.hasNext()) {
